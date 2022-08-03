@@ -136,22 +136,6 @@ switch:
       mode:
         output: true
       inverted: false
-  - platform: gpio
-    name: "MCP23017_2 Pin A0"
-    pin:
-      mcp23xxx: mcp23017_out3
-      number: 0
-      mode:
-        output: true
-      inverted: false
-  - platform: gpio
-    name: "MCP23017_3 Pin A0"
-    pin:
-      mcp23xxx: mcp23017_out4
-      number: 0
-      mode:
-        output: true
-      inverted: false
 
 # # Individual inputs
 binary_sensor:
@@ -168,6 +152,30 @@ binary_sensor:
     on_press:
       then:
         - display.page.show_next: my_display
+  - platform: gpio
+    id: binary_sensor1
+    name: "MCP23017 Pin A0"
+    pin:
+      mcp23xxx: mcp23017_out4
+      number: 0
+      mode:
+        output: false
+      inverted: false
+    on_multi_click:
+    - timing:
+        - ON for at most 1s
+        - OFF for at most 0.3s
+        - ON for at most 1s
+        - OFF for at least 0.2s
+      then:
+        - switch.turn_on: switch_mcp_out1_1
+        - logger.log: "Double-Clicked"
+    - timing:
+        - ON for at most 1s
+        - OFF for at least 0.5s
+      then:
+        - switch.toggle: switch_mcp_out1_1
+        - logger.log: "Single-Clicked"
 #     name: "MCP23017 Pin B7"
 #     pin:
 #       mcp23xxx: mcp23017_hub
