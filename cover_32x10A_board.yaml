@@ -35,7 +35,7 @@ web_server:
   
 time:
   - platform: ds1307
-    id: ds1307_tim
+    id: ds1307_time
   
   - platform: homeassistant
     # instead try to synchronize via network repeatedly ...
@@ -43,7 +43,6 @@ time:
       then:
         # ... and update the RTC when the synchronization was successful
         ds1307.write_time:
-    
 
 
 mcp23017:
@@ -56,24 +55,28 @@ mcp23017:
   - id: 'mcp_4'
     address: 0x20
     
-    
 uart:
+
+  id: modbus_serial
   rx_pin: GPIO3
   tx_pin: GPIO1
   baud_rate: 9600
   stop_bits: 1
+
+#modbus:
+
+  #flow_control_pin: 5
+  #id: modbus1
+  #uart_id: modbus_serial
+
+#modbus_controller:
+
+ # - id: edpbox
+ #  update_interval: 31s
+ #   address: 0x1
+ # command_throttle: 150ms
+ #   setup_priority: -10    
   
-# modbus:
-#   id: modbus1
-
-# modbus_controller:
-#   - id: epever
-#     ## the Modbus device addr
-#     address: 0x33
-#     modbus_id: modbus1
-#     setup_priority: -10
-    
-
 switch:
   - platform: gpio
     pin:
@@ -485,10 +488,10 @@ cover:
     assumed_state: false
     open_action:
       - switch.turn_on: relay23
-    open_duration: 30s
+    open_duration: 35s
     close_action:
       - switch.turn_on: relay24
-    close_duration: 30s
+    close_duration: 29s
     stop_action:
       - switch.turn_off: relay23
       - switch.turn_off: relay24
@@ -498,10 +501,10 @@ cover:
     assumed_state: false
     open_action:
       - switch.turn_on: relay25
-    open_duration: 30s
+    open_duration: 35s
     close_action:
       - switch.turn_on: relay26
-    close_duration: 30s
+    close_duration: 29s
     stop_action:
       - switch.turn_off: relay25
       - switch.turn_off: relay26
@@ -511,10 +514,10 @@ cover:
     assumed_state: false
     open_action:
       - switch.turn_on: relay27
-    open_duration: 30s
+    open_duration: 35s
     close_action:
       - switch.turn_on: relay28
-    close_duration: 30s
+    close_duration: 29s
     stop_action:
       - switch.turn_off: relay27
       - switch.turn_off: relay28
@@ -524,10 +527,10 @@ cover:
     assumed_state: false
     open_action:
       - switch.turn_on: relay29
-    open_duration: 30s
+    open_duration: 35s
     close_action:
       - switch.turn_on: relay30
-    close_duration: 30s
+    close_duration: 29s
     stop_action:
       - switch.turn_off: relay29
       - switch.turn_off: relay30
@@ -537,10 +540,10 @@ cover:
     assumed_state: false
     open_action:
       - switch.turn_on: relay31
-    open_duration: 30s
+    open_duration: 17s
     close_action:
       - switch.turn_on: relay32
-    close_duration: 30s
+    close_duration: 14s
     stop_action:
       - switch.turn_off: relay31
       - switch.turn_off: relay32
@@ -897,9 +900,22 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        cover.open: cover_13
-    on_release:
-        cover.stop: cover_13
+        # logic for cycling through movements: open->stop->close->stop->...
+        - lambda: |
+            if (id(cover_13).current_operation == COVER_OPERATION_IDLE) {
+              // Cover is idle, check current state and either open or close cover.
+              if (id(cover_13).is_fully_closed()) {
+                id(cover_13).open();
+              } else {
+                id(cover_13).open();
+              }
+            } else {
+              // Cover is opening/closing. Stop it.
+              id(cover_13).stop();
+            }      
+#        cover.open: cover_13
+#    on_release:
+#        cover.stop: cover_13
   - platform: gpio
     name: "IN_26"
     pin:
@@ -911,9 +927,22 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        cover.close: cover_13
-    on_release:
-        cover.stop: cover_13
+        # logic for cycling through movements: open->stop->close->stop->...
+        - lambda: |
+            if (id(cover_13).current_operation == COVER_OPERATION_IDLE) {
+              // Cover is idle, check current state and either open or close cover.
+              if (id(cover_13).is_fully_closed()) {
+                id(cover_13).open();
+              } else {
+                id(cover_13).close();
+              }
+            } else {
+              // Cover is opening/closing. Stop it.
+              id(cover_13).stop();
+            }      
+#        cover.close: cover_13
+#    on_release:
+#        cover.stop: cover_13
   - platform: gpio
     name: "IN_27"
     pin:
@@ -925,9 +954,22 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        cover.open: cover_14
-    on_release:
-        cover.stop: cover_14
+        # logic for cycling through movements: open->stop->close->stop->...
+        - lambda: |
+            if (id(cover_14).current_operation == COVER_OPERATION_IDLE) {
+              // Cover is idle, check current state and either open or close cover.
+              if (id(cover_14).is_fully_closed()) {
+                id(cover_14).open();
+              } else {
+                id(cover_14).open();
+              }
+            } else {
+              // Cover is opening/closing. Stop it.
+              id(cover_14).stop();
+            }      
+#        cover.open: cover_14
+#    on_release:
+#        cover.stop: cover_14
   - platform: gpio
     name: "IN_28"
     pin:
@@ -939,9 +981,22 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        cover.close: cover_14
-    on_release:
-        cover.stop: cover_14
+        # logic for cycling through movements: open->stop->close->stop->...
+        - lambda: |
+            if (id(cover_14).current_operation == COVER_OPERATION_IDLE) {
+              // Cover is idle, check current state and either open or close cover.
+              if (id(cover_14).is_fully_closed()) {
+                id(cover_14).open();
+              } else {
+                id(cover_14).close();
+              }
+            } else {
+              // Cover is opening/closing. Stop it.
+              id(cover_14).stop();
+            }      
+#        cover.close: cover_14
+#    on_release:
+#        cover.stop: cover_14
   - platform: gpio
     name: "IN_29"
     pin:
@@ -953,9 +1008,22 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        cover.open: cover_15
-    on_release:
-        cover.stop: cover_15
+        # logic for cycling through movements: open->stop->close->stop->...
+        - lambda: |
+            if (id(cover_15).current_operation == COVER_OPERATION_IDLE) {
+              // Cover is idle, check current state and either open or close cover.
+              if (id(cover_15).is_fully_closed()) {
+                id(cover_15).open();
+              } else {
+                id(cover_15).open();
+              }
+            } else {
+              // Cover is opening/closing. Stop it.
+              id(cover_15).stop();
+            }      
+#        cover.open: cover_15
+#    on_release:
+#        cover.stop: cover_15
   - platform: gpio
     name: "IN_30"
     pin:
@@ -967,9 +1035,22 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        cover.close: cover_15
-    on_release:
-        cover.stop: cover_15
+        # logic for cycling through movements: open->stop->close->stop->...
+        - lambda: |
+            if (id(cover_15).current_operation == COVER_OPERATION_IDLE) {
+              // Cover is idle, check current state and either open or close cover.
+              if (id(cover_15).is_fully_closed()) {
+                id(cover_15).open();
+              } else {
+                id(cover_15).close();
+              }
+            } else {
+              // Cover is opening/closing. Stop it.
+              id(cover_15).stop();
+            }      
+#        cover.close: cover_15
+#    on_release:
+#        cover.stop: cover_15
   - platform: gpio
     name: "IN_31"
     pin:
@@ -981,9 +1062,23 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        cover.open: cover_16
-    on_release:
-        cover.stop: cover_16
+        # logic for cycling through movements: open->stop->close->stop->...
+        - lambda: |
+            if (id(cover_16).current_operation == COVER_OPERATION_IDLE) {
+              // Cover is idle, check current state and either open or close cover.
+              if (id(cover_16).is_fully_closed()) {
+                id(cover_16).open();
+              } else {
+                id(cover_16).open();
+              }
+            } else {
+              // Cover is opening/closing. Stop it.
+              id(cover_16).stop();
+            }
+#        - cover.toggle: cover_16
+#      else:
+#        - cover.stop: cover_16
+
   - platform: gpio
     name: "IN_32"
     pin:
@@ -995,10 +1090,22 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        cover.close: cover_16
-    on_release:
-        cover.stop: cover_16
-
+        # logic for cycling through movements: open->stop->close->stop->...
+        - lambda: |
+            if (id(cover_16).current_operation == COVER_OPERATION_IDLE) {
+              // Cover is idle, check current state and either open or close cover.
+              if (id(cover_16).is_fully_closed()) {
+                id(cover_16).open();
+              } else {
+                id(cover_16).close();
+              }
+            } else {
+              // Cover is opening/closing. Stop it.
+              id(cover_16).stop();
+            }
+#        - cover.toggle: cover_16
+#        - cover.stop: cover_16
+ 
 
   - platform: gpio
     name: "IN_33"
@@ -1039,71 +1146,100 @@ binary_sensor:
       then:
         - display.page.show_next: oled_display
         - component.update: oled_display   
-        
-        
+
+
+
 text_sensor:
   - platform: template
-    name: "IP"
-    id: IP
+    name: ${node_name} Uptime
+    id: wt32_uptime
+    entity_category: diagnostic
+    icon: mdi:clock-start
+  - platform: template
+    name: "${node_name} IP"
+    id: ip_address
     entity_category: diagnostic
     icon: "mdi:ip-network"
     lambda: return { id(eth).get_ip_address().str() };
-    update_interval: 30s
+    update_interval: 60s
 
-
-dallas:
-  - pin: GPIO32
+#dallas:
+#  - pin: GPIO32
 
 sensor:
-
   - platform: pct2075
     temperature:
-     name: "PCT2075 Temperature"
+      id: led_temp
+      name: "${node_name} LM75B Temperature"
     update_interval: 30s
+  - platform: uptime
+    name: ${node_name} uptime text
+    id: wt32_uptime_sensor
+    update_interval: 60s
+    on_raw_value:
+      then:
+        - text_sensor.template.publish:
+            id: wt32_uptime
+            state: !lambda |-
+              int seconds = round(id(wt32_uptime_sensor).raw_state);
+              int days = seconds / (24 * 3600);
+              seconds = seconds % (24 * 3600);
+              int hours = seconds / 3600;
+              seconds = seconds % 3600;
+              int minutes = seconds /  60;
+              return (
+                (days ? to_string(days) + "d " : "") +
+                (hours ? to_string(hours) + "h " : "") +
+                (to_string(minutes) + "m")
+              ).c_str();
+
+    
      
 #  - platform: mcp9808
 #    name: "MCP9808 temp"
 #    update_interval: 60s  
     
-  - platform: dallas
-    address: 0x283c01d607d4df28
-    name: "Dallas Sensor 1"
+#  - platform: dallas
+#    address: 0x283c01d607d4df28
+#    name: "Dallas Sensor 1"
     
-  - platform: dallas
-    address: 0xdfe67a061e64ff28
-    name: "Dallas Sensor 2"
+#  - platform: dallas
+#    address: 0xdfe67a061e64ff28
+#    name: "Dallas Sensor 2"
   
-  - platform: dallas
-    address: 0xa7a89f071e64ff28
-    name: "Dallas Sensor 3"
+#  - platform: dallas
+#    address: 0xa7a89f071e64ff28
+#    name: "Dallas Sensor 3"
     
     
   - platform: ina219
     address: 0x40
     shunt_resistance: 0.1 ohm
     current:
-      name: "INA219 Current"
+      id: ina_current
+      name: "${node_name} INA219 Current"
     power:
-      name: "INA219 Power"
+      id: ina_power
+      name: "${node_name} INA219 Power"
     bus_voltage:
-      name: "INA219 Bus Voltage"
+      id: ina_bus_voltage
+      name: "${node_name} INA219 Bus Voltage"
     shunt_voltage:
-      name: "INA219 Shunt Voltage"
+      id: ina_shunt_voltage
+      name: "${node_name} INA219 Shunt Voltage"
     max_voltage: 32.0V
     max_current: 3.2A
     update_interval: 30s
     
-
   
-  - platform: adc
-    pin: GPIO36
-    name: "ADC_1"
-    update_interval: 5s
+#    pin: GPIO36
+#    name: "ADC_1"
+#    update_interval: 5s
     
-  - platform: adc
-    pin: GPIO39
-    name: "ADC_2"
-    update_interval: 5s
+#  - platform: adc
+#    pin: GPIO39
+#    name: "ADC_2"
+#    update_interval: 5s
     
     
 display:
@@ -1112,107 +1248,43 @@ display:
     model: "SH1106 128x64"
     address: 0x3C
     contrast: 0.5
-
-
     pages:
       - id: page1
         lambda: |-
-          it.rectangle(0, 0, 126, 15);
-          it.printf(64,12, id(font1), TextAlign::BASELINE_CENTER, "BoneiO ESP");
-# it.printf(1, 27, id(font1), TextAlign::BASELINE_LEFT, "IP:");
-# it.printf(125, 27, id(font1), TextAlign::BASELINE_RIGHT, "%.2s", id(IP).state);
+          it.printf(64,25, id(danube), TextAlign::BASELINE_CENTER, "boneIO");
+          it.printf(64,40, id(fontSmall), TextAlign::BASELINE_CENTER, "take control");
+          it.printf(64,50, id(fontSmall), TextAlign::BASELINE_CENTER, "of your home");
       - id: page2
         lambda: |-
           it.rectangle(0, 0, 126, 15);
-          it.printf(64,12, id(font1), TextAlign::BASELINE_CENTER, "My Friend");
+          it.printf(64,12, id(danube1), TextAlign::BASELINE_CENTER, "BoneIO");
+          it.strftime(64, 26, id(fontSmall), TextAlign::BASELINE_CENTER ,"%c", id(ds1307_time).now());
+          it.printf(4, 38, id(fontSmall), TextAlign::BASELINE_LEFT ,"IP addr:");
+          it.printf(124, 38, id(fontSmall), TextAlign::BASELINE_RIGHT ,"%s", id(ip_address).state.c_str());
+          it.printf(4, 50, id(fontSmall), TextAlign::BASELINE_LEFT ,"Uptime:");
+          it.printf(124, 50, id(fontSmall), TextAlign::BASELINE_RIGHT ,"%s", id(wt32_uptime).state.c_str());
+          it.printf(4, 62, id(fontSmall), TextAlign::BASELINE_LEFT ,"Temperature:");
+          it.printf(124, 62, id(fontSmall), TextAlign::BASELINE_RIGHT ,"%.2f°C", id(led_temp).state);
+      - id: page3
+        lambda: |-
+          it.rectangle(0, 0, 126, 15);
+          it.printf(64,12, id(danube1), TextAlign::BASELINE_CENTER, "BoneIO");
+          it.printf(4, 26, id(fontSmall), TextAlign::BASELINE_LEFT ,"Current:");
+          it.printf(124, 26, id(fontSmall), TextAlign::BASELINE_RIGHT ,"%.3fA", id(ina_current).state);
+          it.printf(4, 38, id(fontSmall), TextAlign::BASELINE_LEFT ,"Power:");
+          it.printf(124, 38, id(fontSmall), TextAlign::BASELINE_RIGHT ,"%.2fW", id(ina_power).state);
+          it.printf(4, 50, id(fontSmall), TextAlign::BASELINE_LEFT ,"Bus Volt:");
+          it.printf(124, 50, id(fontSmall), TextAlign::BASELINE_RIGHT ,"%.2fV", id(ina_bus_voltage).state);
+          it.printf(4, 62, id(fontSmall), TextAlign::BASELINE_LEFT ,"Shunt Volt:");
+          it.printf(124, 62, id(fontSmall), TextAlign::BASELINE_RIGHT ,"%.2fV", id(ina_shunt_voltage).state);
 
-
-# interval:
-#   - interval: 5s
-#     then:
-#       - display.page.show_next: oled_display
-#       - component.update: oled_display   
-    
-    
-    
 font:
-  - file: 'arial.ttf'
-    id: font1
-    size: 11
-    glyphs:
-    - ' '
-    - '/'
-    - '!'
-    - '"'
-    - '%'
-    - (
-    - )
-    - +
-    - ','
-    - '-'
-    - .
-    - '0'
-    - '1'
-    - '2'
-    - '3'
-    - '4'
-    - '5'
-    - '6'
-    - '7'
-    - '8'
-    - '9'
-    - ':'
-    - A
-    - B
-    - C
-    - D
-    - E
-    - F
-    - G
-    - H
-    - I
-    - J
-    - K
-    - L
-    - M
-    - N
-    - O
-    - P
-    - Q
-    - R
-    - S
-    - T
-    - U
-    - V
-    - W
-    - X
-    - Y
-    - Z
-    - _
-    - a
-    - b
-    - c
-    - d
-    - e
-    - f
-    - g
-    - h
-    - i
-    - j
-    - k
-    - l
-    - m
-    - n
-    - o
-    - p
-    - q
-    - r
-    - s
-    - t
-    - u
-    - v
-    - w
-    - x
-    - y
-    - z
-    - °
+  - file: "fonts/DejaVuSans.ttf"
+    id: fontSmall
+    size: 9
+  - file: "fonts/danube__.ttf"
+    id: danube
+    size: 20
+  - file: "fonts/danube__.ttf"
+    id: danube1
+    size: 9
