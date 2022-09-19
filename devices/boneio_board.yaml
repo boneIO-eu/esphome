@@ -1,0 +1,34 @@
+#i2c  address: 0x26 input mcp io
+#i2c  address: 0x27 input mcp io
+#i2c  address: 0x40 input ina219 power
+#i2c  address: 0x68 input rtc ds1307
+time:
+  - platform: ds1307
+    id: ds1307_time
+
+sensor:
+# Module power consmption
+  - platform: ina219
+    address: 0x40
+    shunt_resistance: 0.1 ohm
+    current:
+      id: ina_current
+      name: "${node_name} INA219 Current"
+    power:
+      id: ina_power
+      name: "${node_name} INA219 Power"
+    bus_voltage:
+      id: ina_bus_voltage
+      name: "${node_name} INA219 Bus Voltage"
+    shunt_voltage:
+      id: ina_shunt_voltage
+      name: "${node_name} INA219 Shunt Voltage"
+    max_voltage: 32.0V
+    max_current: 3.2A
+    update_interval: 30s
+
+mcp23017:
+  - id: 'mcp_inputs_1to16'
+    address: 0x26
+  - id: 'mcp_inputs_17to32'
+    address: 0x27

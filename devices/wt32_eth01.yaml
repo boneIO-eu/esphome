@@ -1,0 +1,19 @@
+esphome:
+  name: ${node_name}
+  platform: ESP32
+  board: nodemcu-32s
+
+i2c:
+  sda: GPIO14
+  scl: GPIO15
+  scan: True
+  frequency: 100kHz
+
+ethernet:
+  id: eth
+  type: LAN8720
+  mdc_pin: GPIO23
+  mdio_pin: GPIO18
+  clk_mode: GPIO0_IN
+  phy_addr: 1
+  power_pin: GPIO16
