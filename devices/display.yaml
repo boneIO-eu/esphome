@@ -1,0 +1,138 @@
+#i2c  address: 0x3C input oled
+sensor:
+  - platform: uptime
+    id: wt32_uptime_seconds
+    update_interval: 60s
+    entity_category: diagnostic
+    on_raw_value:
+      then:
+        - text_sensor.template.publish:
+            id: wt32_uptime
+            state: !lambda |-
+              int seconds = round(id(wt32_uptime_seconds).raw_state);
+              int days = seconds / (24 * 3600);
+              seconds = seconds % (24 * 3600);
+              int hours = seconds / 3600;
+              seconds = seconds % 3600;
+              int minutes = seconds /  60;
+              return (
+                (days ? to_string(days) + "d " : "") +
+                (hours ? to_string(hours) + "h " : "") +
+                (to_string(minutes) + "m")
+              ).c_str();
+
+text_sensor:
+  - platform: template
+    name: ${node_name} Uptime
+    id: wt32_uptime
+    entity_category: diagnostic
+    icon: mdi:clock-start
+
+script:
+  - id: screensaver_script
+  # screensaver script, turn on screensaver after 30 seconds, restart counter each time when invoked
+    mode: restart
+    then:
+      # set the time after which the screensaver will be activated
+      - delay: 30s
+      - display.page.show: screensaver
+      - component.update: oled_display
+
+esphome:
+  on_boot:
+    # by default display show the first page defined in display (which is the logo page) until full initialization
+    # after that we show the first_page and start the screensaver script
+    priority: 0
+    then:
+      - display.page.show: first_page
+      - component.update: oled_display
+      - script.execute: screensaver_script
+
+binary_sensor:
+  - platform: gpio
+    entity_category: config
+    id: boneIO_button
+    pin:
+      number: GPIO4
+      mode:
+        input: true
+        pullup: true
+      inverted: true
+    on_press:
+      then:
+        # woke up when on the screensaver, as well do not include the logo page and screensaver in a loop when pushing a button
+        - if:
+            condition:
+          # on the last page go to the first page skipping the screensaver and logo page
+              display.is_displaying_page: last_page
+            then:
+              - display.page.show: first_page
+              - component.update: oled_display
+            else:
+              - if:
+                  condition:
+                # on the screensaver, show the logo for a while and display the first page
+                    display.is_displaying_page: screensaver
+                  then:
+                    - display.page.show: logo_page
+                    - component.update: oled_display
+                    - delay: 500ms
+                    - display.page.show: first_page
+                    - component.update: oled_display
+                  else:
+                # not the last page and screensaver go to the next page
+                    - display.page.show_next: oled_display
+                    - component.update: oled_display
+          # restart screensaver script
+        - script.execute: screensaver_script
+
+display:
+  - platform: ssd1306_i2c
+    id: oled_display
+    model: "SH1106 128x64"
+    address: 0x3C
+    contrast: 0.5
+    pages:
+      - id: logo_page
+        lambda: |-
+          it.printf(64,25, id(danubeBig), TextAlign::BASELINE_CENTER, "BoneIO");
+          it.printf(64,40, id(dejaVuSmall), TextAlign::BASELINE_CENTER, "take control");
+          it.printf(64,50, id(dejaVuSmall), TextAlign::BASELINE_CENTER, "of your home");
+      - id: first_page
+        lambda: |-
+          it.rectangle(0, 0, 126, 15);
+          it.printf(64,11, id(danubeSmall), TextAlign::BASELINE_CENTER, "BoneIO");
+          it.strftime(64, 25, id(dejaVuSmall), TextAlign::BASELINE_CENTER ,"%c", id(ds1307_time).now());
+          it.printf(4, 37, id(dejaVuSmall), TextAlign::BASELINE_LEFT ,"IP addr:");
+          it.printf(124, 37, id(dejaVuSmall), TextAlign::BASELINE_RIGHT ,"%s", id(eth).get_ip_address().str().c_str());
+          it.printf(4, 49, id(dejaVuSmall), TextAlign::BASELINE_LEFT ,"Uptime:");
+          it.printf(124, 49, id(dejaVuSmall), TextAlign::BASELINE_RIGHT ,"%s", id(wt32_uptime).state.c_str());
+          it.printf(4, 61, id(dejaVuSmall), TextAlign::BASELINE_LEFT ,"Temperature:");
+          it.printf(124, 61, id(dejaVuSmall), TextAlign::BASELINE_RIGHT ,"%.2f°C", id(boneIO_temp).state);
+      # additional pages should be defined between the first and last page
+      - id: last_page
+        lambda: |-
+          it.rectangle(0, 0, 126, 15);
+          it.printf(64,11, id(danubeSmall), TextAlign::BASELINE_CENTER, "BoneIO");
+          it.printf(4, 25, id(dejaVuSmall), TextAlign::BASELINE_LEFT ,"Current:");
+          it.printf(124, 25, id(dejaVuSmall), TextAlign::BASELINE_RIGHT ,"%.3fA", id(ina_current).state);
+          it.printf(4, 37, id(dejaVuSmall), TextAlign::BASELINE_LEFT ,"Power:");
+          it.printf(124, 37, id(dejaVuSmall), TextAlign::BASELINE_RIGHT ,"%.2fW", id(ina_power).state);
+          it.printf(4, 49, id(dejaVuSmall), TextAlign::BASELINE_LEFT ,"Bus Volt:");
+          it.printf(124, 49, id(dejaVuSmall), TextAlign::BASELINE_RIGHT ,"%.2fV", id(ina_bus_voltage).state);
+          it.printf(4, 61, id(dejaVuSmall), TextAlign::BASELINE_LEFT ,"Shunt Volt:");
+          it.printf(124, 61, id(dejaVuSmall), TextAlign::BASELINE_RIGHT ,"%.2fV", id(ina_shunt_voltage).state);
+      - id: screensaver
+        lambda: |-
+          it.fill(COLOR_OFF);
+
+font:
+  - file: "fonts/DejaVuSans.ttf"
+    id: dejaVuSmall
+    size: 9
+  - file: "fonts/danube__.ttf"
+    id: danubeBig
+    size: 20
+  - file: "fonts/danube__.ttf"
+    id: danubeSmall
+    size: 9

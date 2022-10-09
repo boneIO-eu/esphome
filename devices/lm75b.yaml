@@ -1,0 +1,12 @@
+#i2c address: 0x48 output lm75b temp
+#LM75B
+external_components:
+  - source: github://btomala/esphome-LM75@v1.0
+    components: [ lm75 ]
+
+sensor:
+# Lower board temperature
+  - platform: lm75
+    id: boneIO_temp
+    name: "${node_name} LM75B Temperature"
+    update_interval: 30s
