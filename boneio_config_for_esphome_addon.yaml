@@ -3,29 +3,29 @@ substitutions:
 
 packages:
 # devices
-  core: !include devices/wt32_eth01.yaml
-  internals: !include devices/boneio_board.yaml
-  temp: !include devices/lm75b.yaml
-  display: !include devices/display.yaml
+  core: !include boneio/devices/wt32_eth01.yaml
+  internals: !include boneio/devices/boneio_board.yaml
+  temp: !include boneio/devices/lm75b.yaml
+  display: !include boneio/devices/display.yaml
   # uart: !include devices/uart.yaml
   # one_wire: !include devices/one_wire.yaml
 # relay32
-  # output: !include boards/relay32_outputs.yaml
-  # input: !include boards/relay32_inputs.yaml
+  output: !include boneio/boards/relay32_outputs.yaml
+  input: !include boneio/boards/relay32_inputs.yaml
 # dimmer led
   # output: !include boards/dimmer_led8x4_outputs.yaml
   # input: !include boards/dimmer_led8x4_inputs.yaml
   # light: !include boards/monochromatic_lights.yaml
 # cover
-  output: !include boards/cover16_outputs.yaml
+#  output: !include boards/cover16_outputs.yaml
   # input: !include boards/cover16_inputs.yaml
-  cover: !include boards/cover.yaml
+# cover: !include boards/cover.yaml
 
 logger:
   baud_rate: 0
 api:
 ota:
-  password: secret_ota_password
+  password: boneio
 # disable web server - for testing only
 web_server:
   port: 80
