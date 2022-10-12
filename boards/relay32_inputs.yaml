@@ -453,3 +453,31 @@ binary_sensor:
     on_press:
       then:
         - switch.toggle: relay_32
+
+  - platform: gpio
+    name: "${node_name} IN_33"
+    pin:
+      number: GPIO33
+      mode:
+        input: true
+        pullup: false
+      inverted: true
+      
+  - platform: gpio
+    name: "${node_name} IN_34"
+    pin:
+      number: GPIO17
+      mode:
+        input: true
+        pullup: false
+      inverted: true
+      
+  - platform: gpio
+    name: "${node_name} IN_35"
+    pin:
+      number: GPIO12
+      mode:
+        input: true
+        pullup: true
+      inverted: false
+
