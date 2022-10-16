@@ -86,6 +86,7 @@ switch:
       inverted: false
     id: relay1
     interlock: &interlock_1 [relay1, relay2]
+    interlock_wait_time: 200ms
   - platform: gpio
     pin:
       mcp23xxx: mcp_3
@@ -94,6 +95,7 @@ switch:
       inverted: false
     id: relay2
     interlock: *interlock_1
+    interlock_wait_time: 200ms
   - platform: gpio
     pin:
       mcp23xxx: mcp_3
@@ -102,6 +104,7 @@ switch:
       inverted: false
     id: relay3
     interlock: &interlock_2 [relay3, relay4]
+    interlock_wait_time: 200ms
   - platform: gpio
     pin:
       mcp23xxx: mcp_3
@@ -110,6 +113,7 @@ switch:
       inverted: false
     id: relay4
     interlock: *interlock_2
+    interlock_wait_time: 200ms
   - platform: gpio
     pin:
       mcp23xxx: mcp_3
@@ -118,6 +122,7 @@ switch:
       inverted: false
     id: relay5
     interlock: &interlock_3 [relay5, relay6]
+    interlock_wait_time: 200ms
   - platform: gpio
     pin:
       mcp23xxx: mcp_3
@@ -126,6 +131,7 @@ switch:
       inverted: false
     id: relay6
     interlock: *interlock_3
+    interlock_wait_time: 200ms
   - platform: gpio
     pin:
       mcp23xxx: mcp_3
@@ -134,6 +140,7 @@ switch:
       inverted: false
     id: relay7
     interlock: &interlock_4 [relay7, relay8]
+    interlock_wait_time: 200ms
   - platform: gpio
     pin:
       mcp23xxx: mcp_3
@@ -142,6 +149,7 @@ switch:
       inverted: false
     id: relay8
     interlock: *interlock_4
+    interlock_wait_time: 200ms
   - platform: gpio
     pin:
       mcp23xxx: mcp_3
@@ -150,6 +158,7 @@ switch:
       inverted: false
     id: relay9
     interlock: &interlock_5 [relay9, relay10]
+    interlock_wait_time: 200ms
   - platform: gpio
     pin:
       mcp23xxx: mcp_3
@@ -158,6 +167,7 @@ switch:
       inverted: false
     id: relay10
     interlock: *interlock_5
+    interlock_wait_time: 200ms
   - platform: gpio
     pin:
       mcp23xxx: mcp_3
@@ -166,6 +176,7 @@ switch:
       inverted: false
     id: relay11
     interlock: &interlock_6 [relay11, relay12]
+    interlock_wait_time: 200ms
   - platform: gpio
     pin:
       mcp23xxx: mcp_3
@@ -174,6 +185,7 @@ switch:
       inverted: false
     id: relay12
     interlock: *interlock_6
+    interlock_wait_time: 200ms
   - platform: gpio
     pin:
       mcp23xxx: mcp_3
@@ -182,6 +194,7 @@ switch:
       inverted: false
     id: relay13
     interlock: &interlock_7 [relay13, relay14]
+    interlock_wait_time: 200ms
   - platform: gpio
     pin:
       mcp23xxx: mcp_3
@@ -190,6 +203,7 @@ switch:
       inverted: false
     id: relay14
     interlock: *interlock_7
+    interlock_wait_time: 200ms
   - platform: gpio
     pin:
       mcp23xxx: mcp_3
@@ -198,6 +212,7 @@ switch:
       inverted: false
     id: relay15
     interlock: &interlock_8 [relay15, relay16]
+    interlock_wait_time: 200ms
   - platform: gpio
     pin:
       mcp23xxx: mcp_3
@@ -206,6 +221,7 @@ switch:
       inverted: false
     id: relay16
     interlock: *interlock_8
+    interlock_wait_time: 200ms
   - platform: gpio
     pin:
       mcp23xxx: mcp_4
@@ -214,6 +230,7 @@ switch:
       inverted: false
     id: relay17
     interlock: &interlock_9 [relay17, relay18]
+    interlock_wait_time: 200ms
   - platform: gpio
     pin:
       mcp23xxx: mcp_4
@@ -222,6 +239,7 @@ switch:
       inverted: false
     id: relay18
     interlock: *interlock_9
+    interlock_wait_time: 200ms
   - platform: gpio
     pin:
       mcp23xxx: mcp_4
@@ -230,6 +248,7 @@ switch:
       inverted: false
     id: relay19
     interlock: &interlock_10 [relay19, relay20]
+    interlock_wait_time: 200ms
   - platform: gpio
     pin:
       mcp23xxx: mcp_4
@@ -238,6 +257,7 @@ switch:
       inverted: false
     id: relay20
     interlock: *interlock_10
+    interlock_wait_time: 200ms
   - platform: gpio
     pin:
       mcp23xxx: mcp_4
@@ -246,6 +266,7 @@ switch:
       inverted: false
     id: relay21
     interlock: &interlock_11 [relay21, relay22]
+    interlock_wait_time: 200ms
   - platform: gpio
     pin:
       mcp23xxx: mcp_4
@@ -254,6 +275,7 @@ switch:
       inverted: false
     id: relay22
     interlock: *interlock_11
+    interlock_wait_time: 200ms
   - platform: gpio
     pin:
       mcp23xxx: mcp_4
@@ -262,6 +284,7 @@ switch:
       inverted: false
     id: relay23
     interlock: &interlock_12 [relay23, relay24]
+    interlock_wait_time: 200ms
   - platform: gpio
     pin:
       mcp23xxx: mcp_4
@@ -270,6 +293,7 @@ switch:
       inverted: false
     id: relay24
     interlock: *interlock_12
+    interlock_wait_time: 200ms
   - platform: gpio
     pin:
       mcp23xxx: mcp_4
@@ -278,6 +302,7 @@ switch:
       inverted: false
     id: relay25
     interlock: &interlock_13 [relay25, relay26]
+    interlock_wait_time: 200ms
   - platform: gpio
     pin:
       mcp23xxx: mcp_4
@@ -286,6 +311,7 @@ switch:
       inverted: false
     id: relay26
     interlock: *interlock_13
+    interlock_wait_time: 200ms
   - platform: gpio
     pin:
       mcp23xxx: mcp_4
@@ -294,6 +320,7 @@ switch:
       inverted: false
     id: relay27
     interlock: &interlock_14 [relay27, relay28]
+    interlock_wait_time: 200ms
   - platform: gpio
     pin:
       mcp23xxx: mcp_4
@@ -302,6 +329,7 @@ switch:
       inverted: false
     id: relay28
     interlock: *interlock_14
+    interlock_wait_time: 200ms
   - platform: gpio
     pin:
       mcp23xxx: mcp_4
@@ -310,6 +338,7 @@ switch:
       inverted: false
     id: relay29
     interlock: &interlock_15 [relay29, relay30]
+    interlock_wait_time: 200ms
   - platform: gpio
     pin:
       mcp23xxx: mcp_4
@@ -318,6 +347,7 @@ switch:
       inverted: false
     id: relay30
     interlock: *interlock_15
+    interlock_wait_time: 200ms
   - platform: gpio
     pin:
       mcp23xxx: mcp_4
@@ -326,6 +356,7 @@ switch:
       inverted: false
     id: relay31
     interlock: &interlock_16 [relay31, relay32]
+    interlock_wait_time: 200ms
   - platform: gpio
     pin:
       mcp23xxx: mcp_4
@@ -334,6 +365,7 @@ switch:
       inverted: false
     id: relay32
     interlock: *interlock_16
+    interlock_wait_time: 200ms
 
 
 
