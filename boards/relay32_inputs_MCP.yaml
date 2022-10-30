@@ -326,7 +326,7 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        - switch.toggle: relay_22
+        - switch.toggle: relay_23
 
   - platform: gpio
     name: "${node_name} IN_24"
