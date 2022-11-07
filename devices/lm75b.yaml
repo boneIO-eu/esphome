@@ -10,3 +10,4 @@ sensor:
     id: boneIO_temp
     name: "${node_name} LM75B Temperature"
     update_interval: 30s
+    i2c_id: bus_b

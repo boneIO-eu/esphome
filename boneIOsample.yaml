@@ -2,26 +2,23 @@ substitutions:
   node_name: boneio
 
 packages:
-# devices
+  # devices
   core: !include devices/wt32_eth01.yaml
-  internals: !include devices/boneio_board_PCF.yaml
-  #internals: !include devices/boneio_board_MCP.yaml
+  internals: !include devices/boneio_board.yaml
   temp: !include devices/lm75b.yaml
   display: !include devices/display.yaml
   # uart: !include devices/uart.yaml
   # one_wire: !include devices/one_wire.yaml
-# relay32
-  #output: !include boards/relay32_outputs_MCP.yaml
+  # relay32
   output: !include boards/relay32_outputs_PCF.yaml
-  #input: !include boards/relay32_inputs_MCP.yaml
-  input: !include boards/relay32_inputs_PCF.yaml
+  input: !include boards/relay32_inputs.yaml
 # dimmer led
-  #output: !include boards/dimmer_led8x4_outputs.yaml
-  #input: !include boards/dimmer_led8x4_inputs.yaml
-  #light: !include boards/monochromatic_lights.yaml
+# output: !include boards/dimmer_led8x4_outputs.yaml
+# input: !include boards/dimmer_led8x4_inputs.yaml
+# light: !include boards/monochromatic_lights.yaml
 # cover
-  #output: !include boards/cover16_outputs.yaml
-  # input: !include boards/cover16_inputs.yaml
+#  output: !include boards/cover16_outputs.yaml
+# input: !include boards/cover16_inputs.yaml
 # cover: !include boards/cover.yaml
 
 logger:

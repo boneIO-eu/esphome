@@ -5,11 +5,14 @@
 time:
   - platform: ds1307
     id: ds1307_time
+    address: 0x68
+    i2c_id: bus_a
 
 sensor:
 # Module power consmption
   - platform: ina219
     address: 0x40
+    i2c_id: bus_a
     shunt_resistance: 0.1 ohm
     current:
       id: ina_current
@@ -27,11 +30,26 @@ sensor:
     max_current: 3.2A
     update_interval: 30s
 
+switch:
+  - platform: gpio
+    id: buzzer
+    name: "Buzzer"
+    pin:
+      number: GPIO2
+      mode:
+        output: true
+      inverted: false
 pcf8574:
-  - id: 'mcp_inputs_1to16'
-    address: 0x26
+  - id: 'pcf_inputs_1to14'
+    i2c_id: bus_a
+    address: 0x20
     pcf8575: true
-  - id: 'mcp_inputs_17to32'
-    address: 0x27
+  - id: 'pcf_inputs_15to28'
+    i2c_id: bus_a
+    address: 0x21
     pcf8575: true 
+  - id: 'pcf_inputs_28to35_menu'
+    i2c_id: bus_a
+    address: 0x22
+    pcf8575: false
 

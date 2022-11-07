@@ -53,10 +53,10 @@ binary_sensor:
     entity_category: config
     id: boneIO_button
     pin:
-      number: GPIO4
+      pcf8574: pcf_inputs_28to35_menu
+      number: 7
       mode:
         input: true
-        pullup: true
       inverted: true
     on_press:
       then:
@@ -91,6 +91,7 @@ display:
     id: oled_display
     model: "SH1106 128x64"
     address: 0x3C
+    i2c_id: bus_b
     contrast: 0.5
     pages:
       - id: logo_page

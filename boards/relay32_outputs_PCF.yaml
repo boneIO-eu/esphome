@@ -3,9 +3,11 @@ pcf8574:
   - id: 'pcf_1'
     address: 0x21
     pcf8575: true
+    i2c_id: bus_b
   - id: 'pcf_2'
     address: 0x20
-    pcf8575: true 
+    pcf8575: true
+    i2c_id: bus_b 
 
 switch:
     
