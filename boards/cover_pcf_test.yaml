@@ -1,0 +1,32 @@
+cover:
+- platform: time_based
+  name: "${node_name} Cover 01"
+  device_class: cover
+  id: cover_01
+  open_action:
+    - switch.turn_off: cover_close_01
+    - switch.turn_on: cover_open_01
+  open_duration: 60s
+  close_action:
+    - switch.turn_off: cover_open_01
+    - switch.turn_on: cover_close_01
+  close_duration: 60s
+  stop_action:
+    - switch.turn_off: cover_open_01
+    - switch.turn_off: cover_close_01
+
+- platform: time_based
+  name: "${node_name} Cover 02"
+  device_class: cover
+  id: cover_02
+  open_action:
+    - switch.turn_off: cover_close_02
+    - switch.turn_on: cover_open_02
+  open_duration: 60s
+  close_action:
+    - switch.turn_off: cover_open_02
+    - switch.turn_on: cover_close_02
+  close_duration: 60s
+  stop_action:
+    - switch.turn_off: cover_open_02
+    - switch.turn_off: cover_close_02

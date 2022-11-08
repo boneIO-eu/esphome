@@ -1,7 +1,7 @@
 cover:
 - platform: time_based
   name: "${node_name} Cover 01"
-  device_class: shutter
+  device_class: cover
   id: cover_01
   open_action:
     - switch.turn_off: cover_close_01
@@ -24,7 +24,7 @@ cover:
 
 - platform: time_based
   name: "${node_name} Cover 02"
-  device_class: shutter
+  device_class: cover
   id: cover_02
   open_action:
     - switch.turn_off: cover_close_02
