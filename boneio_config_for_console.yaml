@@ -11,12 +11,12 @@ packages:
   # uart: !include devices/uart.yaml
   # one_wire: !include devices/one_wire.yaml
   # relay32
-  output: !include boards/relay32_outputs_PCF.yaml #or MCP
-  input: !include boards/relay32_inputs_PCF.yaml #or MCP
+  # output: !include boards/relay32_outputs_PCF.yaml #or MCP
+  # input: !include boards/relay32_inputs_PCF.yaml #or MCP
 # dimmer led
-# output: !include boards/dimmer_led8x4_outputs.yaml
-# input: !include boards/dimmer_led8x4_inputs.yaml
-# light: !include boards/monochromatic_lights.yaml
+  output: !include boards/dimmer_led8x4_outputs.yaml
+  # input: !include boards/dimmer_led8x4_inputs.yaml
+  light: !include boards/monochromatic_lights.yaml
 # cover
 #  output: !include boards/cover16_outputs.yaml
 # input: !include boards/cover16_inputs.yaml

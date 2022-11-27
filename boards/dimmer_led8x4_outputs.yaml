@@ -5,9 +5,11 @@ pca9685:
   - address: 0x41
     id: pca_hub_1to16
     frequency: 500
+    i2c_id: bus_b
   - address: 0x42
     id: pca_hub_17to32
     frequency: 500
+    i2c_id: bus_b
 
 output:
   - platform: pca9685
