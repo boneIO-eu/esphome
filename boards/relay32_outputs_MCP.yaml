@@ -2,8 +2,10 @@
 mcp23017:
   - id: 'mcp_outputs_1to16'
     address: 0x21
+    i2c_id: bus_b
   - id: 'mcp_outputs_17to32'
     address: 0x20
+    i2c_id: bus_b
 
 switch:
   - platform: gpio
