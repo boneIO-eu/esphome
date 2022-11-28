@@ -127,12 +127,12 @@ display:
           it.fill(COLOR_OFF);
 
 font:
-  - file: "fonts/DejaVuSans.ttf"
+  - file: "${dir_name}/fonts/DejaVuSans.ttf"
     id: dejaVuSmall
     size: 9
-  - file: "fonts/danube__.ttf"
+  - file: "${dir_name}/fonts/danube__.ttf"
     id: danubeBig
     size: 20
-  - file: "fonts/danube__.ttf"
+  - file: "${dir_name}/fonts/danube__.ttf"
     id: danubeSmall
     size: 9

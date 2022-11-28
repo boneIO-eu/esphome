@@ -1,17 +1,22 @@
 substitutions:
   node_name: boneio
+  dir_name: 'boneio/'
 
 packages:
 # devices
   core: !include boneio/devices/wt32_eth01.yaml
-  internals: !include boneio/devices/boneio_board.yaml
+  internals: !include boneio/devices/boneio_board_PCF.yaml
+  #internals: !include boneio/devices/boneio_board_MCP.yaml
   temp: !include boneio/devices/lm75b.yaml
   display: !include boneio/devices/display.yaml
   # uart: !include devices/uart.yaml
   # one_wire: !include devices/one_wire.yaml
 # relay32
-  output: !include boneio/boards/relay32_outputs.yaml
-  input: !include boneio/boards/relay32_inputs.yaml
+  output: !include boneio/boards/relay32_outputs_PCF.yaml
+  #output: !include boneio/boards/relay32_outputs_MCP.yaml
+  input: !include boneio/boards/relay32_inputs_PCF.yaml
+    #input: !include boneio/boards/relay32_inputs_MCP.yaml
+
 # dimmer led
   # output: !include boards/dimmer_led8x4_outputs.yaml
   # input: !include boards/dimmer_led8x4_inputs.yaml
