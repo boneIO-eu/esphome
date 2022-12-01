@@ -14,13 +14,6 @@ cover:
   stop_action:
     - switch.turn_off: cover_open_01
     - switch.turn_off: cover_close_01
-  tilt_action:
-    - cover.close: this cover
-    - delay: 2s
-    - switch.turn_on: open_cover_switch
-    - lambda: |- wyliczenie czasu z zadanej pozycji
-    - delay: X
-    - switch.turn_off: open_cover_switch
 
 - platform: time_based
   name: "${node_name} Cover 02"
@@ -101,3 +94,163 @@ cover:
   stop_action:
     - switch.turn_off: cover_open_06
     - switch.turn_off: cover_close_06
+
+- platform: time_based
+  name: "${node_name} Cover 07"
+  device_class: shutter
+  id: cover_07
+  open_action:
+    - switch.turn_off: cover_close_07
+    - switch.turn_on: cover_open_07
+  open_duration: 60s
+  close_action:
+    - switch.turn_off: cover_open_07
+    - switch.turn_on: cover_close_07
+  close_duration: 60s
+  stop_action:
+    - switch.turn_off: cover_open_07
+    - switch.turn_off: cover_close_07
+
+- platform: time_based
+  name: "${node_name} Cover 08"
+  device_class: shutter
+  id: cover_08
+  open_action:
+    - switch.turn_off: cover_close_08
+    - switch.turn_on: cover_open_08
+  open_duration: 60s
+  close_action:
+    - switch.turn_off: cover_open_08
+    - switch.turn_on: cover_close_08
+  close_duration: 60s
+  stop_action:
+    - switch.turn_off: cover_open_08
+    - switch.turn_off: cover_close_08
+
+- platform: time_based
+  name: "${node_name} Cover 09"
+  device_class: shutter
+  id: cover_09
+  open_action:
+    - switch.turn_off: cover_close_09
+    - switch.turn_on: cover_open_09
+  open_duration: 60s
+  close_action:
+    - switch.turn_off: cover_open_09
+    - switch.turn_on: cover_close_09
+  close_duration: 60s
+  stop_action:
+    - switch.turn_off: cover_open_09
+    - switch.turn_off: cover_close_09
+
+- platform: time_based
+  name: "${node_name} Cover 10"
+  device_class: shutter
+  id: cover_10
+  open_action:
+    - switch.turn_off: cover_close_10
+    - switch.turn_on: cover_open_10
+  open_duration: 60s
+  close_action:
+    - switch.turn_off: cover_open_10
+    - switch.turn_on: cover_close_10
+  close_duration: 60s
+  stop_action:
+    - switch.turn_off: cover_open_10
+    - switch.turn_off: cover_close_10
+
+- platform: time_based
+  name: "${node_name} Cover 11"
+  device_class: shutter
+  id: cover_11
+  open_action:
+    - switch.turn_off: cover_close_11
+    - switch.turn_on: cover_open_11
+  open_duration: 60s
+  close_action:
+    - switch.turn_off: cover_open_11
+    - switch.turn_on: cover_close_11
+  close_duration: 60s
+  stop_action:
+    - switch.turn_off: cover_open_11
+    - switch.turn_off: cover_close_11
+
+- platform: time_based
+  name: "${node_name} Cover 12"
+  device_class: shutter
+  id: cover_12
+  open_action:
+    - switch.turn_off: cover_close_12
+    - switch.turn_on: cover_open_12
+  open_duration: 60s
+  close_action:
+    - switch.turn_off: cover_open_12
+    - switch.turn_on: cover_close_12
+  close_duration: 60s
+  stop_action:
+    - switch.turn_off: cover_open_12
+    - switch.turn_off: cover_close_12
+
+- platform: time_based
+  name: "${node_name} Cover 13"
+  device_class: shutter
+  id: cover_13
+  open_action:
+    - switch.turn_off: cover_close_13
+    - switch.turn_on: cover_open_13
+  open_duration: 60s
+  close_action:
+    - switch.turn_off: cover_open_13
+    - switch.turn_on: cover_close_13
+  close_duration: 60s
+  stop_action:
+    - switch.turn_off: cover_open_13
+    - switch.turn_off: cover_close_13
+
+- platform: time_based
+  name: "${node_name} Cover 14"
+  device_class: shutter
+  id: cover_14
+  open_action:
+    - switch.turn_off: cover_close_14
+    - switch.turn_on: cover_open_14
+  open_duration: 60s
+  close_action:
+    - switch.turn_off: cover_open_14
+    - switch.turn_on: cover_close_14
+  close_duration: 60s
+  stop_action:
+    - switch.turn_off: cover_open_14
+    - switch.turn_off: cover_close_14
+
+- platform: time_based
+  name: "${node_name} Cover 15"
+  device_class: shutter
+  id: cover_15
+  open_action:
+    - switch.turn_off: cover_close_15
+    - switch.turn_on: cover_open_15
+  open_duration: 60s
+  close_action:
+    - switch.turn_off: cover_open_15
+    - switch.turn_on: cover_close_15
+  close_duration: 60s
+  stop_action:
+    - switch.turn_off: cover_open_15
+    - switch.turn_off: cover_close_15
+
+- platform: time_based
+  name: "${node_name} Cover 16"
+  device_class: shutter
+  id: cover_16
+  open_action:
+    - switch.turn_off: cover_close_16
+    - switch.turn_on: cover_open_16
+  open_duration: 60s
+  close_action:
+    - switch.turn_off: cover_open_16
+    - switch.turn_on: cover_close_16
+  close_duration: 60s
+  stop_action:
+    - switch.turn_off: cover_open_16
+    - switch.turn_off: cover_close_16
