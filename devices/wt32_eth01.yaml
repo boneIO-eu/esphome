@@ -2,6 +2,7 @@ esphome:
   name: ${node_name}
   platform: ESP32
   board: nodemcu-32s
+  name_add_mac_suffix: true
 
 i2c:
   - id: bus_a
