@@ -20,9 +20,10 @@ packages:
 # input: !include boneio/boards/dimmer_led8x4_inputs.yaml
 # light: !include boneio/boards/monochromatic_lights.yaml
 # cover
-#  output: !include boneio/boards/cover16_outputs.yaml
-# input: !include boneio/boards/cover16_inputs.yaml
-# cover: !include boneio/boards/cover.yaml
+#  output: !include boneio/boards/cover16_outputs_PCF.yaml
+#  output: !include boneio/boards/cover16_outputs_MCP.yaml
+# input: !include boneio/boards/cover16_inputs_PCF.yaml
+# input: !include boneio/boards/cover16_inputs_MCP.yaml
 
 logger:
   baud_rate: 0
