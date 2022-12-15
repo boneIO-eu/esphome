@@ -14,13 +14,13 @@ cover:
   stop_action:
     - switch.turn_off: cover_open_01
     - switch.turn_off: cover_close_01
-  tilt_action:
-    - cover.close: this cover
-    - delay: 2s
-    - switch.turn_on: open_cover_switch
-    - lambda: |- wyliczenie czasu z zadanej pozycji
-    - delay: X
-    - switch.turn_off: open_cover_switch
+  # tilt_action:
+  #   - cover.close: this cover
+  #   - delay: 2s
+  #   - switch.turn_on: open_cover_switch
+  #   - lambda: |- wyliczenie czasu z zadanej pozycji
+  #   - delay: X
+  #   - switch.turn_off: open_cover_switch
 
 - platform: time_based
   name: "${node_name} Cover 02"
@@ -37,67 +37,3 @@ cover:
   stop_action:
     - switch.turn_off: cover_open_02
     - switch.turn_off: cover_close_02
-
-- platform: time_based
-  name: "${node_name} Cover 03"
-  device_class: shutter
-  id: cover_03
-  open_action:
-    - switch.turn_off: cover_close_03
-    - switch.turn_on: cover_open_03
-  open_duration: 60s
-  close_action:
-    - switch.turn_off: cover_open_03
-    - switch.turn_on: cover_close_03
-  close_duration: 60s
-  stop_action:
-    - switch.turn_off: cover_open_03
-    - switch.turn_off: cover_close_03
-
-- platform: time_based
-  name: "${node_name} Cover 04"
-  device_class: shutter
-  id: cover_04
-  open_action:
-    - switch.turn_off: cover_close_04
-    - switch.turn_on: cover_open_04
-  open_duration: 60s
-  close_action:
-    - switch.turn_off: cover_open_04
-    - switch.turn_on: cover_close_04
-  close_duration: 60s
-  stop_action:
-    - switch.turn_off: cover_open_04
-    - switch.turn_off: cover_close_04
-
-- platform: time_based
-  name: "${node_name} Cover 05"
-  device_class: shutter
-  id: cover_05
-  open_action:
-    - switch.turn_off: cover_close_05
-    - switch.turn_on: cover_open_05
-  open_duration: 60s
-  close_action:
-    - switch.turn_off: cover_open_05
-    - switch.turn_on: cover_close_05
-  close_duration: 60s
-  stop_action:
-    - switch.turn_off: cover_open_05
-    - switch.turn_off: cover_close_05
-
-- platform: time_based
-  name: "${node_name} Cover 06"
-  device_class: shutter
-  id: cover_06
-  open_action:
-    - switch.turn_off: cover_close_06
-    - switch.turn_on: cover_open_06
-  open_duration: 60s
-  close_action:
-    - switch.turn_off: cover_open_06
-    - switch.turn_on: cover_close_06
-  close_duration: 60s
-  stop_action:
-    - switch.turn_off: cover_open_06
-    - switch.turn_off: cover_close_06

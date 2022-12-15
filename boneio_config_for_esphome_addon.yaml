@@ -1,5 +1,5 @@
 substitutions:
-  node_name: boneio
+  node_name: boneio-5d9340
   dir_name: 'boneio/'
 
 packages:
@@ -24,6 +24,7 @@ packages:
 #  output: !include boneio/boards/cover16_outputs_MCP.yaml
 # input: !include boneio/boards/cover16_inputs_PCF.yaml
 # input: !include boneio/boards/cover16_inputs_MCP.yaml
+# cover: !include boneio/boards/cover.yaml
 
 logger:
   baud_rate: 0
