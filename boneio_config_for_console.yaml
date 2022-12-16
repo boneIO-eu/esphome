@@ -1,5 +1,5 @@
 substitutions:
-  node_name: boneio-5d9340
+  node_name: boneio
   dir_name: './'
 
 packages:
@@ -10,6 +10,9 @@ packages:
   display: !include devices/display.yaml
   # uart: !include devices/uart.yaml
   # one_wire: !include devices/one_wire.yaml
+  # relay24
+  output: !include boneio/boards/relay24_outputs_MCP.yaml
+  input: !include boneio/boards/relay24_inputs_PCF.yaml
   # relay32
   # output: !include boards/relay32_outputs_PCF.yaml #or MCP
   # input: !include boards/relay32_inputs_PCF.yaml #or MCP
