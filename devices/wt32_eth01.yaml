@@ -1,9 +1,3 @@
-esphome:
-  name: ${node_name}
-  platform: ESP32
-  board: nodemcu-32s
-  name_add_mac_suffix: true
-
 i2c:
   - id: bus_a
     sda: GPIO14
@@ -16,6 +10,13 @@ i2c:
     scan: True
     frequency: 100kHz
 
+esphome:
+  name: ${node_name}
+  platform: ESP32
+  board: nodemcu-32s
+  # set to false if you already added this device to ESPHOME add-on
+  name_add_mac_suffix: ${name_add_mac_suffix}
+
 ethernet:
   id: eth
   type: LAN8720
@@ -24,3 +25,6 @@ ethernet:
   clk_mode: GPIO0_IN
   phy_addr: 1
   power_pin: GPIO16
+
+  # uncomment this line and set your actual IP address before changing name of device
+  # use_address: xxx.xxx.xxx.xxx

@@ -1,33 +1,39 @@
 substitutions:
-  node_name: boneio
+  # set to false if you don't want mac suffix in your device name
+  name_add_mac_suffix: "false"
+  # if you want to change the name of device via OTA you have to set IP first in boneio/devices/wt32_eth01.yaml 
+  node_name: boneio-4
   dir_name: 'boneio/'
+  
+  
 
 packages:
-  # devices
+  # select your input board:
+  # input: !include boneio/boards/relay24_inputs_PCF.yaml
+  # input: !include boneio/boards/relay32_inputs_PCF.yaml
+  # input: !include boneio/boards/relay32_inputs_MCP.yaml
+  # input: !include boneio/boards/dimmer_led8x4_inputs.yaml
+  # input: !include boneio/boards/cover16_inputs_MCP.yaml
+  # input: !include boneio/boards/cover16_inputs_PCF.yaml
+  
+  # select your output board:
+  output: !include boneio/boards/relay24_outputs_MCP.yaml
+  # output: !include boneio/boards/relay32_outputs_PCF.yaml
+  # output: !include boneio/boards/relay32_outputs_MCP.yaml
+  # output: !include boneio/boards/dimmer_led8x4_outputs.yaml
+  # light: !include boneio/boards/monochromatic_lights.yaml
+  # cover: !include boneio/boards/cover.yaml
+  # output: !include boneio/boards/cover16_outputs_PCF.yaml
+  # output: !include boneio/boards/cover16_outputs_MCP.yaml
+  
+  # select your devices:
   core: !include boneio/devices/wt32_eth01.yaml
   internals: !include boneio/devices/boneio_board.yaml
   temp: !include boneio/devices/lm75b.yaml
   display: !include boneio/devices/display.yaml
   # uart: !include devices/uart.yaml
   # one_wire: !include devices/one_wire.yaml
-  # relay24
-  output: !include boneio/boards/relay24_outputs_MCP.yaml
-  input: !include boneio/boards/relay24_inputs_PCF.yaml
-  # relay32
-  output: !include boneio/boards/relay32_outputs_PCF.yaml
-  #output: !include boneio/boards/relay32_outputs_MCP.yaml
-  input: !include boneio/boards/relay32_inputs_PCF.yaml
-  #input: !include boneio/boards/relay32_inputs_MCP.yaml
-# dimmer led
-# output: !include boneio/boards/dimmer_led8x4_outputs.yaml
-# input: !include boneio/boards/dimmer_led8x4_inputs.yaml
-# light: !include boneio/boards/monochromatic_lights.yaml
-# cover
-#  output: !include boneio/boards/cover16_outputs_PCF.yaml
-#  output: !include boneio/boards/cover16_outputs_MCP.yaml
-# input: !include boneio/boards/cover16_inputs_PCF.yaml
-# input: !include boneio/boards/cover16_inputs_MCP.yaml
-# cover: !include boneio/boards/cover.yaml
+
 
 logger:
   baud_rate: 0
