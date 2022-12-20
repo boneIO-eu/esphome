@@ -3,7 +3,7 @@ substitutions:
   name_add_mac_suffix: "true"
   # if you want to change the name of device via OTA you have to set IP first in boneio/devices/wt32_eth01.yaml 
   node_name: boneio
-  dir_name: 'boneio/'
+  dir_name: './'
 
 
 packages:
