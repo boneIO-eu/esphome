@@ -17,3 +17,6 @@ ethernet:
   clk_mode: GPIO0_IN
   phy_addr: 1
   power_pin: GPIO16
+  
+  # uncomment this line and set your actual IP address before changing name of device
+  # use_address: xxx.xxx.xxx.xxx
