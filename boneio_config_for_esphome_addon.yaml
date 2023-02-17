@@ -10,6 +10,7 @@ substitutions:
 packages:
   # select your input board:
   #input: !include boneio/boards/relay32_inputs_MCP.yaml
+  #input: !include boards/relay32_inputs_PCF.yaml
   #input: !include boneio/boards/dimmer_led8x4_inputs.yaml
   #input: !include boneio/boards/cover16_inputs.yaml
   #input: !include boneio/boards/cover16_inputs.yaml
