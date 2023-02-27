@@ -26,7 +26,8 @@ packages:
   
   # select your devices:
   core: !include devices/wt32_eth01.yaml
-  internals: !include devices/boneio_board.yaml
+  internals: !include devices/boneio_board_MCP.yaml
+  #internals: !include devices/boneio_board_PCF.yaml
   temp: !include devices/lm75b.yaml
   display: !include devices/display.yaml
   # uart: !include devices/uart.yaml
