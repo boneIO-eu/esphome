@@ -25,7 +25,7 @@ packages:
   # cover: !include boneio/boards/cover.yaml
   # output: !include boneio/boards/cover16_outputs_PCF.yaml
   # output: !include boneio/boards/cover16_outputs_MCP.yaml
-  # output: !include boards/mosfet48_outputs_PCF.yaml 
+  # output: !include boneio/mosfet48_outputs_PCF.yaml 
   
   # select your devices:
   core: !include boneio/devices/wt32_eth01.yaml
