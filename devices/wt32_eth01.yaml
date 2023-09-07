@@ -2,7 +2,7 @@ i2c:
   sda: GPIO14
   scl: GPIO15
   scan: True
-  frequency: 100kHz
+  frequency: 400kHz
 
 esphome:
   name: ${node_name}
