@@ -30,7 +30,7 @@ text_sensor:
 
 script:
   - id: screensaver_script
-  # screensaver script, turn on screensaver after 30 seconds, restart counter each time when invoked
+    # screensaver script, turn on screensaver after 30 seconds, restart counter each time when invoked
     mode: restart
     then:
       # set the time after which the screensaver will be activated
@@ -63,7 +63,7 @@ binary_sensor:
         # woke up when on the screensaver, as well do not include the logo page and screensaver in a loop when pushing a button
         - if:
             condition:
-          # on the last page go to the first page skipping the screensaver and logo page
+              # on the last page go to the first page skipping the screensaver and logo page
               display.is_displaying_page: last_page
             then:
               - display.page.show: first_page
@@ -71,7 +71,7 @@ binary_sensor:
             else:
               - if:
                   condition:
-                # on the screensaver, show the logo for a while and display the first page
+                    # on the screensaver, show the logo for a while and display the first page
                     display.is_displaying_page: screensaver
                   then:
                     - display.page.show: logo_page
@@ -80,16 +80,18 @@ binary_sensor:
                     - display.page.show: first_page
                     - component.update: oled_display
                   else:
-                # not the last page and screensaver go to the next page
+                    # not the last page and screensaver go to the next page
                     - display.page.show_next: oled_display
                     - component.update: oled_display
           # restart screensaver script
         - script.execute: screensaver_script
 
+          # it.printf(4, 37, id(dejaVuSmall), TextAlign::BASELINE_LEFT ,"IP addr:");
+          # it.printf(124, 37, id(dejaVuSmall), TextAlign::BASELINE_RIGHT ,"%s", id(eth).get_ip_addresses().str().c_str());
 display:
   - platform: ssd1306_i2c
     id: oled_display
-    model: "SH1106 128x64"
+    model: 'SH1106 128x64'
     address: 0x3C
     i2c_id: bus_b
     contrast: 0.5
@@ -104,8 +106,6 @@ display:
           it.rectangle(0, 0, 126, 15);
           it.printf(64,11, id(danubeSmall), TextAlign::BASELINE_CENTER, "BoneIO");
           it.strftime(64, 25, id(dejaVuSmall), TextAlign::BASELINE_CENTER ,"%c", id(ds1307_time).now());
-          it.printf(4, 37, id(dejaVuSmall), TextAlign::BASELINE_LEFT ,"IP addr:");
-          it.printf(124, 37, id(dejaVuSmall), TextAlign::BASELINE_RIGHT ,"%s", id(eth).get_ip_address().str().c_str());
           it.printf(4, 49, id(dejaVuSmall), TextAlign::BASELINE_LEFT ,"Uptime:");
           it.printf(124, 49, id(dejaVuSmall), TextAlign::BASELINE_RIGHT ,"%s", id(wt32_uptime).state.c_str());
           it.printf(4, 61, id(dejaVuSmall), TextAlign::BASELINE_LEFT ,"Temperature:");
@@ -128,12 +128,12 @@ display:
           it.fill(COLOR_OFF);
 
 font:
-  - file: "${dir_name}/fonts/DejaVuSans.ttf"
+  - file: '${dir_name}/fonts/DejaVuSans.ttf'
     id: dejaVuSmall
     size: 9
-  - file: "${dir_name}/fonts/danube__.ttf"
+  - file: '${dir_name}/fonts/danube__.ttf'
     id: danubeBig
     size: 20
-  - file: "${dir_name}/fonts/danube__.ttf"
+  - file: '${dir_name}/fonts/danube__.ttf'
     id: danubeSmall
     size: 9
