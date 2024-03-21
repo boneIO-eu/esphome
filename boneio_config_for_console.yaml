@@ -1,30 +1,40 @@
 substitutions:
+  # set to false if you don't want mac suffix in your device name
+  name_add_mac_suffix: 'false'
+  # if you want to change the name of device via OTA you have to set IP first in boneio/devices/wt32_eth01.yaml
   node_name: boneio
   dir_name: './'
 
 packages:
-  # devices
+  # select your input board:
+  # input: !include boards/relay24_inputs_PCF.yaml
+  # input: !include boards/relay32_inputs_PCF.yaml
+  # input: !include boards/relay32_inputs_MCP.yaml
+  # input: !include boards/dimmer_led8x4_inputs.yaml
+  # input: !include boards/cover16_inputs_MCP.yaml
+  # input: !include boards/cover16_inputs_PCF.yaml
+  input: !include boards/coverMix_inputs_PCF.yaml
+
+  # select your output board:
+  # output: !include boards/relay24_outputs_MCP.yaml
+  # output: !include boards/relay32_outputs_PCF.yaml
+  # output: !include boards/relay32_outputs_MCP.yaml
+  # output: !include boards/dimmer_led8x4_outputs.yaml
+  # light: !include boards/monochromatic_lights.yaml
+  # cover: !include boards/cover.yaml
+  cover: !include boards/cover_mix.yaml
+  # output: !include boards/cover16_outputs_PCF.yaml
+  # output: !include boards/cover16_outputs_MCP.yaml
+  # output: !include boards/mosfet48_outputs_PCF.yaml
+  output: !include boards/relay32_outputs_mix_PCF.yaml
+
+  # select your devices:
   core: !include devices/wt32_eth01.yaml
   internals: !include devices/boneio_board.yaml
   temp: !include devices/lm75b.yaml
   display: !include devices/display.yaml
   # uart: !include devices/uart.yaml
   # one_wire: !include devices/one_wire.yaml
-  # relay32
-  # output: !include boards/relay32_outputs_PCF.yaml #or MCP
-  # input: !include boards/relay32_inputs_PCF.yaml #or MCP
-  # dimmer led
-  output: !include boards/dimmer_led8x4_outputs.yaml
-  # input: !include boards/dimmer_led8x4_inputs.yaml
-  light: !include boards/monochromatic_lights.yaml
-  # cover
-  #  output: !include boneio/boards/cover16_outputs_MCP_old.yaml
-  #  output: !include boneio/boards/cover16_outputs.yaml
-  # input: !include boneio/boards/cover16_inputs.yaml
-  # input: !include boneio/boards/cover16_inputs_PCF.yaml
-  # cover: !include boneio/boards/cover.yaml
-  # mosfet
-  # output: !include boards/mosfet48_outputs_PCF.yaml 
 
 logger:
   baud_rate: 0

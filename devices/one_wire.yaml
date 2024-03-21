@@ -1,5 +1,5 @@
 dallas:
-- pin: GPIO4
+- pin: GPIO32
 
 # sensor:
 #   - platform: dallas
