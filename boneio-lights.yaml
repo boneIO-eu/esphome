@@ -8,7 +8,9 @@ esphome:
   board: nodemcu-32s
   # set to false if you already added this device to ESPHOME add-on
   name_add_mac_suffix: ${name_add_mac_suffix}
-
+  project:
+    name: boneio.32x10-lights
+    version: '1.0'
 ethernet:
   id: eth
   type: LAN8720
