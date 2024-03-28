@@ -97,7 +97,7 @@ display:
         lambda: |-
           it.rectangle(0, 0, 126, 15);
           it.printf(64,11, id(roboto_9), TextAlign::BASELINE_CENTER, "BoneIO");
-          it.strftime(64, 25, id(roboto_9), TextAlign::BASELINE_CENTER ,"%c", id(ds1307_time).now());
+          it.strftime(64, 25, id(roboto_9), TextAlign::BASELINE_CENTER ,"%c", id(homeassistant_time).now());
           it.printf(4, 49, id(roboto_9), TextAlign::BASELINE_LEFT ,"Uptime:");
           it.printf(124, 49, id(roboto_9), TextAlign::BASELINE_RIGHT ,"%s", id(wt32_uptime).state.c_str());
           it.printf(4, 61, id(roboto_9), TextAlign::BASELINE_LEFT ,"Temperature:");
