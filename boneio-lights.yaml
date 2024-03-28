@@ -42,7 +42,7 @@ packages:
       ]
 
 logger:
-  baud_rate: 0
+  baud_rate: 0 #IMPORTANT FOR V0.5 TO GET MODBUS WORKING
 api:
 ota:
   password: boneio
@@ -58,8 +58,98 @@ time:
 
 light:
   - platform: binary
-    name: 'Light 1'
+    name: 'OUT 1'
     output: out_1
   - platform: binary
-    name: 'Light 2'
+    name: 'OUT 2'
     output: out_2
+  - platform: binary
+    name: 'OUT 3'
+    output: out_3
+  - platform: binary
+    name: 'OUT 4'
+    output: out_4
+  - platform: binary
+    name: 'OUT 5'
+    output: out_5
+  - platform: binary
+    name: 'OUT 6'
+    output: out_6
+  - platform: binary
+    name: 'OUT 7'
+    output: out_7
+  - platform: binary
+    name: 'OUT 8'
+    output: out_8
+  - platform: binary
+    name: 'OUT 9'
+    output: out_9
+  - platform: binary
+    name: 'OUT 10'
+    output: out_10
+  - platform: binary
+    name: 'OUT 11'
+    output: out_11
+  - platform: binary
+    name: 'OUT 12'
+    output: out_12
+  - platform: binary
+    name: 'OUT 13'
+    output: out_13
+  - platform: binary
+    name: 'OUT 14'
+    output: out_14
+  - platform: binary
+    name: 'OUT 15'
+    output: out_15
+  - platform: binary
+    name: 'OUT 16'
+    output: out_16
+  - platform: binary
+    name: 'OUT 17'
+    output: out_17
+  - platform: binary
+    name: 'OUT 18'
+    output: out_18
+  - platform: binary
+    name: 'OUT 19'
+    output: out_19
+  - platform: binary
+    name: 'OUT 20'
+    output: out_20
+  - platform: binary
+    name: 'OUT 21'
+    output: out_21
+  - platform: binary
+    name: 'OUT 22'
+    output: out_22
+  - platform: binary
+    name: 'OUT 23'
+    output: out_23
+  - platform: binary
+    name: 'OUT 24'
+    output: out_24
+  - platform: binary
+    name: 'OUT 25'
+    output: out_25
+  - platform: binary
+    name: 'OUT 26'
+    output: out_26
+  - platform: binary
+    name: 'OUT 27'
+    output: out_27
+  - platform: binary
+    name: 'OUT 28'
+    output: out_28
+  - platform: binary
+    name: 'OUT 29'
+    output: out_29
+  - platform: binary
+    name: 'OUT 30'
+    output: out_30
+  - platform: binary
+    name: 'OUT 31'
+    output: out_31
+  - platform: binary
+    name: 'OUT 32'
+    output: out_32
