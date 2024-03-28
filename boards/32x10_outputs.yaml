@@ -1,4 +1,3 @@
-
 pcf8574:
   - id: 'pcf_1'
     address: 0x21
@@ -7,359 +6,292 @@ pcf8574:
   - id: 'pcf_2'
     address: 0x20
     pcf8575: true
-    i2c_id: bus_b 
+    i2c_id: bus_b
 
-switch:
-    
+output:
   - platform: gpio
-    id: relay_1
-    name: "Relay_01"
+    id: out_1
     pin:
       pcf8574: pcf_1
-      # Use pin number 0
       number: 15
       mode:
         output: true
       inverted: true
   - platform: gpio
-    id: relay_2
-    name: "Relay_02"
+    id: out_2
     pin:
       pcf8574: pcf_1
-      # Use pin number 1
       number: 14
       mode:
         output: true
       inverted: true
-      
+
   - platform: gpio
-    id: relay_3
-    name: "Relay_03"
+    id: out_3
     pin:
       pcf8574: pcf_1
-      # Use pin number 2
       number: 13
       mode:
         output: true
       inverted: true
-      
+
   - platform: gpio
-    id: relay_4
-    name: "Relay_04"
+    id: out_4
     pin:
       pcf8574: pcf_1
-      # Use pin number 3
       number: 12
       mode:
         output: true
       inverted: true
-      
+
   - platform: gpio
-    id: relay_5
-    name: "Relay_05"
+    id: out_5
     pin:
       pcf8574: pcf_1
-      # Use pin number 4
       number: 11
       mode:
         output: true
       inverted: true
-      
+
   - platform: gpio
-    id: relay_6
-    name: "Relay_06"
+    id: out_6
     pin:
       pcf8574: pcf_1
-      # Use pin number 5
       number: 10
       mode:
         output: true
       inverted: true
 
   - platform: gpio
-    id: relay_7
-    name: "Relay_07"
+    id: out_7
     pin:
       pcf8574: pcf_1
-      # Use pin number 6
       number: 9
       mode:
         output: true
       inverted: true
-      
+
   - platform: gpio
-    id: relay_8
-    name: "Relay_08"
+    id: out_8
     pin:
       pcf8574: pcf_1
-      # Use pin number 7
       number: 8
       mode:
         output: true
       inverted: true
 
   - platform: gpio
-    id: relay_9
-    name: "Relay_09"
+    id: out_9
     pin:
       pcf8574: pcf_2
-      # Use pin number 0
       number: 15
       mode:
         output: true
       inverted: true
-      
+
   - platform: gpio
-    id: relay_10
-    name: "Relay_10"
+    id: out_10
     pin:
       pcf8574: pcf_2
-      # Use pin number 1
       number: 14
       mode:
         output: true
       inverted: true
-  
+
   - platform: gpio
-    id: relay_11
-    name: "Relay_11"
+    id: out_11
     pin:
       pcf8574: pcf_2
-      # Use pin number 2
       number: 13
       mode:
         output: true
       inverted: true
-      
+
   - platform: gpio
-    id: relay_12
-    name: "Relay_12"
+    id: out_12
     pin:
       pcf8574: pcf_2
-      # Use pin number 3
       number: 12
       mode:
         output: true
       inverted: true
-      
+
   - platform: gpio
-    id: relay_13
-    name: "Relay_13"
+    id: out_13
     pin:
       pcf8574: pcf_2
-      # Use pin number 4
       number: 11
       mode:
         output: true
       inverted: true
-      
+
   - platform: gpio
-    id: relay_14
-    name: "Relay_14"
+    id: out_14
     pin:
       pcf8574: pcf_2
-      # Use pin number 5
       number: 10
       mode:
         output: true
       inverted: true
-      
+
   - platform: gpio
-    id: relay_15
-    name: "Relay_15"
+    id: out_15
     pin:
       pcf8574: pcf_2
-      # Use pin number 6
       number: 9
       mode:
         output: true
       inverted: true
-      
+
   - platform: gpio
-    id: relay_16
-    name: "Relay_16"
+    id: out_16
     pin:
       pcf8574: pcf_2
-      # Use pin number 7
       number: 8
       mode:
         output: true
       inverted: true
-    
+
   - platform: gpio
-    id: relay_17
-    name: "Relay_17"
+    id: out_17
     pin:
       pcf8574: pcf_1
-      # Use pin number 15
       number: 0
       mode:
         output: true
       inverted: true
 
   - platform: gpio
-    id: relay_18
-    name: "Relay_18"
+    id: out_18
     pin:
       pcf8574: pcf_1
-      # Use pin number 14
       number: 1
       mode:
         output: true
       inverted: true
-      
+
   - platform: gpio
-    id: relay_19
-    name: "Relay_19"
+    id: out_19
     pin:
       pcf8574: pcf_1
-      # Use pin number 13
       number: 2
       mode:
         output: true
       inverted: true
-      
+
   - platform: gpio
-    id: relay_20
-    name: "Relay_20"
+    id: out_20
     pin:
       pcf8574: pcf_1
-      # Use pin number 12
       number: 3
       mode:
         output: true
       inverted: true
-      
+
   - platform: gpio
-    id: relay_21
-    name: "Relay_21"
+    id: out_21
     pin:
       pcf8574: pcf_1
-      # Use pin number 11
       number: 4
       mode:
         output: true
       inverted: true
-      
+
   - platform: gpio
-    id: relay_22
-    name: "Relay_22"
+    id: out_22
     pin:
       pcf8574: pcf_1
-      # Use pin number 10
       number: 5
       mode:
         output: true
       inverted: true
-      
+
   - platform: gpio
-    id: relay_23
-    name: "Relay_23"
+    id: out_23
     pin:
       pcf8574: pcf_1
-      # Use pin number 9
       number: 6
       mode:
         output: true
       inverted: true
-      
+
   - platform: gpio
-    id: relay_24
-    name: "Relay_24"
+    id: out_24
     pin:
       pcf8574: pcf_1
-      # Use pin number 8
       number: 7
       mode:
         output: true
       inverted: true
-      
+
   - platform: gpio
-    id: relay_25
-    name: "Relay_25"
+    id: out_25
     pin:
       pcf8574: pcf_2
-      # Use pin number 15
       number: 0
       mode:
         output: true
       inverted: true
-      
+
   - platform: gpio
-    id: relay_26
-    name: "Relay_26"
+    id: out_26
     pin:
       pcf8574: pcf_2
-      # Use pin number 14
       number: 1
       mode:
         output: true
       inverted: true
-      
+
   - platform: gpio
-    id: relay_27
-    name: "Relay_27"
+    id: out_27
     pin:
       pcf8574: pcf_2
-      # Use pin number 13
       number: 2
       mode:
         output: true
       inverted: true
-      
+
   - platform: gpio
-    id: relay_28
-    name: "Relay_28"
+    id: out_28
     pin:
       pcf8574: pcf_2
-      # Use pin number 12
       number: 3
       mode:
         output: true
       inverted: true
-      
+
   - platform: gpio
-    id: relay_29
-    name: "Relay_29"
+    id: out_29
     pin:
       pcf8574: pcf_2
-      # Use pin number 11
       number: 4
       mode:
         output: true
       inverted: true
-      
+
   - platform: gpio
-    id: relay_30
-    name: "Relay_30"
+    id: out_30
     pin:
       pcf8574: pcf_2
-      # Use pin number 10
       number: 5
       mode:
         output: true
       inverted: true
-      
+
   - platform: gpio
-    id: relay_31
-    name: "Relay_31"
+    id: out_31
     pin:
       pcf8574: pcf_2
-      # Use pin number 9
       number: 6
       mode:
         output: true
       inverted: true
-      
+
   - platform: gpio
-    id: relay_32
-    name: "Relay_32"
+    id: out_32
     pin:
       pcf8574: pcf_2
-      # Use pin number 8
       number: 7
       mode:
         output: true
       inverted: true
-
-

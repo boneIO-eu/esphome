@@ -1,0 +1,63 @@
+substitutions:
+  name_add_mac_suffix: 'true'
+  node_name: boneio
+
+esphome:
+  name: ${node_name}
+  platform: ESP32
+  board: nodemcu-32s
+  # set to false if you already added this device to ESPHOME add-on
+  name_add_mac_suffix: ${name_add_mac_suffix}
+
+ethernet:
+  id: eth
+  type: LAN8720
+  mdc_pin: GPIO23
+  mdio_pin: GPIO18
+  clk_mode: GPIO0_IN
+  phy_addr: 1
+  power_pin: GPIO16
+
+dashboard_import:
+  package_import_url: github://boneIO-eu/esphome/boneio-lights.yaml@single_file_test
+  import_full_config: false
+
+packages:
+  internals_packages:
+    url: https://github.com/boneIO-eu/esphome
+    ref: single_file_test
+    files:
+      [
+        'devices/buzzer.yaml',
+        'devices/display.yaml',
+        'devices/i2c.yaml',
+        'devices/ina219.yaml',
+        'devices/lm75b.yaml',
+        'devices/one_wire.yaml',
+        'devices/pcf_inputs.yaml',
+        'devices/uart.yaml',
+        'boards/32x10_outputs.yaml',
+      ]
+
+logger:
+  baud_rate: 0
+api:
+ota:
+  password: boneio
+
+web_server:
+  port: 80
+  local: true
+
+time:
+  - platform: homeassistant
+    timezone: Europe/Warsaw
+    id: homeassistant_time
+
+light:
+  - platform: binary
+    name: 'Light 1'
+    output: out_1
+  - platform: binary
+    name: 'Light 2'
+    output: out_2

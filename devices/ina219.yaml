@@ -2,30 +2,24 @@
 #i2c  address: 0x27 input pcf io
 #i2c  address: 0x40 input ina219 power
 #i2c  address: 0x68 input rtc ds1307
-time:
-  - platform: ds1307
-    id: ds1307_time
-    address: 0x68
-    i2c_id: bus_a
-
 sensor:
-# Module power consmption
+  # Module power consmption
   - platform: ina219
     address: 0x40
     i2c_id: bus_a
     shunt_resistance: 0.1 ohm
     current:
       id: ina_current
-      name: "${node_name} INA219 Current"
+      name: 'INA219 Current'
     power:
       id: ina_power
-      name: "${node_name} INA219 Power"
+      name: 'INA219 Power'
     bus_voltage:
       id: ina_bus_voltage
-      name: "${node_name} INA219 Bus Voltage"
+      name: 'INA219 Bus Voltage'
     shunt_voltage:
       id: ina_shunt_voltage
-      name: "${node_name} INA219 Shunt Voltage"
+      name: 'INA219 Shunt Voltage'
     max_voltage: 32.0V
     max_current: 3.2A
     update_interval: 30s
@@ -33,7 +27,7 @@ sensor:
 switch:
   - platform: gpio
     id: buzzer
-    name: "Buzzer"
+    name: 'Buzzer'
     pin:
       number: GPIO2
       mode:
@@ -47,9 +41,8 @@ pcf8574:
   - id: 'pcf_inputs_15to28'
     i2c_id: bus_a
     address: 0x21
-    pcf8575: true 
+    pcf8575: true
   - id: 'pcf_inputs_28to35_menu'
     i2c_id: bus_a
     address: 0x22
     pcf8575: false
-
