@@ -23,26 +23,3 @@ sensor:
     max_voltage: 32.0V
     max_current: 3.2A
     update_interval: 30s
-
-switch:
-  - platform: gpio
-    id: buzzer
-    name: 'Buzzer'
-    pin:
-      number: GPIO2
-      mode:
-        output: true
-      inverted: false
-pcf8574:
-  - id: 'pcf_inputs_1to14'
-    i2c_id: bus_a
-    address: 0x20
-    pcf8575: true
-  - id: 'pcf_inputs_15to28'
-    i2c_id: bus_a
-    address: 0x21
-    pcf8575: true
-  - id: 'pcf_inputs_28to35_menu'
-    i2c_id: bus_a
-    address: 0x22
-    pcf8575: false
