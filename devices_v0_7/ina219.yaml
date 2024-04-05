@@ -2,7 +2,6 @@ sensor:
   # Module power consmption
   - platform: ina219
     address: 0x40
-    i2c_id: i2c_bus
     shunt_resistance: 0.1 ohm
     current:
       id: ina_current
