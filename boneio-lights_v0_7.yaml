@@ -37,7 +37,7 @@ packages:
         'devices/lm75b.yaml',
         'devices/one_wire.yaml',
         'devices_v0_7/pcf.yaml',
-        'devices/uart_v_0_7.yaml',
+        'devices_v0_7/uart.yaml',
         'boards_v_0_7/32x10_outputs.yaml',
       ]
 
