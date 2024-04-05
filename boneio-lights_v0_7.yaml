@@ -31,7 +31,7 @@ packages:
     files:
       [
         'devices_v0_7/buzzer.yaml',
-#        'devices/display.yaml',
+        'devices_v0_7/display.yaml',
         'devices_v0_7/i2c.yaml',
         'devices_v0_7/ina219.yaml',
         'devices_v0_7/lm75b.yaml',
