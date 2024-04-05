@@ -30,12 +30,12 @@ packages:
     ref: single_file_test
     files:
       [
-        'devices/buzzer.yaml',
+        'devices_v0_7/buzzer.yaml',
 #        'devices/display.yaml',
         'devices_v0_7/i2c.yaml',
-        'devices/ina219.yaml',
-        'devices/lm75b.yaml',
-        'devices/one_wire.yaml',
+        'devices_v0_7/ina219.yaml',
+        'devices_v0_7/lm75b.yaml',
+        'devices_v0_7/one_wire.yaml',
         'devices_v0_7/pcf.yaml',
         'devices_v0_7/uart.yaml',
         'boards_v_0_7/32x10_outputs.yaml',
