@@ -1,6 +1,6 @@
 output:
   - platform: gpio
-    id: out_1
+    id: out_01
     pin:
       pcf8574: pcf_left
       number: 15
@@ -8,7 +8,7 @@ output:
         output: true
       inverted: true
   - platform: gpio
-    id: out_2
+    id: out_02
     pin:
       pcf8574: pcf_left
       number: 14
@@ -17,7 +17,7 @@ output:
       inverted: true
 
   - platform: gpio
-    id: out_3
+    id: out_03
     pin:
       pcf8574: pcf_left
       number: 13
@@ -26,7 +26,7 @@ output:
       inverted: true
 
   - platform: gpio
-    id: out_4
+    id: out_04
     pin:
       pcf8574: pcf_left
       number: 12
@@ -35,7 +35,7 @@ output:
       inverted: true
 
   - platform: gpio
-    id: out_5
+    id: out_05
     pin:
       pcf8574: pcf_left
       number: 11
@@ -44,7 +44,7 @@ output:
       inverted: true
 
   - platform: gpio
-    id: out_6
+    id: out_06
     pin:
       pcf8574: pcf_left
       number: 10
@@ -53,7 +53,7 @@ output:
       inverted: true
 
   - platform: gpio
-    id: out_7
+    id: out_07
     pin:
       pcf8574: pcf_left
       number: 9
@@ -62,7 +62,7 @@ output:
       inverted: true
 
   - platform: gpio
-    id: out_8
+    id: out_08
     pin:
       pcf8574: pcf_left
       number: 8
@@ -71,7 +71,7 @@ output:
       inverted: true
 
   - platform: gpio
-    id: out_9
+    id: out_09
     pin:
       pcf8574: pcf_right
       number: 15
