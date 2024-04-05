@@ -21,7 +21,7 @@ ethernet:
   power_pin: GPIO16
 
 dashboard_import:
-  package_import_url: github://boneIO-eu/esphome/boneio-lights.yaml@single_file_test
+  package_import_url: github://boneIO-eu/esphome/boneio-lights_v0_7.yaml@single_file_test
   import_full_config: true
 
 packages:
@@ -32,17 +32,16 @@ packages:
       [
         'devices/buzzer.yaml',
 #        'devices/display.yaml',
-        'devices/i2c.yaml',
+        'devices_v0_7/i2c.yaml',
         'devices/ina219.yaml',
         'devices/lm75b.yaml',
         'devices/one_wire.yaml',
-        'devices/pcf_inputs.yaml',
-        'devices/uart.yaml',
-        'boards/32x10_outputs.yaml',
+        'devices_v0_7/pcf.yaml',
+        'devices/uart_v_0_7.yaml',
+        'boards_v_0_7/32x10_outputs.yaml',
       ]
 
 logger:
-  baud_rate: 0 #IMPORTANT FOR V0.5 TO GET MODBUS WORKING
 api:
 ota:
   password: boneio

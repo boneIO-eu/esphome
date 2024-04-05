@@ -1,0 +1,60 @@
+
+pcf8574:
+  - id: 'pcf_1'
+    address: 0x21
+    pcf8575: true
+    i2c_id: bus_b
+  - id: 'pcf_2'
+    address: 0x20
+    pcf8575: true
+    i2c_id: bus_b 
+
+switch:
+  - platform: gpio
+    id: cover_open_01
+    pin:
+      pcf8574: pcf_1
+      # Use pin number 0
+      number: 15
+      mode:
+        output: true
+      inverted: true
+    interlock: &cover_interlock_01 [cover_open_01, cover_close_01]
+    interlock_wait_time: 5ms
+    restore_mode: always off
+
+  - platform: gpio
+    id: cover_close_01
+    pin:
+      pcf8574: pcf_1
+      # Use pin number 1
+      number: 14
+      mode:
+        output: true
+      inverted: true
+    interlock: *cover_interlock_01
+    restore_mode: always off
+
+  - platform: gpio
+    id: cover_open_02
+    pin:
+      pcf8574: pcf_1
+      # Use pin number 3
+      number: 13
+      mode:
+        output: true
+      inverted: true
+    interlock: &cover_interlock_02 [cover_open_02, cover_close_02]
+    restore_mode: always off
+
+  - platform: gpio
+    id: cover_close_02
+    pin:
+      pcf8574: pcf_1
+      # Use pin number 2
+      number: 12
+      mode:
+        output: true
+      inverted: true
+    interlock: *cover_interlock_02
+    restore_mode: always off

@@ -1,0 +1,9 @@
+switch:
+  - platform: gpio
+    id: buzzer
+    name: 'Buzzer'
+    pin:
+      number: GPIO2
+      mode:
+        output: true
+      inverted: false
