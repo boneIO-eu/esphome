@@ -25,7 +25,6 @@ dashboard_import:
   import_full_config: true
 
 packages:
-  display: !include
   internals_packages:
     url: https://github.com/boneIO-eu/esphome
     ref: single_file_test
