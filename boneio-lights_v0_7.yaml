@@ -627,22 +627,3 @@ binary_sensor:
       mode:
         input: true
       inverted: true
-# Example configuration entry
-debug:
-  update_interval: 50s
-
-text_sensor:
-  - platform: debug
-    device:
-      name: 'Device Info'
-    reset_reason:
-      name: 'Reset Reason'
-
-sensor:
-  - platform: debug
-    free:
-      name: 'Heap Free'
-    block:
-      name: 'Heap Max Block'
-    loop_time:
-      name: 'Loop Time'
