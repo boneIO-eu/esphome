@@ -3,7 +3,7 @@ substitutions:
   friendly_name: 'BoneIO ESP 32x10 Lights'
 
 esphome:
-  name: ${node_name}
+  name: '${name}'
   friendly_name: '${friendly_name}'
   platform: ESP32
   board: nodemcu-32s
