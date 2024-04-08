@@ -323,7 +323,7 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        - cover.open: cover_01
+        - cover.close: cover_01
     on_release:
       then:
         - cover.stop: cover_01
@@ -355,7 +355,7 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        - cover.open: cover_02
+        - cover.close: cover_02
     on_release:
       then:
         - cover.stop: cover_02
@@ -387,7 +387,7 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        - cover.open: cover_03
+        - cover.close: cover_03
     on_release:
       then:
         - cover.stop: cover_03
@@ -419,7 +419,7 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        - cover.open: cover_04
+        - cover.close: cover_04
     on_release:
       then:
         - cover.stop: cover_04
@@ -451,7 +451,7 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        - cover.open: cover_05
+        - cover.close: cover_05
     on_release:
       then:
         - cover.stop: cover_05
@@ -483,7 +483,7 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        - cover.open: cover_06
+        - cover.close: cover_06
     on_release:
       then:
         - cover.stop: cover_06
@@ -515,7 +515,7 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        - cover.open: cover_07
+        - cover.close: cover_07
     on_release:
       then:
         - cover.stop: cover_07
@@ -547,7 +547,7 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        - cover.open: cover_08
+        - cover.close: cover_08
     on_release:
       then:
         - cover.stop: cover_08
@@ -579,7 +579,7 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        - cover.open: cover_09
+        - cover.close: cover_09
     on_release:
       then:
         - cover.stop: cover_09
@@ -611,7 +611,7 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        - cover.open: cover_10
+        - cover.close: cover_10
     on_release:
       then:
         - cover.stop: cover_10
@@ -643,7 +643,7 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        - cover.open: cover_11
+        - cover.close: cover_11
     on_release:
       then:
         - cover.stop: cover_11
@@ -675,7 +675,7 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        - cover.open: cover_12
+        - cover.close: cover_12
     on_release:
       then:
         - cover.stop: cover_12
@@ -707,7 +707,7 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        - cover.open: cover_13
+        - cover.close: cover_13
     on_release:
       then:
         - cover.stop: cover_13
@@ -739,7 +739,7 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        - cover.open: cover_14
+        - cover.close: cover_14
     on_release:
       then:
         - cover.stop: cover_14
@@ -771,7 +771,7 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        - cover.open: cover_15
+        - cover.close: cover_15
     on_release:
       then:
         - cover.stop: cover_15
@@ -803,7 +803,7 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        - cover.open: cover_16
+        - cover.close: cover_16
     on_release:
       then:
         - cover.stop: cover_16
