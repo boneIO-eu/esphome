@@ -57,6 +57,7 @@ time:
 cover:
   - platform: time_based
     name: 'Cover 01'
+    id: cover_01
     open_action:
       - switch.turn_off: cover_close_01_out02
       - switch.turn_on: cover_open_01_out01
@@ -71,6 +72,7 @@ cover:
 
   - platform: time_based
     name: 'Cover 02'
+    id: cover_02
     open_action:
       - switch.turn_off: cover_close_02_out04
       - switch.turn_on: cover_open_02_out03
@@ -85,6 +87,7 @@ cover:
 
   - platform: time_based
     name: 'Cover 03'
+    id: cover_03
     open_action:
       - switch.turn_off: cover_close_03_out06
       - switch.turn_on: cover_open_03_out05
@@ -99,6 +102,7 @@ cover:
 
   - platform: time_based
     name: 'Cover 04'
+    id: cover_04
     open_action:
       - switch.turn_off: cover_close_04_out08
       - switch.turn_on: cover_open_04_out07
@@ -113,6 +117,7 @@ cover:
 
   - platform: time_based
     name: 'Cover 05'
+    id: cover_05
     open_action:
       - switch.turn_off: cover_close_05_out10
       - switch.turn_on: cover_open_05_out09
@@ -127,6 +132,7 @@ cover:
 
   - platform: time_based
     name: 'Cover 06'
+    id: cover_06
     open_action:
       - switch.turn_off: cover_close_06_out12
       - switch.turn_on: cover_open_06_out11
@@ -141,6 +147,7 @@ cover:
 
   - platform: time_based
     name: 'Cover 07'
+    id: cover_07
     open_action:
       - switch.turn_off: cover_close_07_out14
       - switch.turn_on: cover_open_07_out13
@@ -155,6 +162,7 @@ cover:
 
   - platform: time_based
     name: 'Cover 08'
+    id: cover_08
     open_action:
       - switch.turn_off: cover_close_08_out16
       - switch.turn_on: cover_open_08_out15
@@ -169,6 +177,7 @@ cover:
 
   - platform: time_based
     name: 'Cover 09'
+    id: cover_09
     open_action:
       - switch.turn_off: cover_close_09_out18
       - switch.turn_on: cover_open_09_out17
@@ -183,6 +192,7 @@ cover:
 
   - platform: time_based
     name: 'Cover 10'
+    id: cover_10
     open_action:
       - switch.turn_off: cover_close_10_out20
       - switch.turn_on: cover_open_10_out19
@@ -197,6 +207,7 @@ cover:
 
   - platform: time_based
     name: 'Cover 11'
+    id: cover_11
     open_action:
       - switch.turn_off: cover_close_11_out22
       - switch.turn_on: cover_open_11_out21
@@ -211,6 +222,7 @@ cover:
 
   - platform: time_based
     name: 'Cover 12'
+    id: cover_12
     open_action:
       - switch.turn_off: cover_close_12_out24
       - switch.turn_on: cover_open_12_out23
@@ -225,6 +237,7 @@ cover:
 
   - platform: time_based
     name: 'Cover 13'
+    id: cover_13
     open_action:
       - switch.turn_off: cover_close_13_out26
       - switch.turn_on: cover_open_13_out25
@@ -239,6 +252,7 @@ cover:
 
   - platform: time_based
     name: 'Cover 14'
+    id: cover_14
     open_action:
       - switch.turn_off: cover_close_14_out28
       - switch.turn_on: cover_open_14_out27
@@ -253,6 +267,7 @@ cover:
 
   - platform: time_based
     name: 'Cover 15'
+    id: cover_15
     open_action:
       - switch.turn_off: cover_close_15_out30
       - switch.turn_on: cover_open_15_out29
@@ -267,6 +282,7 @@ cover:
 
   - platform: time_based
     name: 'Cover 16'
+    id: cover_16
     open_action:
       - switch.turn_off: cover_close_16_out32
       - switch.turn_on: cover_open_16_out31
