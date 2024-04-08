@@ -35,7 +35,7 @@ packages:
         'devices_v0_7/ina219.yaml',
         'devices_v0_7/lm75b.yaml',
         'devices_v0_7/pcf.yaml',
-        'boards_v0_7/32x10_cover.yaml',
+        'boards_v0_7/16_cover_pcf.yaml',
         # 'devices_v0_7/one_wire.yaml',
         # 'devices_v0_7/uart.yaml',
       ]
