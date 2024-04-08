@@ -1,3 +1,284 @@
+substitutions:
+  name: boneio-esp32x10-covers
+  friendly_name: 'BoneIO ESP 32x10 Cover'
+
+esphome:
+  name: '${name}'
+  friendly_name: '${friendly_name}'
+  platform: ESP32
+  board: nodemcu-32s
+  name_add_mac_suffix: true
+  project:
+    name: boneio.32x10-covers
+    version: '1.0'
+ethernet:
+  id: eth
+  type: LAN8720
+  mdc_pin: GPIO23
+  mdio_pin: GPIO18
+  clk_mode: GPIO0_IN
+  phy_addr: 1
+  power_pin: GPIO16
+
+dashboard_import:
+  package_import_url: github://boneIO-eu/esphome/boneio-covers_v0_7.yaml@single_file_test
+  import_full_config: true
+
+packages:
+  internals_packages:
+    url: https://github.com/boneIO-eu/esphome
+    ref: single_file_test
+    files: [
+        'devices_v0_7/buzzer.yaml',
+        'devices_v0_7/display.yaml',
+        'devices_v0_7/i2c.yaml',
+        'devices_v0_7/ina219.yaml',
+        'devices_v0_7/lm75b.yaml',
+        'devices_v0_7/pcf.yaml',
+        'boards_v0_7/32x10_cover.yaml',
+        # 'devices_v0_7/one_wire.yaml',
+        # 'devices_v0_7/uart.yaml',
+      ]
+
+logger:
+api:
+ota:
+  password: boneio
+
+web_server:
+  port: 80
+  local: true
+
+time:
+  - platform: homeassistant
+    timezone: Europe/Warsaw
+    id: homeassistant_time
+
+cover:
+  - platform: time_based
+    name: 'Cover 01'
+    open_action:
+      - switch.turn_off: cover_close_01_out02
+      - switch.turn_on: cover_open_01_out01
+    open_duration: 10s
+    close_action:
+      - switch.turn_off: cover_open_01_out01
+      - switch.turn_on: cover_close_01_out02
+    close_duration: 10s
+    stop_action:
+      - switch.turn_off: cover_open_01_out01
+      - switch.turn_off: cover_close_01_out02
+
+  - platform: time_based
+    name: 'Cover 02'
+    open_action:
+      - switch.turn_off: cover_close_02_out04
+      - switch.turn_on: cover_open_02_out03
+    open_duration: 10s
+    close_action:
+      - switch.turn_off: cover_open_02_out03
+      - switch.turn_on: cover_close_02_out04
+    close_duration: 10s
+    stop_action:
+      - switch.turn_off: cover_open_02_out03
+      - switch.turn_off: cover_close_02_out04
+
+  - platform: time_based
+    name: 'Cover 03'
+    open_action:
+      - switch.turn_off: cover_close_03_out06
+      - switch.turn_on: cover_open_03_out05
+    open_duration: 10s
+    close_action:
+      - switch.turn_off: cover_open_03_out05
+      - switch.turn_on: cover_close_03_out06
+    close_duration: 10s
+    stop_action:
+      - switch.turn_off: cover_open_03_out05
+      - switch.turn_off: cover_close_03_out06
+
+  - platform: time_based
+    name: 'Cover 04'
+    open_action:
+      - switch.turn_off: cover_close_04_out08
+      - switch.turn_on: cover_open_04_out07
+    open_duration: 10s
+    close_action:
+      - switch.turn_off: cover_open_04_out07
+      - switch.turn_on: cover_close_04_out08
+    close_duration: 10s
+    stop_action:
+      - switch.turn_off: cover_open_04_out07
+      - switch.turn_off: cover_close_04_out08
+
+  - platform: time_based
+    name: 'Cover 05'
+    open_action:
+      - switch.turn_off: cover_close_05_out10
+      - switch.turn_on: cover_open_05_out09
+    open_duration: 10s
+    close_action:
+      - switch.turn_off: cover_open_05_out09
+      - switch.turn_on: cover_close_05_out10
+    close_duration: 10s
+    stop_action:
+      - switch.turn_off: cover_open_05_out09
+      - switch.turn_off: cover_close_05_out10
+
+  - platform: time_based
+    name: 'Cover 06'
+    open_action:
+      - switch.turn_off: cover_close_06_out12
+      - switch.turn_on: cover_open_06_out11
+    open_duration: 10s
+    close_action:
+      - switch.turn_off: cover_open_06_out11
+      - switch.turn_on: cover_close_06_out12
+    close_duration: 10s
+    stop_action:
+      - switch.turn_off: cover_open_06_out11
+      - switch.turn_off: cover_close_06_out12
+
+  - platform: time_based
+    name: 'Cover 07'
+    open_action:
+      - switch.turn_off: cover_close_07_out14
+      - switch.turn_on: cover_open_07_out13
+    open_duration: 10s
+    close_action:
+      - switch.turn_off: cover_open_07_out13
+      - switch.turn_on: cover_close_07_out14
+    close_duration: 10s
+    stop_action:
+      - switch.turn_off: cover_open_07_out13
+      - switch.turn_off: cover_close_07_out14
+
+  - platform: time_based
+    name: 'Cover 08'
+    open_action:
+      - switch.turn_off: cover_close_08_out16
+      - switch.turn_on: cover_open_08_out15
+    open_duration: 10s
+    close_action:
+      - switch.turn_off: cover_open_08_out15
+      - switch.turn_on: cover_close_08_out16
+    close_duration: 10s
+    stop_action:
+      - switch.turn_off: cover_open_08_out15
+      - switch.turn_off: cover_close_08_out16
+
+  - platform: time_based
+    name: 'Cover 09'
+    open_action:
+      - switch.turn_off: cover_close_09_out18
+      - switch.turn_on: cover_open_09_out17
+    open_duration: 10s
+    close_action:
+      - switch.turn_off: cover_open_09_out17
+      - switch.turn_on: cover_close_09_out18
+    close_duration: 10s
+    stop_action:
+      - switch.turn_off: cover_open_09_out17
+      - switch.turn_off: cover_close_09_out18
+
+  - platform: time_based
+    name: 'Cover 10'
+    open_action:
+      - switch.turn_off: cover_close_10_out20
+      - switch.turn_on: cover_open_10_out19
+    open_duration: 10s
+    close_action:
+      - switch.turn_off: cover_open_10_out19
+      - switch.turn_on: cover_close_10_out20
+    close_duration: 10s
+    stop_action:
+      - switch.turn_off: cover_open_10_out19
+      - switch.turn_off: cover_close_10_out20
+
+  - platform: time_based
+    name: 'Cover 11'
+    open_action:
+      - switch.turn_off: cover_close_11_out22
+      - switch.turn_on: cover_open_11_out21
+    open_duration: 10s
+    close_action:
+      - switch.turn_off: cover_open_11_out21
+      - switch.turn_on: cover_close_11_out22
+    close_duration: 10s
+    stop_action:
+      - switch.turn_off: cover_open_11_out21
+      - switch.turn_off: cover_close_11_out22
+
+  - platform: time_based
+    name: 'Cover 12'
+    open_action:
+      - switch.turn_off: cover_close_12_out24
+      - switch.turn_on: cover_open_12_out23
+    open_duration: 10s
+    close_action:
+      - switch.turn_off: cover_open_12_out23
+      - switch.turn_on: cover_close_12_out24
+    close_duration: 10s
+    stop_action:
+      - switch.turn_off: cover_open_12_out23
+      - switch.turn_off: cover_close_12_out24
+
+  - platform: time_based
+    name: 'Cover 13'
+    open_action:
+      - switch.turn_off: cover_close_13_out26
+      - switch.turn_on: cover_open_13_out25
+    open_duration: 10s
+    close_action:
+      - switch.turn_off: cover_open_13_out25
+      - switch.turn_on: cover_close_13_out26
+    close_duration: 10s
+    stop_action:
+      - switch.turn_off: cover_open_13_out25
+      - switch.turn_off: cover_close_13_out26
+
+  - platform: time_based
+    name: 'Cover 14'
+    open_action:
+      - switch.turn_off: cover_close_14_out28
+      - switch.turn_on: cover_open_14_out27
+    open_duration: 10s
+    close_action:
+      - switch.turn_off: cover_open_14_out27
+      - switch.turn_on: cover_close_14_out28
+    close_duration: 10s
+    stop_action:
+      - switch.turn_off: cover_open_14_out27
+      - switch.turn_off: cover_close_14_out28
+
+  - platform: time_based
+    name: 'Cover 15'
+    open_action:
+      - switch.turn_off: cover_close_15_out30
+      - switch.turn_on: cover_open_15_out29
+    open_duration: 10s
+    close_action:
+      - switch.turn_off: cover_open_15_out29
+      - switch.turn_on: cover_close_15_out30
+    close_duration: 10s
+    stop_action:
+      - switch.turn_off: cover_open_15_out29
+      - switch.turn_off: cover_close_15_out30
+
+  - platform: time_based
+    name: 'Cover 16'
+    open_action:
+      - switch.turn_off: cover_close_16_out32
+      - switch.turn_on: cover_open_16_out31
+    open_duration: 10s
+    close_action:
+      - switch.turn_off: cover_open_16_out31
+      - switch.turn_on: cover_close_16_out32
+    close_duration: 10s
+    stop_action:
+      - switch.turn_off: cover_open_16_out31
+      - switch.turn_off: cover_close_16_out32
+
 binary_sensor:
   - platform: gpio
     name: 'IN_01'
