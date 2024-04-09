@@ -178,10 +178,6 @@ cover:
 
 switch:
   - platform: output
-    name: 'Switch 16'
-    output: out_16
-    id: switch_16
-  - platform: output
     name: 'Switch 17'
     output: out_17
     id: switch_17
@@ -245,6 +241,7 @@ switch:
     name: 'Switch 32'
     output: out_32
     id: switch_32
+
 binary_sensor:
   - platform: gpio
     name: 'IN_01'
@@ -481,7 +478,10 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        - switch.toggle: switch_15
+        - cover.open: cover_08
+    on_release:
+      then:
+        - cover.stop: cover_08
 
   - platform: gpio
     name: 'IN_16'
@@ -494,7 +494,10 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        - switch.toggle: switch_16
+        - cover.close: cover_08
+    on_release:
+      then:
+        - cover.stop: cover_08
 
   - platform: gpio
     name: 'IN_17'

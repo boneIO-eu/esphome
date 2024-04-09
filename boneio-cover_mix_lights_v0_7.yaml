@@ -178,10 +178,6 @@ cover:
 
 light:
   - platform: binary
-    name: 'Light 16'
-    output: out_16
-    id: light_16
-  - platform: binary
     name: 'Light 17'
     output: out_17
     id: light_17
@@ -245,6 +241,7 @@ light:
     name: 'Light 32'
     output: out_32
     id: light_32
+
 binary_sensor:
   - platform: gpio
     name: 'IN_01'
@@ -481,7 +478,10 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        - light.toggle: light_15
+        - cover.open: cover_08
+    on_release:
+      then:
+        - cover.stop: cover_08
 
   - platform: gpio
     name: 'IN_16'
@@ -494,7 +494,10 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        - light.toggle: light_16
+        - cover.close: cover_08
+    on_release:
+      then:
+        - cover.stop: cover_08
 
   - platform: gpio
     name: 'IN_17'
