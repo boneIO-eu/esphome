@@ -95,6 +95,7 @@ display:
     id: oled_display
     model: 'SH1106 128x64'
     address: 0x3C
+    i2c_id: bus_b
     contrast: 0.5
     pages:
       - id: first_page
