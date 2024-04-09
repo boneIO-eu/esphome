@@ -1,5 +1,5 @@
 uart:
-  id: uart_pin3_1
+  id: uart_pin14_15
   rx_pin: GPIO14
   tx_pin: GPIO15
   baud_rate: 9600

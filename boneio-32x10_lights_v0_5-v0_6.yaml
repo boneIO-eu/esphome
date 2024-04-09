@@ -1,0 +1,631 @@
+substitutions:
+  name: boneio-esp32x10-lights
+  friendly_name: 'BoneIO ESP 32x10 Lights'
+
+esphome:
+  name: '${name}'
+  friendly_name: '${friendly_name}'
+  platform: ESP32
+  board: nodemcu-32s
+  name_add_mac_suffix: true
+  project:
+    name: boneio.32x10-lights_v0_5-v0_6
+    version: '1.0'
+
+ethernet:
+  id: eth
+  type: LAN8720
+  mdc_pin: GPIO23
+  mdio_pin: GPIO18
+  clk_mode: GPIO0_IN
+  phy_addr: 1
+  power_pin: GPIO16
+
+dashboard_import:
+  package_import_url: github://boneIO-eu/esphome/boneio-32x10_lights_v0_5-v0_6.yaml@v1.0
+  import_full_config: true
+
+packages:
+  internals_packages:
+    url: https://github.com/boneIO-eu/esphome
+    ref: v1.0
+    files: [
+        'devices/buzzer.yaml',
+        'devices_v0_5-v0_6/display.yaml',
+        'devices_v0_5-v0_6/i2c.yaml',
+        'devices_v0_5-v0_6/ina219.yaml',
+        'devices_v0_5-v0_6/lm75b.yaml',
+        'devices_v0_5-v0_6/pcf.yaml',
+        'boards/32x10_outputs.yaml',
+        # 'devices_v0_5-v0_6/one_wire.yaml',
+        # 'devices_v0_5-v0_6/uart.yaml',
+      ]
+
+logger:
+  baud_rate: 0 #IMPORTANT FOR V0.5-V0.6 TO GET MODBUS WORKING
+api:
+ota:
+  password: boneio
+
+web_server:
+  port: 80
+  local: true
+
+time:
+  - platform: homeassistant
+    timezone: Europe/Warsaw
+    id: homeassistant_time
+
+light:
+  - platform: binary
+    name: 'Light 01'
+    output: out_01
+    id: light_01
+  - platform: binary
+    name: 'Light 02'
+    output: out_02
+    id: light_02
+  - platform: binary
+    name: 'Light 03'
+    output: out_03
+    id: light_03
+  - platform: binary
+    name: 'Light 04'
+    output: out_04
+    id: light_04
+  - platform: binary
+    name: 'Light 05'
+    output: out_05
+    id: light_05
+  - platform: binary
+    name: 'Light 06'
+    output: out_06
+    id: light_06
+  - platform: binary
+    name: 'Light 07'
+    output: out_07
+    id: light_07
+  - platform: binary
+    name: 'Light 08'
+    output: out_08
+    id: light_08
+  - platform: binary
+    name: 'Light 09'
+    output: out_09
+    id: light_09
+  - platform: binary
+    name: 'Light 10'
+    output: out_10
+    id: light_10
+  - platform: binary
+    name: 'Light 11'
+    output: out_11
+    id: light_11
+  - platform: binary
+    name: 'Light 12'
+    output: out_12
+    id: light_12
+  - platform: binary
+    name: 'Light 13'
+    output: out_13
+    id: light_13
+  - platform: binary
+    name: 'Light 14'
+    output: out_14
+    id: light_14
+  - platform: binary
+    name: 'Light 15'
+    output: out_15
+    id: light_15
+  - platform: binary
+    name: 'Light 16'
+    output: out_16
+    id: light_16
+  - platform: binary
+    name: 'Light 17'
+    output: out_17
+    id: light_17
+  - platform: binary
+    name: 'Light 18'
+    output: out_18
+    id: light_18
+  - platform: binary
+    name: 'Light 19'
+    output: out_19
+    id: light_19
+  - platform: binary
+    name: 'Light 20'
+    output: out_20
+    id: light_20
+  - platform: binary
+    name: 'Light 21'
+    output: out_21
+    id: light_21
+  - platform: binary
+    name: 'Light 22'
+    output: out_22
+    id: light_22
+  - platform: binary
+    name: 'Light 23'
+    output: out_23
+    id: light_23
+  - platform: binary
+    name: 'Light 24'
+    output: out_24
+    id: light_24
+  - platform: binary
+    name: 'Light 25'
+    output: out_25
+    id: light_25
+  - platform: binary
+    name: 'Light 26'
+    output: out_26
+    id: light_26
+  - platform: binary
+    name: 'Light 27'
+    output: out_27
+    id: light_27
+  - platform: binary
+    name: 'Light 28'
+    output: out_28
+    id: light_28
+  - platform: binary
+    name: 'Light 29'
+    output: out_29
+    id: light_29
+  - platform: binary
+    name: 'Light 30'
+    output: out_30
+    id: light_30
+  - platform: binary
+    name: 'Light 31'
+    output: out_31
+    id: light_31
+  - platform: binary
+    name: 'Light 32'
+    output: out_32
+    id: light_32
+
+binary_sensor:
+  - platform: gpio
+    name: 'IN_01'
+    id: in_01
+    pin:
+      pcf8574: pcf_inputs_1to14
+      number: 0
+      mode:
+        input: true
+      inverted: true
+    on_press:
+      then:
+        - light.toggle: light_01
+
+  - platform: gpio
+    name: 'IN_02'
+    id: in_02
+    pin:
+      pcf8574: pcf_inputs_1to14
+      number: 1
+      mode:
+        input: true
+      inverted: true
+    on_press:
+      then:
+        - light.toggle: light_02
+
+  - platform: gpio
+    name: 'IN_03'
+    id: in_03
+    pin:
+      pcf8574: pcf_inputs_1to14
+      number: 2
+      mode:
+        input: true
+      inverted: true
+    on_press:
+      then:
+        - light.toggle: light_03
+
+  - platform: gpio
+    name: 'IN_04'
+    id: in_04
+    pin:
+      pcf8574: pcf_inputs_1to14
+      number: 3
+      mode:
+        input: true
+      inverted: true
+    on_press:
+      then:
+        - light.toggle: light_04
+
+  - platform: gpio
+    name: 'IN_05'
+    id: in_05
+    pin:
+      pcf8574: pcf_inputs_1to14
+      number: 4
+      mode:
+        input: true
+      inverted: true
+    on_press:
+      then:
+        - light.toggle: light_05
+
+  - platform: gpio
+    name: 'IN_06'
+    id: in_06
+    pin:
+      pcf8574: pcf_inputs_1to14
+      number: 5
+      mode:
+        input: true
+      inverted: true
+    on_press:
+      then:
+        - light.toggle: light_06
+
+  - platform: gpio
+    name: 'IN_07'
+    id: in_07
+    pin:
+      pcf8574: pcf_inputs_1to14
+      number: 6
+      mode:
+        input: true
+      inverted: true
+    on_press:
+      then:
+        - light.toggle: light_07
+
+  - platform: gpio
+    name: 'IN_08'
+    id: in_08
+    pin:
+      pcf8574: pcf_inputs_1to14
+      number: 8
+      mode:
+        input: true
+      inverted: true
+    on_press:
+      then:
+        - light.toggle: light_08
+
+  - platform: gpio
+    name: 'IN_09'
+    id: in_09
+    pin:
+      pcf8574: pcf_inputs_1to14
+      number: 9
+      mode:
+        input: true
+      inverted: true
+    on_press:
+      then:
+        - light.toggle: light_09
+
+  - platform: gpio
+    name: 'IN_10'
+    id: in_10
+    pin:
+      pcf8574: pcf_inputs_1to14
+      number: 10
+      mode:
+        input: true
+      inverted: true
+    on_press:
+      then:
+        - light.toggle: light_10
+
+  - platform: gpio
+    name: 'IN_11'
+    id: in_11
+    pin:
+      pcf8574: pcf_inputs_1to14
+      number: 11
+      mode:
+        input: true
+      inverted: true
+    on_press:
+      then:
+        - light.toggle: light_11
+
+  - platform: gpio
+    name: 'IN_12'
+    id: in_12
+    pin:
+      pcf8574: pcf_inputs_1to14
+      number: 12
+      mode:
+        input: true
+      inverted: true
+    on_press:
+      then:
+        - light.toggle: light_12
+
+  - platform: gpio
+    name: 'IN_13'
+    id: in_13
+    pin:
+      pcf8574: pcf_inputs_1to14
+      number: 13
+      mode:
+        input: true
+      inverted: true
+    on_press:
+      then:
+        - light.toggle: light_13
+
+  - platform: gpio
+    name: 'IN_14'
+    id: in_14
+    pin:
+      pcf8574: pcf_inputs_1to14
+      number: 14
+      mode:
+        input: true
+      inverted: true
+    on_press:
+      then:
+        - light.toggle: light_14
+
+  - platform: gpio
+    name: 'IN_15'
+    id: in_15
+    pin:
+      pcf8574: pcf_inputs_15to28
+      number: 6
+      mode:
+        input: true
+      inverted: true
+    on_press:
+      then:
+        - light.toggle: light_15
+
+  - platform: gpio
+    name: 'IN_16'
+    id: in_16
+    pin:
+      pcf8574: pcf_inputs_15to28
+      number: 5
+      mode:
+        input: true
+      inverted: true
+    on_press:
+      then:
+        - light.toggle: light_16
+
+  - platform: gpio
+    name: 'IN_17'
+    id: in_17
+    pin:
+      pcf8574: pcf_inputs_15to28
+      number: 4
+      mode:
+        input: true
+      inverted: true
+    on_press:
+      then:
+        - light.toggle: light_17
+
+  - platform: gpio
+    name: 'IN_18'
+    id: in_18
+    pin:
+      pcf8574: pcf_inputs_15to28
+      number: 3
+      mode:
+        input: true
+      inverted: true
+    on_press:
+      then:
+        - light.toggle: light_18
+
+  - platform: gpio
+    name: 'IN_19'
+    id: in_19
+    pin:
+      pcf8574: pcf_inputs_15to28
+      number: 2
+      mode:
+        input: true
+      inverted: true
+    on_press:
+      then:
+        - light.toggle: light_19
+
+  - platform: gpio
+    name: 'IN_20'
+    id: in_20
+    pin:
+      pcf8574: pcf_inputs_15to28
+      number: 1
+      mode:
+        input: true
+      inverted: true
+    on_press:
+      then:
+        - light.toggle: light_20
+
+  - platform: gpio
+    name: 'IN_21'
+    id: in_21
+    pin:
+      pcf8574: pcf_inputs_15to28
+      number: 0
+      mode:
+        input: true
+      inverted: true
+    on_press:
+      then:
+        - light.toggle: light_21
+
+  - platform: gpio
+    name: 'IN_22'
+    id: in_22
+    pin:
+      pcf8574: pcf_inputs_15to28
+      number: 8
+      mode:
+        input: true
+      inverted: true
+    on_press:
+      then:
+        - light.toggle: light_22
+
+  - platform: gpio
+    name: 'IN_23'
+    id: in_23
+    pin:
+      pcf8574: pcf_inputs_15to28
+      number: 9
+      mode:
+        input: true
+      inverted: true
+    on_press:
+      then:
+        - light.toggle: light_23
+
+  - platform: gpio
+    name: 'IN_24'
+    id: in_24
+    pin:
+      pcf8574: pcf_inputs_15to28
+      number: 10
+      mode:
+        input: true
+      inverted: true
+    on_press:
+      then:
+        - light.toggle: light_24
+
+  - platform: gpio
+    name: 'IN_25'
+    id: in_25
+    pin:
+      pcf8574: pcf_inputs_15to28
+      number: 11
+      mode:
+        input: true
+      inverted: true
+    on_press:
+      then:
+        - light.toggle: light_25
+
+  - platform: gpio
+    name: 'IN_26'
+    id: in_26
+    pin:
+      pcf8574: pcf_inputs_15to28
+      number: 12
+      mode:
+        input: true
+      inverted: true
+    on_press:
+      then:
+        - light.toggle: light_26
+
+  - platform: gpio
+    name: 'IN_27'
+    id: in_27
+    pin:
+      pcf8574: pcf_inputs_15to28
+      number: 13
+      mode:
+        input: true
+      inverted: true
+    on_press:
+      then:
+        - light.toggle: light_27
+
+  - platform: gpio
+    name: 'IN_28'
+    id: in_28
+    pin:
+      pcf8574: pcf_inputs_15to28
+      number: 14
+      mode:
+        input: true
+      inverted: true
+    on_press:
+      then:
+        - light.toggle: light_28
+
+  - platform: gpio
+    name: 'IN_29'
+    id: in_29
+    pin:
+      pcf8574: pcf_inputs_28to35_menu
+      number: 0
+      mode:
+        input: true
+      inverted: true
+    on_press:
+      then:
+        - light.toggle: light_29
+
+  - platform: gpio
+    name: 'IN_30'
+    id: in_30
+    pin:
+      pcf8574: pcf_inputs_28to35_menu
+      number: 1
+      mode:
+        input: true
+      inverted: true
+    on_press:
+      then:
+        - light.toggle: light_30
+
+  - platform: gpio
+    name: 'IN_31'
+    id: in_31
+    pin:
+      pcf8574: pcf_inputs_28to35_menu
+      number: 2
+      mode:
+        input: true
+      inverted: true
+    on_press:
+      then:
+        - light.toggle: light_31
+
+  - platform: gpio
+    name: 'IN_32'
+    id: in_32
+    pin:
+      pcf8574: pcf_inputs_28to35_menu
+      number: 3
+      mode:
+        input: true
+      inverted: true
+    on_press:
+      then:
+        - light.toggle: light_32
+
+  - platform: gpio
+    name: 'IN_33'
+    pin:
+      pcf8574: pcf_inputs_28to35_menu
+      number: 4
+      mode:
+        input: true
+      inverted: true
+
+  - platform: gpio
+    name: 'IN_34'
+    pin:
+      pcf8574: pcf_inputs_28to35_menu
+      number: 5
+      mode:
+        input: true
+      inverted: true
+
+  - platform: gpio
+    name: 'IN_35'
+    pin:
+      pcf8574: pcf_inputs_28to35_menu
+      number: 6
+      mode:
+        input: true
+      inverted: true

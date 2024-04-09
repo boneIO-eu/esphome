@@ -1,6 +1,6 @@
 substitutions:
-  name: boneio-esp32x10-covers
-  friendly_name: 'BoneIO ESP 32x10 Cover'
+  name: boneio-esp-cover-mix
+  friendly_name: 'BoneIO ESP Cover Mix Lights'
 
 esphome:
   name: '${name}'
@@ -9,8 +9,9 @@ esphome:
   board: nodemcu-32s
   name_add_mac_suffix: true
   project:
-    name: boneio.32x10-covers
+    name: boneio.32x10-cover-mix-lights
     version: '1.0'
+
 ethernet:
   id: eth
   type: LAN8720
@@ -21,21 +22,21 @@ ethernet:
   power_pin: GPIO16
 
 dashboard_import:
-  package_import_url: github://boneIO-eu/esphome/boneio-covers_v0_7.yaml@single_file_test
+  package_import_url: github://boneIO-eu/esphome/boneio-cover_mix_lights_v0_7.yaml@v1.0
   import_full_config: true
 
 packages:
   internals_packages:
     url: https://github.com/boneIO-eu/esphome
-    ref: single_file_test
+    ref: v1.0
     files: [
-        'devices_v0_7/buzzer.yaml',
+        'devices/buzzer.yaml',
         'devices_v0_7/display.yaml',
         'devices_v0_7/i2c.yaml',
         'devices_v0_7/ina219.yaml',
         'devices_v0_7/lm75b.yaml',
         'devices_v0_7/pcf.yaml',
-        'boards_v0_7/16_cover_pcf.yaml',
+        'boards/8_covers_16_output.yaml',
         # 'devices_v0_7/one_wire.yaml',
         # 'devices_v0_7/uart.yaml',
       ]
@@ -175,126 +176,75 @@ cover:
       - switch.turn_off: cover_open_08_out15
       - switch.turn_off: cover_close_08_out16
 
-  - platform: time_based
-    name: 'Cover 09'
-    id: cover_09
-    open_action:
-      - switch.turn_off: cover_close_09_out18
-      - switch.turn_on: cover_open_09_out17
-    open_duration: 10s
-    close_action:
-      - switch.turn_off: cover_open_09_out17
-      - switch.turn_on: cover_close_09_out18
-    close_duration: 10s
-    stop_action:
-      - switch.turn_off: cover_open_09_out17
-      - switch.turn_off: cover_close_09_out18
-
-  - platform: time_based
-    name: 'Cover 10'
-    id: cover_10
-    open_action:
-      - switch.turn_off: cover_close_10_out20
-      - switch.turn_on: cover_open_10_out19
-    open_duration: 10s
-    close_action:
-      - switch.turn_off: cover_open_10_out19
-      - switch.turn_on: cover_close_10_out20
-    close_duration: 10s
-    stop_action:
-      - switch.turn_off: cover_open_10_out19
-      - switch.turn_off: cover_close_10_out20
-
-  - platform: time_based
-    name: 'Cover 11'
-    id: cover_11
-    open_action:
-      - switch.turn_off: cover_close_11_out22
-      - switch.turn_on: cover_open_11_out21
-    open_duration: 10s
-    close_action:
-      - switch.turn_off: cover_open_11_out21
-      - switch.turn_on: cover_close_11_out22
-    close_duration: 10s
-    stop_action:
-      - switch.turn_off: cover_open_11_out21
-      - switch.turn_off: cover_close_11_out22
-
-  - platform: time_based
-    name: 'Cover 12'
-    id: cover_12
-    open_action:
-      - switch.turn_off: cover_close_12_out24
-      - switch.turn_on: cover_open_12_out23
-    open_duration: 10s
-    close_action:
-      - switch.turn_off: cover_open_12_out23
-      - switch.turn_on: cover_close_12_out24
-    close_duration: 10s
-    stop_action:
-      - switch.turn_off: cover_open_12_out23
-      - switch.turn_off: cover_close_12_out24
-
-  - platform: time_based
-    name: 'Cover 13'
-    id: cover_13
-    open_action:
-      - switch.turn_off: cover_close_13_out26
-      - switch.turn_on: cover_open_13_out25
-    open_duration: 10s
-    close_action:
-      - switch.turn_off: cover_open_13_out25
-      - switch.turn_on: cover_close_13_out26
-    close_duration: 10s
-    stop_action:
-      - switch.turn_off: cover_open_13_out25
-      - switch.turn_off: cover_close_13_out26
-
-  - platform: time_based
-    name: 'Cover 14'
-    id: cover_14
-    open_action:
-      - switch.turn_off: cover_close_14_out28
-      - switch.turn_on: cover_open_14_out27
-    open_duration: 10s
-    close_action:
-      - switch.turn_off: cover_open_14_out27
-      - switch.turn_on: cover_close_14_out28
-    close_duration: 10s
-    stop_action:
-      - switch.turn_off: cover_open_14_out27
-      - switch.turn_off: cover_close_14_out28
-
-  - platform: time_based
-    name: 'Cover 15'
-    id: cover_15
-    open_action:
-      - switch.turn_off: cover_close_15_out30
-      - switch.turn_on: cover_open_15_out29
-    open_duration: 10s
-    close_action:
-      - switch.turn_off: cover_open_15_out29
-      - switch.turn_on: cover_close_15_out30
-    close_duration: 10s
-    stop_action:
-      - switch.turn_off: cover_open_15_out29
-      - switch.turn_off: cover_close_15_out30
-
-  - platform: time_based
-    name: 'Cover 16'
-    id: cover_16
-    open_action:
-      - switch.turn_off: cover_close_16_out32
-      - switch.turn_on: cover_open_16_out31
-    open_duration: 10s
-    close_action:
-      - switch.turn_off: cover_open_16_out31
-      - switch.turn_on: cover_close_16_out32
-    close_duration: 10s
-    stop_action:
-      - switch.turn_off: cover_open_16_out31
-      - switch.turn_off: cover_close_16_out32
-
+light:
+  - platform: binary
+    name: 'Light 16'
+    output: out_16
+    id: light_16
+  - platform: binary
+    name: 'Light 17'
+    output: out_17
+    id: light_17
+  - platform: binary
+    name: 'Light 18'
+    output: out_18
+    id: light_18
+  - platform: binary
+    name: 'Light 19'
+    output: out_19
+    id: light_19
+  - platform: binary
+    name: 'Light 20'
+    output: out_20
+    id: light_20
+  - platform: binary
+    name: 'Light 21'
+    output: out_21
+    id: light_21
+  - platform: binary
+    name: 'Light 22'
+    output: out_22
+    id: light_22
+  - platform: binary
+    name: 'Light 23'
+    output: out_23
+    id: light_23
+  - platform: binary
+    name: 'Light 24'
+    output: out_24
+    id: light_24
+  - platform: binary
+    name: 'Light 25'
+    output: out_25
+    id: light_25
+  - platform: binary
+    name: 'Light 26'
+    output: out_26
+    id: light_26
+  - platform: binary
+    name: 'Light 27'
+    output: out_27
+    id: light_27
+  - platform: binary
+    name: 'Light 28'
+    output: out_28
+    id: light_28
+  - platform: binary
+    name: 'Light 29'
+    output: out_29
+    id: light_29
+  - platform: binary
+    name: 'Light 30'
+    output: out_30
+    id: light_30
+  - platform: binary
+    name: 'Light 31'
+    output: out_31
+    id: light_31
+  - platform: binary
+    name: 'Light 32'
+    output: out_32
+    id: light_32
 binary_sensor:
   - platform: gpio
     name: 'IN_01'
@@ -531,10 +481,7 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        - cover.open: cover_08
-    on_release:
-      then:
-        - cover.stop: cover_08
+        - light.toggle: light_15
 
   - platform: gpio
     name: 'IN_16'
@@ -547,10 +494,7 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        - cover.close: cover_08
-    on_release:
-      then:
-        - cover.stop: cover_08
+        - light.toggle: light_16
 
   - platform: gpio
     name: 'IN_17'
@@ -563,10 +507,7 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        - cover.open: cover_09
-    on_release:
-      then:
-        - cover.stop: cover_09
+        - light.toggle: light_17
 
   - platform: gpio
     name: 'IN_18'
@@ -579,10 +520,7 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        - cover.close: cover_09
-    on_release:
-      then:
-        - cover.stop: cover_09
+        - light.toggle: light_18
 
   - platform: gpio
     name: 'IN_19'
@@ -595,10 +533,7 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        - cover.open: cover_10
-    on_release:
-      then:
-        - cover.stop: cover_10
+        - light.toggle: light_19
 
   - platform: gpio
     name: 'IN_20'
@@ -611,10 +546,7 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        - cover.close: cover_10
-    on_release:
-      then:
-        - cover.stop: cover_10
+        - light.toggle: light_20
 
   - platform: gpio
     name: 'IN_21'
@@ -627,10 +559,7 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        - cover.open: cover_11
-    on_release:
-      then:
-        - cover.stop: cover_11
+        - light.toggle: light_21
 
   - platform: gpio
     name: 'IN_22'
@@ -643,10 +572,7 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        - cover.close: cover_11
-    on_release:
-      then:
-        - cover.stop: cover_11
+        - light.toggle: light_22
 
   - platform: gpio
     name: 'IN_23'
@@ -659,10 +585,7 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        - cover.open: cover_12
-    on_release:
-      then:
-        - cover.stop: cover_12
+        - light.toggle: light_23
 
   - platform: gpio
     name: 'IN_24'
@@ -675,10 +598,7 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        - cover.close: cover_12
-    on_release:
-      then:
-        - cover.stop: cover_12
+        - light.toggle: light_24
 
   - platform: gpio
     name: 'IN_25'
@@ -691,10 +611,7 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        - cover.open: cover_13
-    on_release:
-      then:
-        - cover.stop: cover_13
+        - light.toggle: light_25
 
   - platform: gpio
     name: 'IN_26'
@@ -707,10 +624,7 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        - cover.close: cover_13
-    on_release:
-      then:
-        - cover.stop: cover_13
+        - light.toggle: light_26
 
   - platform: gpio
     name: 'IN_27'
@@ -723,10 +637,7 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        - cover.open: cover_14
-    on_release:
-      then:
-        - cover.stop: cover_14
+        - light.toggle: light_27
 
   - platform: gpio
     name: 'IN_28'
@@ -739,10 +650,7 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        - cover.close: cover_14
-    on_release:
-      then:
-        - cover.stop: cover_14
+        - light.toggle: light_28
 
   - platform: gpio
     name: 'IN_29'
@@ -755,10 +663,7 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        - cover.open: cover_15
-    on_release:
-      then:
-        - cover.stop: cover_15
+        - light.toggle: light_29
 
   - platform: gpio
     name: 'IN_30'
@@ -771,10 +676,7 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        - cover.close: cover_15
-    on_release:
-      then:
-        - cover.stop: cover_15
+        - light.toggle: light_30
 
   - platform: gpio
     name: 'IN_31'
@@ -787,10 +689,7 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        - cover.open: cover_16
-    on_release:
-      then:
-        - cover.stop: cover_16
+        - light.toggle: light_31
 
   - platform: gpio
     name: 'IN_32'
@@ -803,10 +702,7 @@ binary_sensor:
       inverted: true
     on_press:
       then:
-        - cover.close: cover_16
-    on_release:
-      then:
-        - cover.stop: cover_16
+        - light.toggle: light_32
 
   - platform: gpio
     name: 'IN_33'

@@ -11,3 +11,11 @@ pcf8574:
     i2c_id: bus_a
     address: 0x22
     pcf8575: false
+  - id: 'pcf_left'
+    address: 0x21
+    pcf8575: true
+    i2c_id: bus_b
+  - id: 'pcf_right'
+    address: 0x20
+    pcf8575: true
+    i2c_id: bus_b

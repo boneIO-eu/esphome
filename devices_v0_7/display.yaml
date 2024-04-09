@@ -7,7 +7,7 @@ sensor:
     on_raw_value:
       then:
         - text_sensor.template.publish:
-            id: wt32_uptime
+      7      id: wt32_uptime
             state: !lambda |-
               int seconds = round(id(wt32_uptime_seconds).raw_state);
               int days = seconds / (24 * 3600);
@@ -111,7 +111,7 @@ display:
       - id: last_page
         lambda: |-
           it.rectangle(0, 0, 126, 15);
-          it.printf(64,11, id(size_10), TextAlign::BASELINE_CENTER, "boneIO");
+          it.printf(64,11, id(size_10), TextAlign::BASELINE_CENTER, "bone IO");
           it.printf(4, 25, id(size_10), TextAlign::BASELINE_LEFT ,"Current:");
           it.printf(124, 25, id(size_10), TextAlign::BASELINE_RIGHT ,"%.3fA", id(ina_current).state);
           it.printf(4, 37, id(size_10), TextAlign::BASELINE_LEFT ,"Power:");

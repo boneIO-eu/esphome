@@ -1,0 +1,18 @@
+pcf8574:
+  - id: 'pcf_inputs_1to14'
+    i2c_id: i2c_bus
+    address: 0x20
+    pcf8575: true
+  - id: 'pcf_inputs_15to28'
+    i2c_id: i2c_bus
+    address: 0x21
+    pcf8575: true
+  - id: 'pcf_inputs_28to35_menu'
+    i2c_id: i2c_bus
+    address: 0x22
+    pcf8575: false
+mcp23017:
+  - id: 'mcp_left'
+    address: 0x23
+  - id: 'mcp_right'
+    address: 0x24
