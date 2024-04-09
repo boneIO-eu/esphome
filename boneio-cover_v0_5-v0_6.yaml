@@ -1,5 +1,5 @@
 substitutions:
-  name: boneio-esp-covers
+  name: boneio-esp-covers-v0_5-v0_6
   friendly_name: 'BoneIO ESP Cover'
 
 esphome:

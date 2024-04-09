@@ -1,5 +1,5 @@
 substitutions:
-  name: boneio-esp-cover-mix
+  name: boneio-esp-cover-mix-0.7
   friendly_name: 'BoneIO ESP Cover Mix Lights'
 
 esphome:

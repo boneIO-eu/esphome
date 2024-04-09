@@ -1,5 +1,5 @@
 substitutions:
-  name: boneio-esp-cover-mix
+  name: boneio-esp-cover-mix-v0_5-v0_6
   friendly_name: 'BoneIO ESP Cover Mix Switches'
 
 esphome:

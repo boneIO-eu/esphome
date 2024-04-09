@@ -9,7 +9,7 @@ esphome:
   board: nodemcu-32s
   name_add_mac_suffix: true
   project:
-    name: boneio.24x16-switches_v0_5-v0_6
+    name: boneio.24x16-switches-v0_5-v0_6
     version: '1.0'
 
 ethernet:
