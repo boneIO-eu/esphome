@@ -32,6 +32,7 @@ packages:
     files: [
         'devices/buzzer.yaml',
         'devices_v0_5-v0_6/display.yaml',
+        'devices_v0_5-v0_6/time.yaml',
         'devices_v0_5-v0_6/i2c.yaml',
         'devices_v0_5-v0_6/ina219.yaml',
         'devices_v0_5-v0_6/lm75b.yaml',
@@ -54,6 +55,9 @@ time:
   - platform: homeassistant
     timezone: Europe/Warsaw
     id: homeassistant_time
+    on_time_sync:
+      then:
+        ds1307.write_time:
 
 switch:
   - platform: output

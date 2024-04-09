@@ -1,0 +1,5 @@
+time:
+  - platform: ds1307
+    id: ds1307_time
+    address: 0x68
+    i2c_id: bus_a
