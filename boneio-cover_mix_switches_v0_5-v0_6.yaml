@@ -22,13 +22,13 @@ ethernet:
   power_pin: GPIO16
 
 dashboard_import:
-  package_import_url: github://boneIO-eu/esphome/boneio-cover_mix_switches_v0_5-v0_6.yaml@v1.0.0
+  package_import_url: github://boneIO-eu/esphome/boneio-cover_mix_switches_v0_5-v0_6.yaml@v1.0.1
   import_full_config: true
 
 packages:
   internals_packages:
     url: https://github.com/boneIO-eu/esphome
-    ref: v1.0.0
+    ref: v1.0.1
     files: [
         'devices/buzzer.yaml',
         'devices_v0_5-v0_6/display.yaml',
