@@ -101,8 +101,6 @@ display:
         lambda: |-
           it.rectangle(0, 0, 126, 15);
           it.printf(64,11, id(size_10), TextAlign::BASELINE_CENTER, "bone IO");
-          it.printf(4, 25, id(dejaVuSmall), TextAlign::BASELINE_LEFT ,"Current:");
-          it.printf(124, 25, id(dejaVuSmall), TextAlign::BASELINE_RIGHT ,"%.3fA", id(ina_current).state);
           it.printf(4, 37, id(size_10), TextAlign::BASELINE_LEFT ,"IP addr:");
           it.printf(124, 37, id(size_10), TextAlign::BASELINE_RIGHT ,"%s", id(ip_address).state.c_str());
           it.printf(4, 49, id(size_10), TextAlign::BASELINE_LEFT ,"Uptime:");
