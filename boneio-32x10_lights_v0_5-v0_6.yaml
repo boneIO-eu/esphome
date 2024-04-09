@@ -22,13 +22,13 @@ ethernet:
   power_pin: GPIO16
 
 dashboard_import:
-  package_import_url: github://boneIO-eu/esphome/boneio-32x10_lights_v0_5-v0_6.yaml@v1.0
+  package_import_url: github://boneIO-eu/esphome/boneio-32x10_lights_v0_5-v0_6.yaml@v1.0.0
   import_full_config: true
 
 packages:
   internals_packages:
     url: https://github.com/boneIO-eu/esphome
-    ref: v1.0
+    ref: v1.0.0
     files: [
         'devices/buzzer.yaml',
         'devices_v0_5-v0_6/display.yaml',
@@ -37,7 +37,7 @@ packages:
         'devices_v0_5-v0_6/ina219.yaml',
         'devices_v0_5-v0_6/lm75b.yaml',
         'devices_v0_5-v0_6/pcf.yaml',
-        'boards/32x10_outputs.yaml',
+        'boards/32x10_output.yaml',
         # 'devices_v0_5-v0_6/one_wire.yaml',
         # 'devices_v0_5-v0_6/uart.yaml',
       ]
