@@ -1,5 +1,5 @@
 substitutions:
-  name: boneio-esp32x10-switches-0.7
+  name: boneio-32-sw-07
   friendly_name: 'BoneIO ESP 32x10 Switches'
 
 esphome:
@@ -22,13 +22,13 @@ ethernet:
   power_pin: GPIO16
 
 dashboard_import:
-  package_import_url: github://boneIO-eu/esphome/boneio-32x10_switches_v0_7.yaml@v1.0.1
+  package_import_url: github://boneIO-eu/esphome/boneio-32x10_switches_v0_7.yaml@v1.0.3
   import_full_config: true
 
 packages:
   internals_packages:
     url: https://github.com/boneIO-eu/esphome
-    ref: v1.0.1
+    ref: v1.0.3
     files: [
         'devices/buzzer.yaml',
         'devices_v0_7/display.yaml',

@@ -1,5 +1,5 @@
 substitutions:
-  name: boneio-esp-cover-mix-0.7
+  name: boneio-cm-l-07
   friendly_name: 'BoneIO ESP Cover Mix Lights'
 
 esphome:
@@ -22,13 +22,13 @@ ethernet:
   power_pin: GPIO16
 
 dashboard_import:
-  package_import_url: github://boneIO-eu/esphome/boneio-cover_mix_lights_v0_7.yaml@v1.0.1
+  package_import_url: github://boneIO-eu/esphome/boneio-cover_mix_lights_v0_7.yaml@v1.0.3
   import_full_config: true
 
 packages:
   internals_packages:
     url: https://github.com/boneIO-eu/esphome
-    ref: v1.0.1
+    ref: v1.0.3
     files: [
         'devices/buzzer.yaml',
         'devices_v0_7/display.yaml',

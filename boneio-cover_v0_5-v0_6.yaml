@@ -1,5 +1,5 @@
 substitutions:
-  name: boneio-esp-covers-v0_5-v0_6
+  name: boneio-c-06
   friendly_name: 'BoneIO ESP Cover'
 
 esphome:
@@ -22,13 +22,13 @@ ethernet:
   power_pin: GPIO16
 
 dashboard_import:
-  package_import_url: github://boneIO-eu/esphome/boneio-cover_v0_5-v0_6.yaml@v1.0.1
+  package_import_url: github://boneIO-eu/esphome/boneio-cover_v0_5-v0_6.yaml@v1.0.3
   import_full_config: true
 
 packages:
   internals_packages:
     url: https://github.com/boneIO-eu/esphome
-    ref: v1.0.1
+    ref: v1.0.3
     files: [
         'devices/buzzer.yaml',
         'devices_v0_5-v0_6/display.yaml',
