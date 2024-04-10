@@ -1,0 +1,270 @@
+substitutions:
+  name: boneio-dimmer-01
+  friendly_name: 'BoneIO Dimmer LED'
+
+esphome:
+  name: '${name}'
+  friendly_name: '${friendly_name}'
+  name_add_mac_suffix: true
+  project:
+    name: boneio.32x10-cover
+    version: '1.0'
+
+esp32:
+  board: esp32dev
+
+ethernet:
+  id: eth
+  type: LAN8720
+  mdc_pin: GPIO23
+  mdio_pin: GPIO18
+  clk_mode: GPIO0_IN
+  phy_addr: 1
+  power_pin: GPIO16
+
+dashboard_import:
+  package_import_url: github://boneIO-eu/esphome/boneio-dimmer_8ch-v0_1.yaml@v1.0.4
+  import_full_config: true
+
+i2c:
+  sda: GPIO4
+  scl: GPIO5
+  scan: True
+  frequency: 400kHz
+
+pcf8574:
+  - id: 'pcf_inputs'
+    address: 0x38
+
+external_components:
+  - source: github://boneIO-eu/esphome-LM75@main #Original source and thank you note for BTomala https://github.com/boneIO-eu/esphome-lm75
+    components: [lm75]
+
+logger:
+api:
+ota:
+  password: boneio
+
+web_server:
+  port: 80
+  local: true
+
+text_sensor:
+  - platform: version
+    name: 'boneio-dimmer- Version'
+    icon: mdi:cube-outline
+    entity_category: diagnostic
+  - platform: ethernet_info
+    ip_address:
+      entity_category: diagnostic
+      name: boneio-dimmer IP
+
+binary_sensor:
+  - platform: gpio
+    name: 'IN_01'
+    pin:
+      pcf8574: pcf_inputs
+      number: 1
+      mode:
+        input: true
+      inverted: true
+  - platform: gpio
+    name: 'IN_02'
+    pin:
+      pcf8574: pcf_inputs
+      number: 2
+      mode:
+        input: true
+      inverted: true
+  - platform: gpio
+    name: 'IN_03'
+    pin:
+      pcf8574: pcf_inputs
+      number: 3
+      mode:
+        input: true
+      inverted: true
+  - platform: gpio
+    name: 'IN_04'
+    pin:
+      pcf8574: pcf_inputs
+      number: 4
+      mode:
+        input: true
+      inverted: true
+  - platform: gpio
+    name: 'IN_05'
+    pin:
+      number: 36
+      mode:
+        input: true
+      inverted: true
+  - platform: gpio
+    name: 'IN_06'
+    pin:
+      number: 39
+      mode:
+        input: true
+      inverted: true
+  - platform: gpio
+    name: 'IN_07'
+    pin:
+      number: 34
+      mode:
+        input: true
+      inverted: true
+  - platform: gpio
+    name: 'IN_08'
+    pin:
+      number: 35
+      mode:
+        input: true
+      inverted: true
+
+light:
+  - platform: monochromatic
+    output: chl01
+    name: 'CHL 01'
+    id: chl_01
+    default_transition_length: 2s
+    gamma_correct: 0
+  - platform: monochromatic
+    output: chl02
+    name: 'CHL 02'
+    id: chl_02
+    default_transition_length: 2s
+    gamma_correct: 0
+  - platform: monochromatic
+    output: chl03
+    name: 'CHL 03'
+    id: chl_03
+    default_transition_length: 2s
+    gamma_correct: 0
+  - platform: monochromatic
+    output: chl04
+    name: 'CHL 04'
+    id: chl_04
+    default_transition_length: 2s
+    gamma_correct: 0
+
+  - platform: monochromatic
+    output: chr01
+    name: 'CHR 01'
+    id: chr_01
+    default_transition_length: 2s
+    gamma_correct: 0
+  - platform: monochromatic
+    output: chr02
+    name: 'CHR 02'
+    id: chr_02
+    default_transition_length: 2s
+    gamma_correct: 0
+  - platform: monochromatic
+    output: chr03
+    name: 'CHR 03'
+    id: chr_03
+    default_transition_length: 2s
+    gamma_correct: 0
+  - platform: monochromatic
+    output: chr04
+    name: 'CHR 04'
+    id: chr_04
+    default_transition_length: 2s
+    gamma_correct: 0
+
+output:
+  - platform: ledc
+    pin: 33
+    frequency: 1000Hz
+    inverted: false
+    id: chl01
+  - platform: ledc
+    pin: 32
+    frequency: 1000Hz
+    inverted: false
+    id: chl02
+  - platform: ledc
+    pin: 12
+    frequency: 1000Hz
+    inverted: false
+    id: chl03
+  - platform: ledc
+    pin: 14
+    frequency: 1000Hz
+    inverted: false
+    id: chl04
+
+  - platform: ledc
+    pin: 13
+    frequency: 1000Hz
+    inverted: false
+    id: chr01
+  - platform: ledc
+    pin: 15
+    frequency: 1000Hz
+    inverted: false
+    id: chr02
+  - platform: ledc
+    pin: 2
+    frequency: 1000Hz
+    inverted: false
+    id: chr03
+  - platform: ledc
+    pin: 17
+    frequency: 1000Hz
+    inverted: false
+    id: chr04
+
+sensor:
+  # Lower board temperature
+  - platform: lm75
+    id: boneIO_temp
+    name: 'Temperature'
+    update_interval: 10s
+    entity_category: diagnostic
+
+  - platform: ina219
+    address: 0x40
+    shunt_resistance: 1.0 ohm
+    bus_voltage:
+      name: 'VDDL Supply'
+      unit_of_measurement: 'V'
+      entity_category: diagnostic
+    current:
+      name: 'VDDL Current'
+      unit_of_measurement: 'A'
+      entity_category: diagnostic
+    shunt_voltage:
+      name: 'VDDL Shunt Voltage'
+      entity_category: diagnostic
+    max_voltage: 32V
+    max_current: 3.2A
+    update_interval: 5s
+  - platform: ina219
+    address: 0x41
+    shunt_resistance: 1.0 ohm
+    bus_voltage:
+      name: 'VDDR Supply'
+      unit_of_measurement: 'V'
+      entity_category: diagnostic
+    current:
+      name: 'VDDR Current'
+      unit_of_measurement: 'A'
+      entity_category: diagnostic
+    shunt_voltage:
+      name: 'VDDR Shunt Voltage'
+      entity_category: diagnostic
+    max_voltage: 32V
+    max_current: 3.2A
+    update_interval: 5s
+
+switch:
+  - platform: gpio
+    id: buzzer
+    name: 'Buzzer'
+    pin:
+      pcf8574: pcf_inputs
+      number: 0
+      mode:
+        output: true
+      inverted: true

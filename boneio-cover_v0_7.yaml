@@ -5,12 +5,13 @@ substitutions:
 esphome:
   name: '${name}'
   friendly_name: '${friendly_name}'
-  platform: ESP32
-  board: nodemcu-32s
   name_add_mac_suffix: true
   project:
     name: boneio.32x10-cover
     version: '1.0'
+
+esp32:
+  board: nodemcu-32s
 
 ethernet:
   id: eth
@@ -22,13 +23,13 @@ ethernet:
   power_pin: GPIO16
 
 dashboard_import:
-  package_import_url: github://boneIO-eu/esphome/boneio-cover_v0_7.yaml@v1.0.3
+  package_import_url: github://boneIO-eu/esphome/boneio-cover_v0_7.yaml@v1.0.4
   import_full_config: true
 
 packages:
   internals_packages:
     url: https://github.com/boneIO-eu/esphome
-    ref: v1.0.3
+    ref: v1.0.4
     files: [
         'devices/buzzer.yaml',
         'devices_v0_7/display.yaml',
