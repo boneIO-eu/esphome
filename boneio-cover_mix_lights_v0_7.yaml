@@ -8,7 +8,7 @@ esphome:
   name_add_mac_suffix: true
   project:
     name: boneio.32x10-cover-mix-lights
-    version: '1.0'
+    version: '0.7'
 
 esp32:
   board: nodemcu-32s

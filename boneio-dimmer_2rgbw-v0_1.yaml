@@ -1,5 +1,5 @@
 substitutions:
-  name: boneio-dr-rgbw-20
+  name: boneio-dr-rgbw-03
   friendly_name: 'BoneIO Dimmer LED'
 
 esphome:
@@ -8,7 +8,7 @@ esphome:
   name_add_mac_suffix: true
   project:
     name: boneio.dimmer-led
-    version: '2.0'
+    version: '0.3'
 
 esp32:
   board: esp32dev
