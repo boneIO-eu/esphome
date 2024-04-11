@@ -1,5 +1,5 @@
 substitutions:
-  name: boneio-dimmer-01
+  name: boneio-dr-rgbw-20
   friendly_name: 'BoneIO Dimmer LED'
 
 esphome:
@@ -7,8 +7,8 @@ esphome:
   friendly_name: '${friendly_name}'
   name_add_mac_suffix: true
   project:
-    name: boneio.32x10-cover
-    version: '1.0'
+    name: boneio.dimmer-led
+    version: '2.0'
 
 esp32:
   board: esp32dev
@@ -35,10 +35,6 @@ i2c:
 pcf8574:
   - id: 'pcf_inputs'
     address: 0x38
-
-external_components:
-  - source: github://boneIO-eu/esphome-LM75@main #Original source and thank you note for BTomala https://github.com/boneIO-eu/esphome-lm75
-    components: [lm75]
 
 logger:
 api:
@@ -183,13 +179,11 @@ output:
     id: chr04
 
 sensor:
-  # Lower board temperature
-  - platform: lm75
+  - platform: tmp102
     id: boneIO_temp
     name: 'Temperature'
-    update_interval: 10s
+    update_interval: 30s
     entity_category: diagnostic
-
   - platform: ina219
     address: 0x40
     shunt_resistance: 1.0 ohm
