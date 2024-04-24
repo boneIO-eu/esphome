@@ -23,7 +23,7 @@ ethernet:
   power_pin: GPIO16
 
 dashboard_import:
-  package_import_url: github://boneIO-eu/esphome/boneio-dimmer_2rgbw-v0_1.yaml@v1.0.4
+  package_import_url: github://boneIO-eu/esphome/boneio-dimmer_2rgbw-v0_1.yaml@v1.0.5
   import_full_config: true
 
 i2c:
@@ -39,7 +39,6 @@ pcf8574:
 logger:
 api:
 ota:
-  password: boneio
 
 web_server:
   port: 80

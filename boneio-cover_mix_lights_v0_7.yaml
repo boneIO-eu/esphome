@@ -23,13 +23,13 @@ ethernet:
   power_pin: GPIO16
 
 dashboard_import:
-  package_import_url: github://boneIO-eu/esphome/boneio-cover_mix_lights_v0_7.yaml@v1.0.4
+  package_import_url: github://boneIO-eu/esphome/boneio-cover_mix_lights_v0_7.yaml@v1.0.5
   import_full_config: true
 
 packages:
   internals_packages:
     url: https://github.com/boneIO-eu/esphome
-    ref: v1.0.4
+    ref: v1.0.5
     files: [
         'devices/buzzer.yaml',
         'devices_v0_7/display.yaml',
@@ -45,7 +45,6 @@ packages:
 logger:
 api:
 ota:
-  password: boneio
 
 web_server:
   port: 80

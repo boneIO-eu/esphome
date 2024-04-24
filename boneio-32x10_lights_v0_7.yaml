@@ -23,13 +23,31 @@ ethernet:
   power_pin: GPIO16
 
 dashboard_import:
-  package_import_url: github://boneIO-eu/esphome/boneio-32x10_lights_v0_7.yaml@v1.0.4
+  package_import_url: github://boneIO-eu/esphome/boneio-32x10_lights_v0_7.yaml@v1.0.5
   import_full_config: true
 
+modbus:
+  send_wait_time: 200ms
+  uart_id: uart_pin14_15
+  id: mod_bus
+
+modbus_controller:
+  - id: sofarsolar
+    address: 0x09
+    modbus_id: mod_bus
+    setup_priority: -10
+    update_interval: 15s
+
 packages:
+  # extra_boneio_package:
+  #   url: github://boneIO-eu/esphome-packages
+  #   file: sofar-inverter-ktl.yaml
+  #   vars:
+  #     sofar_modbus_id: sofarsolar
+
   internals_packages:
     url: https://github.com/boneIO-eu/esphome
-    ref: v1.0.4
+    ref: v1.0.5
     files: [
         'devices/buzzer.yaml',
         'devices_v0_7/display.yaml',
@@ -39,13 +57,13 @@ packages:
         'devices_v0_7/pcf.yaml',
         'boards/32x10_output.yaml',
         # 'devices_v0_7/one_wire.yaml',
-        # 'devices_v0_7/uart.yaml',
+        'devices_v0_7/uart.yaml',
       ]
 
 logger:
 api:
+  reboot_timeout: 0s
 ota:
-  password: boneio
 
 web_server:
   port: 80
