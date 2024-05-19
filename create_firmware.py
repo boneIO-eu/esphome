@@ -21,7 +21,7 @@ firmware_destination = "../website/public/esp/firmware"
 def json_pattern(firmware_name):
     return {
         "name": "ESPHome",
-        "version": "2024.3.1",
+        "version": "2024.5.0",
         "home_assistant_domain": "esphome",
         "funding_url": "https://esphome.io/guides/supporters.html",
         "new_install_prompt_erase": False,
