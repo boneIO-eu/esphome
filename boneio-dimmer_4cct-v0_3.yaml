@@ -16,7 +16,7 @@ esp32:
 packages:
   internals_packages:
     url: https://github.com/boneIO-eu/esphome
-    ref: v1.0.6
+    ref: v1.0.7
     files:
       [
         'devices/dimmer_buzzer.yaml',
