@@ -13,6 +13,19 @@ esphome:
 esp32:
   board: esp32dev
 
+packages:
+  internals_packages:
+    url: https://github.com/boneIO-eu/esphome
+    ref: v1.0.6
+    files:
+      [
+        'devices/dimmer_buzzer.yaml',
+        'devices/dimmer_i2c.yaml',
+        'devices/dimmer_ina219.yaml',
+        'devices/dimmer_lm75.yaml',
+        'devices/dimmer_outputs.yaml',
+      ]
+
 ethernet:
   id: eth
   type: LAN8720
@@ -23,14 +36,8 @@ ethernet:
   power_pin: GPIO16
 
 dashboard_import:
-  package_import_url: github://boneIO-eu/esphome/boneio-dimmer_8ch-v0_1.yaml@v1.0.5
+  package_import_url: github://boneIO-eu/esphome/boneio-dimmer_8ch-v0_3.yaml@v1.0.6
   import_full_config: true
-
-i2c:
-  sda: GPIO4
-  scl: GPIO5
-  scan: True
-  frequency: 400kHz
 
 pcf8574:
   - id: 'pcf_inputs'
@@ -166,100 +173,3 @@ light:
     id: chr_04
     default_transition_length: 2s
     gamma_correct: 0
-
-output:
-  - platform: ledc
-    pin: 33
-    frequency: 1000Hz
-    inverted: false
-    id: chl01
-  - platform: ledc
-    pin: 32
-    frequency: 1000Hz
-    inverted: false
-    id: chl02
-  - platform: ledc
-    pin: 12
-    frequency: 1000Hz
-    inverted: false
-    id: chl03
-  - platform: ledc
-    pin: 14
-    frequency: 1000Hz
-    inverted: false
-    id: chl04
-
-  - platform: ledc
-    pin: 13
-    frequency: 1000Hz
-    inverted: false
-    id: chr01
-  - platform: ledc
-    pin: 15
-    frequency: 1000Hz
-    inverted: false
-    id: chr02
-  - platform: ledc
-    pin: 2
-    frequency: 1000Hz
-    inverted: false
-    id: chr03
-  - platform: ledc
-    pin: 17
-    frequency: 1000Hz
-    inverted: false
-    id: chr04
-
-sensor:
-  # Lower board temperature
-  - platform: tmp102
-    id: boneIO_temp
-    name: 'Temperature'
-    update_interval: 10s
-    entity_category: diagnostic
-
-  - platform: ina219
-    address: 0x40
-    shunt_resistance: 1.0 ohm
-    bus_voltage:
-      name: 'VDDL Supply'
-      unit_of_measurement: 'V'
-      entity_category: diagnostic
-    current:
-      name: 'VDDL Current'
-      unit_of_measurement: 'A'
-      entity_category: diagnostic
-    shunt_voltage:
-      name: 'VDDL Shunt Voltage'
-      entity_category: diagnostic
-    max_voltage: 32V
-    max_current: 3.2A
-    update_interval: 5s
-  - platform: ina219
-    address: 0x41
-    shunt_resistance: 1.0 ohm
-    bus_voltage:
-      name: 'VDDR Supply'
-      unit_of_measurement: 'V'
-      entity_category: diagnostic
-    current:
-      name: 'VDDR Current'
-      unit_of_measurement: 'A'
-      entity_category: diagnostic
-    shunt_voltage:
-      name: 'VDDR Shunt Voltage'
-      entity_category: diagnostic
-    max_voltage: 32V
-    max_current: 3.2A
-    update_interval: 5s
-
-switch:
-  - platform: gpio
-    id: buzzer
-    name: 'Buzzer'
-    pin:
-      pcf8574: pcf_inputs
-      number: 0
-      mode:
-        output: true
-      inverted: true

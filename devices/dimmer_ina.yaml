@@ -1,0 +1,35 @@
+sensor:
+  - platform: ina219
+    address: 0x40
+    shunt_resistance: 0.005 ohm
+    bus_voltage:
+      name: 'VDDL Supply'
+      unit_of_measurement: 'V'
+      entity_category: diagnostic
+    current:
+      name: 'VDDL Current'
+      unit_of_measurement: 'A'
+      entity_category: diagnostic
+    shunt_voltage:
+      name: 'VDDL Shunt Voltage'
+      entity_category: diagnostic
+    max_voltage: 32V
+    max_current: 3.2A
+    update_interval: 5s
+  - platform: ina219
+    address: 0x41
+    shunt_resistance: 0.005 ohm
+    bus_voltage:
+      name: 'VDDR Supply'
+      unit_of_measurement: 'V'
+      entity_category: diagnostic
+    current:
+      name: 'VDDR Current'
+      unit_of_measurement: 'A'
+      entity_category: diagnostic
+    shunt_voltage:
+      name: 'VDDR Shunt Voltage'
+      entity_category: diagnostic
+    max_voltage: 32V
+    max_current: 3.2A
+    update_interval: 5s

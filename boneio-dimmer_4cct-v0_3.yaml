@@ -1,0 +1,152 @@
+substitutions:
+  name: boneio-dr-4cct-03
+  friendly_name: 'BoneIO Dimmer LED'
+
+esphome:
+  name: '${name}'
+  friendly_name: '${friendly_name}'
+  name_add_mac_suffix: true
+  project:
+    name: boneio.dimmer-led
+    version: '0.3'
+
+esp32:
+  board: esp32dev
+
+packages:
+  internals_packages:
+    url: https://github.com/boneIO-eu/esphome
+    ref: v1.0.6
+    files:
+      [
+        'devices/dimmer_buzzer.yaml',
+        'devices/dimmer_i2c.yaml',
+        'devices/dimmer_ina219.yaml',
+        'devices/dimmer_lm75.yaml',
+        'devices/dimmer_outputs.yaml',
+      ]
+
+ethernet:
+  id: eth
+  type: LAN8720
+  mdc_pin: GPIO23
+  mdio_pin: GPIO18
+  clk_mode: GPIO0_IN
+  phy_addr: 1
+  power_pin: GPIO16
+
+dashboard_import:
+  package_import_url: github://boneIO-eu/esphome/boneio-dimmer_4cct-v0_3.yaml@v1.0.6
+  import_full_config: true
+
+pcf8574:
+  - id: 'pcf_inputs'
+    address: 0x38
+
+logger:
+api:
+ota:
+
+web_server:
+  port: 80
+  local: true
+
+text_sensor:
+  - platform: version
+    name: 'boneio-dimmer- Version'
+    icon: mdi:cube-outline
+    entity_category: diagnostic
+  - platform: ethernet_info
+    ip_address:
+      entity_category: diagnostic
+      name: boneio-dimmer IP
+
+binary_sensor:
+  - platform: gpio
+    name: 'IN_01'
+    pin:
+      pcf8574: pcf_inputs
+      number: 1
+      mode:
+        input: true
+      inverted: true
+  - platform: gpio
+    name: 'IN_02'
+    pin:
+      pcf8574: pcf_inputs
+      number: 2
+      mode:
+        input: true
+      inverted: true
+  - platform: gpio
+    name: 'IN_03'
+    pin:
+      pcf8574: pcf_inputs
+      number: 3
+      mode:
+        input: true
+      inverted: true
+  - platform: gpio
+    name: 'IN_04'
+    pin:
+      pcf8574: pcf_inputs
+      number: 4
+      mode:
+        input: true
+      inverted: true
+  - platform: gpio
+    name: 'IN_05'
+    pin:
+      number: 36
+      mode:
+        input: true
+      inverted: true
+  - platform: gpio
+    name: 'IN_06'
+    pin:
+      number: 39
+      mode:
+        input: true
+      inverted: true
+  - platform: gpio
+    name: 'IN_07'
+    pin:
+      number: 34
+      mode:
+        input: true
+      inverted: true
+  - platform: gpio
+    name: 'IN_08'
+    pin:
+      number: 35
+      mode:
+        input: true
+      inverted: true
+
+light:
+  - platform: cwww
+    name: 'CHL_01_02'
+    cold_white: chl01
+    warm_white: chl02
+    cold_white_color_temperature: 6536 K
+    warm_white_color_temperature: 2000 K
+  - platform: cwww
+    name: 'CHL_03_04'
+    cold_white: chl03
+    warm_white: chl04
+    cold_white_color_temperature: 6536 K
+    warm_white_color_temperature: 2000 K
+
+  - platform: cwww
+    name: 'CHL_05_06'
+    cold_white: chl05
+    warm_white: chl06
+    cold_white_color_temperature: 6536 K
+    warm_white_color_temperature: 2000 K
+
+  - platform: cwww
+    name: 'CHL_07_08'
+    cold_white: chl07
+    warm_white: chl08
+    cold_white_color_temperature: 6536 K
+    warm_white_color_temperature: 2000 K
