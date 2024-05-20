@@ -13,16 +13,18 @@ esphome:
 esp32:
   board: esp32dev
 
+external_components:
+  - source: github://boneIO-eu/esphome-LM75@main #Original source and thank you note for BTomala https://github.com/boneIO-eu/esphome-lm75
+    components: [lm75]
+
 packages:
   internals_packages:
     url: https://github.com/boneIO-eu/esphome
-    ref: v1.0.7
+    ref: v1.0.8
     files:
       [
-        'devices/dimmer_buzzer.yaml',
         'devices/dimmer_i2c.yaml',
         'devices/dimmer_ina219.yaml',
-        'devices/dimmer_lm75.yaml',
         'devices/dimmer_outputs.yaml',
       ]
 
@@ -36,7 +38,7 @@ ethernet:
   power_pin: GPIO16
 
 dashboard_import:
-  package_import_url: github://boneIO-eu/esphome/boneio-dimmer_4cct-v0_3.yaml@v1.0.7
+  package_import_url: github://boneIO-eu/esphome/boneio-dimmer_4cct-v0_3.yaml@v1.0.8
   import_full_config: true
 
 pcf8574:
@@ -150,3 +152,28 @@ light:
     warm_white: chl04
     cold_white_color_temperature: 6536 K
     warm_white_color_temperature: 2000 K
+
+sensor:
+  - platform: lm75
+    id: boneIO_temp
+    name: 'Temperature'
+    update_interval: 30s
+    entity_category: diagnostic
+    on_value_range:
+      - above: 70.0
+        then:
+          - switch.turn_on: buzzer
+      - below: 70.0
+        then:
+          - switch.turn_off: buzzer
+
+switch:
+  - platform: gpio
+    id: buzzer
+    name: 'Buzzer'
+    pin:
+      pcf8574: pcf_inputs
+      number: 0
+      mode:
+        output: true
+      inverted: true
