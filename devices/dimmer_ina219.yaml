@@ -6,7 +6,7 @@ sensor:
       name: 'VDDL Supply'
       entity_category: diagnostic
     power:
-      name: 'VDDR Power'
+      name: 'VDDL Power'
       entity_category: diagnostic
     current:
       name: 'VDDL Current'
