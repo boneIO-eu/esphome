@@ -4,11 +4,12 @@ sensor:
     shunt_resistance: 0.005 ohm
     bus_voltage:
       name: 'VDDL Supply'
-      unit_of_measurement: 'V'
+      entity_category: diagnostic
+    power:
+      name: 'VDDR Power'
       entity_category: diagnostic
     current:
       name: 'VDDL Current'
-      unit_of_measurement: 'A'
       entity_category: diagnostic
     shunt_voltage:
       name: 'VDDL Shunt Voltage'
@@ -21,11 +22,12 @@ sensor:
     shunt_resistance: 0.005 ohm
     bus_voltage:
       name: 'VDDR Supply'
-      unit_of_measurement: 'V'
+      entity_category: diagnostic
+    power:
+      name: 'VDDR Power'
       entity_category: diagnostic
     current:
       name: 'VDDR Current'
-      unit_of_measurement: 'A'
       entity_category: diagnostic
     shunt_voltage:
       name: 'VDDR Shunt Voltage'
