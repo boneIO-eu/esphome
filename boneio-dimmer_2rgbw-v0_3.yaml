@@ -20,8 +20,13 @@ external_components:
 packages:
   internals_packages:
     url: https://github.com/boneIO-eu/esphome
-    ref: v1.0.9
-    files: ['devices/dimmer_i2c.yaml', 'devices/dimmer_ina219.yaml']
+    ref: v1.0.10
+    files:
+      [
+        'devices/dimmer_serial_no.yaml',
+        'devices/dimmer_i2c.yaml',
+        'devices/dimmer_ina219.yaml',
+      ]
 
 ethernet:
   id: eth
@@ -33,7 +38,7 @@ ethernet:
   power_pin: GPIO16
 
 dashboard_import:
-  package_import_url: github://boneIO-eu/esphome/boneio-dimmer_2rgbw-v0_3.yaml@v1.0.9
+  package_import_url: github://boneIO-eu/esphome/boneio-dimmer_2rgbw-v0_3.yaml@v1.0.10
   import_full_config: true
 
 pcf8574:
