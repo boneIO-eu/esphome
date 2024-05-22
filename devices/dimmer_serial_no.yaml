@@ -1,8 +1,9 @@
-- platform: template
-  name: 'Serial No.'
-  lambda: |-
-    std::string mac = get_mac_address();
-    return "dim" + mac.erase(0, mac.length()/2);
-  icon: mdi:expansion-card-variant
-  entity_category: diagnostic
-  update_interval: 10m
+text_sensor:
+  - platform: template
+    name: 'Serial No.'
+    lambda: |-
+      std::string mac = get_mac_address();
+      return "dim" + mac.erase(0, mac.length()/2);
+    icon: mdi:expansion-card-variant
+    entity_category: diagnostic
+    update_interval: 10m
