@@ -6,4 +6,4 @@ text_sensor:
       return "dim" + mac.erase(0, mac.length()/2);
     icon: mdi:expansion-card-variant
     entity_category: diagnostic
-    update_interval: 10m
+    update_interval: 10min
