@@ -1,6 +1,0 @@
-uart:
-  id: uart_pin14_15
-  rx_pin: GPIO14
-  tx_pin: GPIO15
-  baud_rate: 9600
-  stop_bits: 1

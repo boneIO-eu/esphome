@@ -23,13 +23,13 @@ ethernet:
   power_pin: GPIO16
 
 dashboard_import:
-  package_import_url: github://boneIO-eu/esphome/boneio-cover_mix_lights_v0_7.yaml@v1.0.5
+  package_import_url: github://boneIO-eu/esphome/boneio-cover_mix_lights_v0_7.yaml@latest
   import_full_config: true
 
 packages:
   internals_packages:
     url: https://github.com/boneIO-eu/esphome
-    ref: v1.0.5
+    ref: v1.0.15
     files: [
         'devices/buzzer.yaml',
         'devices_v0_7/display.yaml',
@@ -39,7 +39,6 @@ packages:
         'devices_v0_7/pcf.yaml',
         'boards/8_covers_16_output.yaml',
         # 'devices_v0_7/one_wire.yaml',
-        # 'devices_v0_7/uart.yaml',
       ]
 
 logger:
@@ -733,3 +732,25 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+######################
+### MODBUS SECTION ###
+######################
+# UNCOMMENT BELOW TO USE MODBUS
+# uart:
+#   id: uart_pin14_15
+#   rx_pin: GPIO14
+#   tx_pin: GPIO15
+#   baud_rate: 9600
+#   stop_bits: 1
+
+# modbus:
+#   send_wait_time: 200ms
+#   uart_id: uart_pin14_15
+#   id: boneio_modbus
+
+# modbus_controller:
+#   - id: YOURDEVICE ID
+#     address: 0x09
+#     modbus_id: mod_bus
+#     setup_priority: -10
+#     update_interval: 60s
