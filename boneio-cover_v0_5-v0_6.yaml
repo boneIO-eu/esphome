@@ -1,6 +1,7 @@
 substitutions:
   name: boneio-c-06
   friendly_name: 'BoneIO ESP Cover'
+  serial_prefix: 'espc' #Don't change it.
 
 esphome:
   name: '${name}'
@@ -29,9 +30,10 @@ dashboard_import:
 packages:
   internals_packages:
     url: https://github.com/boneIO-eu/esphome
-    ref: v1.0.15
+    ref: v1.0.16
     files: [
         'devices/buzzer.yaml',
+        'devices/serial_no.yaml',
         'devices_v0_5-v0_6/display.yaml',
         'devices_v0_5-v0_6/time.yaml',
         'devices_v0_5-v0_6/i2c.yaml',
