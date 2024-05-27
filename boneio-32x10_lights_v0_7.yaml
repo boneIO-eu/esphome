@@ -1,6 +1,7 @@
 substitutions:
   name: boneio-32-l-07
   friendly_name: 'BoneIO ESP 32x10 Lights'
+  serial_prefix: 'esp32' #Don't change it.
 
 esphome:
   name: '${name}'
@@ -29,9 +30,10 @@ dashboard_import:
 packages:
   internals_packages:
     url: https://github.com/boneIO-eu/esphome
-    ref: v1.0.15
+    ref: v1.0.16
     files: [
         'devices/buzzer.yaml',
+        'devices/serial_no.yaml',
         'devices_v0_7/display.yaml',
         'devices_v0_7/i2c.yaml',
         'devices_v0_7/ina219.yaml',
