@@ -1,0 +1,431 @@
+output:
+  - platform: gpio
+    id: out_01
+    pin:
+      pcf8574: pcf_left
+      number: 7
+      mode:
+        output: true
+      inverted: true
+  - platform: gpio
+    id: out_02
+    pin:
+      pcf8574: pcf_left
+      number: 6
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_03
+    pin:
+      pcf8574: pcf_left
+      number: 5
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_04
+    pin:
+      pcf8574: pcf_left
+      number: 4
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_05
+    pin:
+      pcf8574: pcf_left
+      number: 3
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_06
+    pin:
+      pcf8574: pcf_left
+      number: 2
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_07
+    pin:
+      pcf8574: pcf_left
+      number: 1
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_08
+    pin:
+      pcf8574: pcf_left
+      number: 0
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_09
+    pin:
+      pcf8574: pcf_middle
+      number: 7
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_10
+    pin:
+      pcf8574: pcf_middle
+      number: 6
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_11
+    pin:
+      pcf8574: pcf_middle
+      number: 5
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_12
+    pin:
+      pcf8574: pcf_middle
+      number: 4
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_13
+    pin:
+      pcf8574: pcf_middle
+      number: 3
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_14
+    pin:
+      pcf8574: pcf_middle
+      number: 2
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_15
+    pin:
+      pcf8574: pcf_middle
+      number: 1
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_16
+    pin:
+      pcf8574: pcf_middle
+      number: 0
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_17
+    pin:
+      pcf8574: pcf_right
+      number: 7
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_18
+    pin:
+      pcf8574: pcf_right
+      number: 6
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_19
+    pin:
+      pcf8574: pcf_right
+      number: 5
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_20
+    pin:
+      pcf8574: pcf_right
+      number: 4
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_21
+    pin:
+      pcf8574: pcf_right
+      number: 3
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_22
+    pin:
+      pcf8574: pcf_right
+      number: 2
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_23
+    pin:
+      pcf8574: pcf_right
+      number: 1
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_24
+    pin:
+      pcf8574: pcf_right
+      number: 0
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_25
+    pin:
+      pcf8574: pcf_left
+      number: 8
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_26
+    pin:
+      pcf8574: pcf_left
+      number: 9
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_27
+    pin:
+      pcf8574: pcf_left
+      number: 10
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_28
+    pin:
+      pcf8574: pcf_left
+      number: 11
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_29
+    pin:
+      pcf8574: pcf_left
+      number: 12
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_30
+    pin:
+      pcf8574: pcf_left
+      number: 13
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_31
+    pin:
+      pcf8574: pcf_left
+      number: 14
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_32
+    pin:
+      pcf8574: pcf_left
+      number: 15
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_33
+    pin:
+      pcf8574: pcf_middle
+      number: 8
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_34
+    pin:
+      pcf8574: pcf_middle
+      number: 9
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_35
+    pin:
+      pcf8574: pcf_middle
+      number: 10
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_36
+    pin:
+      pcf8574: pcf_middle
+      number: 11
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_37
+    pin:
+      pcf8574: pcf_middle
+      number: 12
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_38
+    pin:
+      pcf8574: pcf_middle
+      number: 13
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_39
+    pin:
+      pcf8574: pcf_middle
+      number: 14
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_40
+    pin:
+      pcf8574: pcf_middle
+      number: 15
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_41
+    pin:
+      pcf8574: pcf_right
+      number: 8
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_42
+    pin:
+      pcf8574: pcf_right
+      number: 9
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_43
+    pin:
+      pcf8574: pcf_right
+      number: 10
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_44
+    pin:
+      pcf8574: pcf_right
+      number: 11
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_45
+    pin:
+      pcf8574: pcf_right
+      number: 12
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_46
+    pin:
+      pcf8574: pcf_right
+      number: 13
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_47
+    pin:
+      pcf8574: pcf_right
+      number: 14
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_48
+    pin:
+      pcf8574: pcf_right
+      number: 15
+      mode:
+        output: true
+      inverted: true
