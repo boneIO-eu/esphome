@@ -192,15 +192,15 @@ light:
 
   - platform: cwww
     name: 'CHR_01_02'
-    cold_white: chl01
-    warm_white: chl02
+    cold_white: chr01
+    warm_white: chr02
     cold_white_color_temperature: 6536 K
     warm_white_color_temperature: 2000 K
 
   - platform: cwww
     name: 'CHR_03_04'
-    cold_white: chl03
-    warm_white: chl04
+    cold_white: chr03
+    warm_white: chr04
     cold_white_color_temperature: 6536 K
     warm_white_color_temperature: 2000 K
 
