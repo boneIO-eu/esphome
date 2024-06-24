@@ -30,7 +30,7 @@ dashboard_import:
 packages:
   internals_packages:
     url: https://github.com/boneIO-eu/esphome
-    ref: v1.0.17
+    ref: v1.1.0
     files: [
         'devices/buzzer.yaml',
         'devices/serial_no.yaml',
@@ -48,6 +48,7 @@ logger:
   baud_rate: 0 #IMPORTANT FOR V0.5-V0.6 TO GET MODBUS WORKING
 api:
 ota:
+  platform: esphome
 
 web_server:
   port: 80
