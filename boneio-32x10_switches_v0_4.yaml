@@ -8,8 +8,8 @@ esphome:
   friendly_name: '${friendly_name}'
   name_add_mac_suffix: true
   project:
-    name: boneio.32x10-lights
-    version: '0.4'
+    name: boneio.32x10-switches
+    version: '0.4PP'
 
 esp32:
   board: nodemcu-32s
@@ -22,6 +22,7 @@ ethernet:
   clk_mode: GPIO0_IN
   phy_addr: 1
   power_pin: GPIO16
+  #use_address: 
 
 dashboard_import:
   package_import_url: github://boneIO-eu/esphome/boneio-32x10_switches_v0_4.yaml@latest
@@ -47,7 +48,9 @@ logger:
 api:
 ota:
   platform: esphome
-
+  password: boneio
+  
+# disable web server - for testing only
 web_server:
   port: 80
   local: true
@@ -56,7 +59,12 @@ time:
   - platform: homeassistant
     timezone: Europe/Warsaw
     id: homeassistant_time
-
+    # instead try to synchronize via network repeatedly ...
+    on_time_sync:
+      then:
+        # ... and update the RTC when the synchronization was successful
+        ds1307.write_time:
+        
 switch:
   - platform: output
     name: 'Switch 01'
