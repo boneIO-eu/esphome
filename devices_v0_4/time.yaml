@@ -1,0 +1,3 @@
+time:
+  - platform: ds1307
+    id: ds1307_time
