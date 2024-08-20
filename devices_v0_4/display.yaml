@@ -1,0 +1,131 @@
+#i2c  address: 0x3C input oled
+sensor:
+  - platform: uptime
+    id: wt32_uptime_seconds
+    update_interval: 60s
+    entity_category: diagnostic
+    on_raw_value:
+      then:
+        - text_sensor.template.publish:
+            id: wt32_uptime
+            state: !lambda |-
+              int seconds = round(id(wt32_uptime_seconds).raw_state);
+              int days = seconds / (24 * 3600);
+              seconds = seconds % (24 * 3600);
+              int hours = seconds / 3600;
+              seconds = seconds % 3600;
+              int minutes = seconds /  60;
+              return (
+                (days ? to_string(days) + "d " : "") +
+                (hours ? to_string(hours) + "h " : "") +
+                (to_string(minutes) + "m")
+              ).c_str();
+
+text_sensor:
+  - platform: template
+    name: Uptime
+    id: wt32_uptime
+    entity_category: diagnostic
+    icon: mdi:clock-start
+  - platform: template
+    name: 'IP Address'
+    id: ip_address
+    entity_category: diagnostic
+    icon: 'mdi:ip-network'
+    lambda: |-
+      return id(eth).get_ip_addresses().empty() ? "Unset" : id(eth).get_ip_addresses()[0].str();
+    update_interval: 60s
+
+script:
+  - id: screensaver_script
+    # screensaver script, turn on screensaver after 30 seconds, restart counter each time when invoked
+    mode: restart
+    then:
+      # set the time after which the screensaver will be activated
+      - delay: 30s
+      - display.page.show: screensaver
+      - component.update: oled_display
+
+esphome:
+  on_boot:
+    priority: 0
+    then:
+      - display.page.show: first_page
+      - component.update: ip_address
+      - component.update: oled_display
+      - script.execute: screensaver_script
+
+binary_sensor:
+  - platform: gpio
+    entity_category: config
+    id: boneIO_button
+    pin:
+      number: GPIO4
+      mode:
+        input: true
+        pullup: true
+      inverted: true
+    on_press:
+      then:
+        # woke up when on the screensaver, as well do not include the logo page and screensaver in a loop when pushing a button
+        - if:
+            condition:
+          # on the last page go to the first page skipping the screensaver and logo page
+              display.is_displaying_page: last_page
+            then:
+              - display.page.show: first_page
+              - component.update: oled_display
+            else:
+              - if:
+                  condition:
+                    # on the screensaver, show the logo for a while and display the first page
+                    display.is_displaying_page: screensaver
+                  then:
+                    - display.page.show: first_page
+                    - component.update: oled_display
+                  else:
+                    # not the last page and screensaver go to the next page
+                    - display.page.show_next: oled_display
+                    - component.update: oled_display
+          # restart screensaver script
+        - script.execute: screensaver_script
+
+display:
+  - platform: ssd1306_i2c
+    id: oled_display
+    model: "SH1106 128x64"
+    address: 0x3C
+    contrast: 0.5
+    pages:
+      - id: first_page
+        lambda: |-
+          it.rectangle(0, 0, 126, 15);
+          it.printf(64,11, id(size_10), TextAlign::BASELINE_CENTER, "bone IO");
+          it.printf(4, 37, id(size_10), TextAlign::BASELINE_LEFT ,"IP addr:");
+          it.printf(124, 37, id(size_10), TextAlign::BASELINE_RIGHT ,"%s", id(ip_address).state.c_str());
+          it.printf(4, 49, id(size_10), TextAlign::BASELINE_LEFT ,"Uptime:");
+          it.printf(124, 49, id(size_10), TextAlign::BASELINE_RIGHT ,"%s", id(wt32_uptime).state.c_str());
+          it.printf(4, 61, id(size_10), TextAlign::BASELINE_LEFT ,"Temperature:");
+          it.printf(124, 61, id(size_10), TextAlign::BASELINE_RIGHT ,"%.2f°C", id(boneIO_temp).state);
+      # additional pages should be defined between the first and last page
+      - id: last_page
+        lambda: |-
+          it.rectangle(0, 0, 126, 15);
+          it.printf(64,11, id(size_10), TextAlign::BASELINE_CENTER, "bone IO");
+          it.printf(4, 25, id(size_10), TextAlign::BASELINE_LEFT ,"Current:");
+          it.printf(124, 25, id(size_10), TextAlign::BASELINE_RIGHT ,"%.3fA", id(ina_current).state);
+          it.printf(4, 37, id(size_10), TextAlign::BASELINE_LEFT ,"Power:");
+          it.printf(124, 37, id(size_10), TextAlign::BASELINE_RIGHT ,"%.2fW", id(ina_power).state);
+          it.printf(4, 49, id(size_10), TextAlign::BASELINE_LEFT ,"Bus Volt:");
+          it.printf(124, 49, id(size_10), TextAlign::BASELINE_RIGHT ,"%.2fV", id(ina_bus_voltage).state);
+          it.printf(4, 61, id(size_10), TextAlign::BASELINE_LEFT ,"Shunt Volt:");
+          it.printf(124, 61, id(size_10), TextAlign::BASELINE_RIGHT ,"%.2fV", id(ina_shunt_voltage).state);
+      - id: screensaver
+        lambda: |-
+          it.fill(COLOR_OFF);
+
+font:
+  - file: 'gfonts://Ubuntu'
+    id: size_10
+    size: 10
+
