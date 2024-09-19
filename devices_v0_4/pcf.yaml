@@ -1,8 +1,8 @@
 pcf8574:
-  - id: 'pcf_right'
+  - id: 'pcf_inputs_1to14'
     address: 0x20
     pcf8575: true 
-  - id: 'pcf_left'
+  - id: 'pcf_inputs_15to28'
     address: 0x21
     pcf8575: true
   - id: 'mcp_inputs_1to16'
