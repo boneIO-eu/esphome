@@ -30,7 +30,8 @@ dashboard_import:
 
 packages:
   internals_packages:
-    url: https://github.com/boneIO-eu/esphome
+    #url: https://github.com/boneIO-eu/esphome
+    url: https://github.com/wedr0wycz/esphome-fix
     ref: v1.1.0
     files: [
         'devices/serial_no.yaml',
