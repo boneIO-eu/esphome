@@ -55,7 +55,7 @@ for file in glob.glob("*.yaml"):
     if not filename:
         print("No file found.")
         break
-    firmware_path = f"{cwd}/.esphome/build/{filename}/.pioenvs/{filename}/firmware-factory.bin"
+    firmware_path = f"{cwd}/.esphome/build/{filename}/.pioenvs/{filename}/firmware.factory.bin"
     print("CWD", cwd)
     subprocess.run(
         f'docker run --rm -p 6052:6052 -v "{cwd}":/config -it ghcr.io/esphome/esphome compile {file}',
