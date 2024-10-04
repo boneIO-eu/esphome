@@ -23,9 +23,9 @@ ethernet:
   phy_addr: 1
   power_pin: GPIO16
 
-# dashboard_import:
-#   package_import_url: github://boneIO-eu/esphome/boneio-mosfet48_lights_v0_7.yaml@latest
-#   import_full_config: true
+dashboard_import:
+  package_import_url: github://boneIO-eu/esphome/boneio-8x10A_v0_1.yaml@latest
+  import_full_config: true
 
 packages:
   internals_packages:
@@ -62,6 +62,7 @@ mcp23017:
 switch:
   - platform: gpio
     name: 'OUT 1'
+    id: out_01
     pin:
       mcp23xxx: mcp1
       number: 8
@@ -70,6 +71,7 @@ switch:
       inverted: false
   - platform: gpio
     name: 'OUT 2'
+    id: out_02
     pin:
       mcp23xxx: mcp1
       number: 9
@@ -78,6 +80,7 @@ switch:
       inverted: false
   - platform: gpio
     name: 'OUT 3'
+    id: out_03
     pin:
       mcp23xxx: mcp1
       number: 10
@@ -86,6 +89,7 @@ switch:
       inverted: false
   - platform: gpio
     name: 'OUT 4'
+    id: out_04
     pin:
       mcp23xxx: mcp1
       number: 11
@@ -94,6 +98,7 @@ switch:
       inverted: false
   - platform: gpio
     name: 'OUT 5'
+    id: out_05
     pin:
       mcp23xxx: mcp1
       number: 12
@@ -102,6 +107,7 @@ switch:
       inverted: false
   - platform: gpio
     name: 'OUT 6'
+    id: out_06
     pin:
       mcp23xxx: mcp1
       number: 13
@@ -110,6 +116,7 @@ switch:
       inverted: false
   - platform: gpio
     name: 'OUT 7'
+    id: out_07
     pin:
       mcp23xxx: mcp1
       number: 14
@@ -118,6 +125,7 @@ switch:
       inverted: false
   - platform: gpio
     name: 'OUT 8'
+    id: out_08
     pin:
       mcp23xxx: mcp1
       number: 15
@@ -128,6 +136,7 @@ switch:
 binary_sensor:
   - platform: gpio
     name: 'IN 01'
+    id: in_01
     pin:
       mcp23xxx: mcp1
       number: 0
@@ -136,6 +145,7 @@ binary_sensor:
       inverted: false
   - platform: gpio
     name: 'IN 02'
+    id: in_02
     pin:
       mcp23xxx: mcp1
       number: 1
@@ -144,6 +154,7 @@ binary_sensor:
       inverted: false
   - platform: gpio
     name: 'IN 03'
+    id: in_03
     pin:
       mcp23xxx: mcp1
       number: 2
@@ -152,6 +163,7 @@ binary_sensor:
       inverted: false
   - platform: gpio
     name: 'IN 04'
+    id: in_04
     pin:
       mcp23xxx: mcp1
       number: 3
@@ -160,6 +172,7 @@ binary_sensor:
       inverted: false
   - platform: gpio
     name: 'IN 05'
+    id: in_05
     pin:
       mcp23xxx: mcp1
       number: 4
@@ -168,6 +181,7 @@ binary_sensor:
       inverted: false
   - platform: gpio
     name: 'IN 06'
+    id: in_06
     pin:
       mcp23xxx: mcp1
       number: 5
@@ -176,6 +190,7 @@ binary_sensor:
       inverted: false
   - platform: gpio
     name: 'IN 07'
+    id: in_07
     pin:
       mcp23xxx: mcp1
       number: 6
@@ -184,6 +199,7 @@ binary_sensor:
       inverted: false
   - platform: gpio
     name: 'IN 08'
+    id: in_08
     pin:
       mcp23xxx: mcp1
       number: 7
