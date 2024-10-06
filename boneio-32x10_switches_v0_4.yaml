@@ -2,7 +2,7 @@ substitutions:
   name: boneio-32-sw-04
   friendly_name: 'BoneIO ESP 32x10 Switches'
   serial_prefix: 'esp' #Don't change it.
-  
+
 esphome:
   name: '${name}'
   friendly_name: '${friendly_name}'
@@ -10,7 +10,7 @@ esphome:
   project:
     name: boneio.32x10-switches
     version: '0.4PP'
-    
+
 esp32:
   board: nodemcu-32s
 
@@ -22,10 +22,10 @@ ethernet:
   clk_mode: GPIO0_IN
   phy_addr: 1
   power_pin: GPIO16
-  #use_address: 10.10.20.101
+  #use_address:
 
 dashboard_import:
-  package_import_url: github://boneIO-eu/esphome/boneio-24x16_switches_v0_4.yaml@main
+  package_import_url: github://boneIO-eu/esphome/boneio-32x10_switches_v0_4.yaml@main
   import_full_config: true
 
 packages:
@@ -42,7 +42,7 @@ packages:
       'boards/32x10_output.yaml',
       #  devices_v0_7/one_wire.yaml',
       ]
-  
+
 logger:
 api:
 ota:
@@ -185,7 +185,7 @@ switch:
 
 binary_sensor:
   - platform: gpio
-    name: "IN_01"
+    name: 'IN_01'
     id: in_01
     pin:
       pcf8574: pcf_inputs_1to16
@@ -198,7 +198,7 @@ binary_sensor:
         - switch.toggle: switch_01
 
   - platform: gpio
-    name: "IN_02"
+    name: 'IN_02'
     id: in_02
     pin:
       pcf8574: pcf_inputs_1to16
@@ -211,7 +211,7 @@ binary_sensor:
         - switch.toggle: switch_02
 
   - platform: gpio
-    name: "IN_03"
+    name: 'IN_03'
     id: in_03
     pin:
       pcf8574: pcf_inputs_1to16
@@ -219,9 +219,12 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - switch.toggle: switch_03
 
   - platform: gpio
-    name: "IN_04"
+    name: 'IN_04'
     id: in_04
     pin:
       pcf8574: pcf_inputs_1to16
@@ -229,9 +232,12 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - switch.toggle: switch_04
 
   - platform: gpio
-    name: "IN_05"
+    name: 'IN_05'
     id: in_05
     pin:
       pcf8574: pcf_inputs_1to16
@@ -239,9 +245,12 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - switch.toggle: switch_05
 
   - platform: gpio
-    name: "IN_06"
+    name: 'IN_06'
     id: in_06
     pin:
       pcf8574: pcf_inputs_1to16
@@ -249,9 +258,12 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - switch.toggle: switch_06
 
   - platform: gpio
-    name: "IN_07"
+    name: 'IN_07'
     id: in_07
     pin:
       pcf8574: pcf_inputs_1to16
@@ -259,9 +271,12 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - switch.toggle: switch_07
 
   - platform: gpio
-    name: "IN_08"
+    name: 'IN_08'
     id: in_08
     pin:
       pcf8574: pcf_inputs_1to16
@@ -269,9 +284,12 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - switch.toggle: switch_08
 
   - platform: gpio
-    name: "IN_09"
+    name: 'IN_09'
     id: in_09
     pin:
       pcf8574: pcf_inputs_1to16
@@ -279,9 +297,12 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - switch.toggle: switch_09
 
   - platform: gpio
-    name: "IN_10"
+    name: 'IN_10'
     id: in_10
     pin:
       pcf8574: pcf_inputs_1to16
@@ -289,9 +310,12 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - switch.toggle: switch_10
 
   - platform: gpio
-    name: "IN_11"
+    name: 'IN_11'
     id: in_11
     pin:
       pcf8574: pcf_inputs_1to16
@@ -299,9 +323,12 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - switch.toggle: switch_11
 
   - platform: gpio
-    name: "IN_12"
+    name: 'IN_12'
     id: in_12
     pin:
       pcf8574: pcf_inputs_1to16
@@ -309,9 +336,12 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - switch.toggle: switch_12
 
   - platform: gpio
-    name: "IN_13"
+    name: 'IN_13'
     id: in_13
     pin:
       pcf8574: pcf_inputs_1to16
@@ -319,9 +349,12 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - switch.toggle: switch_13
 
   - platform: gpio
-    name: "IN_14"
+    name: 'IN_14'
     id: in_14
     pin:
       pcf8574: pcf_inputs_1to16
@@ -329,9 +362,12 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - switch.toggle: switch_14
 
   - platform: gpio
-    name: "IN_15"
+    name: 'IN_15'
     id: in_15
     pin:
       pcf8574: pcf_inputs_1to16
@@ -339,9 +375,12 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - switch.toggle: switch_15
 
   - platform: gpio
-    name: "IN_16"
+    name: 'IN_16'
     id: in_16
     pin:
       pcf8574: pcf_inputs_1to16
@@ -349,9 +388,12 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - switch.toggle: switch_16
 
   - platform: gpio
-    name: "IN_17"
+    name: 'IN_17'
     id: in_17
     pin:
       pcf8574: pcf_inputs_17to32
@@ -359,9 +401,12 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - switch.toggle: switch_17
 
   - platform: gpio
-    name: "IN_18"
+    name: 'IN_18'
     id: in_18
     pin:
       pcf8574: pcf_inputs_17to32
@@ -369,9 +414,12 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - switch.toggle: switch_18
 
   - platform: gpio
-    name: "IN_19"
+    name: 'IN_19'
     id: in_19
     pin:
       pcf8574: pcf_inputs_17to32
@@ -379,9 +427,12 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - switch.toggle: switch_19
 
   - platform: gpio
-    name: "IN_20 28"
+    name: 'IN_20'
     id: in_20
     pin:
       pcf8574: pcf_inputs_17to32
@@ -389,9 +440,12 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - switch.toggle: switch_20
 
   - platform: gpio
-    name: "IN_21"
+    name: 'IN_21'
     id: in_21
     pin:
       pcf8574: pcf_inputs_17to32
@@ -399,9 +453,12 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - switch.toggle: switch_21
 
   - platform: gpio
-    name: "IN_22"
+    name: 'IN_22'
     id: in_22
     pin:
       pcf8574: pcf_inputs_17to32
@@ -409,9 +466,12 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - switch.toggle: switch_22
 
   - platform: gpio
-    name: "IN_23"
+    name: 'IN_23'
     id: in_23
     pin:
       pcf8574: pcf_inputs_17to32
@@ -419,9 +479,12 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - switch.toggle: switch_23
 
   - platform: gpio
-    name: "IN_24"
+    name: 'IN_24'
     id: in_24
     pin:
       pcf8574: pcf_inputs_17to32
@@ -429,9 +492,12 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - switch.toggle: switch_24
 
   - platform: gpio
-    name: "IN_25"
+    name: 'IN_25'
     id: in_25
     pin:
       pcf8574: pcf_inputs_17to32
@@ -439,9 +505,12 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - switch.toggle: switch_25
 
   - platform: gpio
-    name: "IN_26"
+    name: 'IN_26'
     id: in_26
     pin:
       pcf8574: pcf_inputs_17to32
@@ -449,9 +518,12 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - switch.toggle: switch_26
 
   - platform: gpio
-    name: "IN_27"
+    name: 'IN_27'
     id: in_27
     pin:
       pcf8574: pcf_inputs_17to32
@@ -459,9 +531,12 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - switch.toggle: switch_27
 
   - platform: gpio
-    name: "IN_28"
+    name: 'IN_28'
     id: in_28
     pin:
       pcf8574: pcf_inputs_17to32
@@ -469,9 +544,12 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - switch.toggle: switch_28
 
   - platform: gpio
-    name: "IN_29"
+    name: 'IN_29'
     id: in_29
     pin:
       pcf8574: pcf_inputs_17to32
@@ -479,9 +557,12 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - switch.toggle: switch_29
 
   - platform: gpio
-    name: "IN_30"
+    name: 'IN_30'
     id: in_30
     pin:
       pcf8574: pcf_inputs_17to32
@@ -489,9 +570,12 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - switch.toggle: switch_30
 
   - platform: gpio
-    name: "IN_31"
+    name: 'IN_31'
     id: in_31
     pin:
       pcf8574: pcf_inputs_17to32
@@ -499,9 +583,12 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - switch.toggle: switch_31
 
   - platform: gpio
-    name: "IN_32"
+    name: 'IN_32'
     id: in_32
     pin:
       pcf8574: pcf_inputs_17to32
@@ -509,17 +596,20 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - switch.toggle: switch_32
 
   - platform: gpio
-    name: "IN_33"
+    name: 'IN_33'
     pin:
       number: GPIO33
       mode:
         input: true
-      inverted: true  
+      inverted: true
 
   - platform: gpio
-    name: "IN_34"
+    name: 'IN_34'
     pin:
       number: GPIO17
       mode:
@@ -527,9 +617,37 @@ binary_sensor:
       inverted: true
       
   - platform: gpio
-    name: "IN_35"
+    name: 'IN_35'
     pin:
       number: GPIO12
+      mode:
+        input: true
+        pullup: true
+      inverted: false
+
+######################
+### MODBUS SECTION ###
+######################
+# UNCOMMENT BELOW TO USE MODBUS
+# uart:
+#   id: uart_pin14_15
+#   rx_pin: GPIO14
+#   tx_pin: GPIO15
+#   baud_rate: 9600
+#   stop_bits: 1
+
+# modbus:
+#   send_wait_time: 200ms
+#   uart_id: uart_pin14_15
+#   id: boneio_modbus
+
+# modbus_controller:
+#   - id: YOURDEVICE ID
+#     address: 0x09
+#     modbus_id: mod_bus
+#     setup_priority: -10
+#     update_interval: 60s
+
       mode:
         input: true
         pullup: true
