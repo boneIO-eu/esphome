@@ -1,0 +1,20 @@
+sensor:
+  # Module power consmption
+  - platform: ina219
+    address: 0x40
+    shunt_resistance: 0.1 ohm
+    current:
+      id: ina_current
+      name: 'INA219 Current'
+    power:
+      id: ina_power
+      name: 'INA219 Power'
+    bus_voltage:
+      id: ina_bus_voltage
+      name: 'INA219 Bus Voltage'
+    shunt_voltage:
+      id: ina_shunt_voltage
+      name: 'INA219 Shunt Voltage'
+    max_voltage: 32.0V
+    max_current: 3.2A
+    update_interval: 30s

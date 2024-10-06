@@ -1,0 +1,6 @@
+i2c:
+  - id: i2c_bus
+    sda: GPIO14
+    scl: GPIO15
+    scan: True
+    frequency: 400kHz

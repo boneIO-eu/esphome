@@ -36,11 +36,11 @@ packages:
         'devices/serial_no.yaml',
         'devices_v0_7/display.yaml',
         'devices_v0_7/i2c.yaml',
-        'devices_v0_7/ina219.yaml',
-        'devices_v0_7/lm75b.yaml',
-        'devices_v0_7/pcf.yaml',
+        'devices_v0_7-v0_9/ina219.yaml',
+        'devices_v0_7-v0_9/lm75b.yaml',
+        'devices_v0_7-v0_9/pcf.yaml',
         'boards/32x10_output.yaml',
-        # 'devices_v0_7/one_wire.yaml',
+        # 'devices_v0_7-v0_9/one_wire.yaml',
       ]
 
 logger:
