@@ -25,13 +25,13 @@ ethernet:
   #use_address:
 
 dashboard_import:
-  package_import_url: github://boneIO-eu/esphome/boneio-32x10_switches_v0_4.yaml@main
+  package_import_url: github://boneIO-eu/esphome/boneio-32x10_switches_v0_4.yaml@latest
   import_full_config: true
 
 packages:
   internals_packages:
     url: https://github.com/boneIO-eu/esphome 
-    ref: main
+    ref: v1.3.0
     files: [
       'devices/serial_no.yaml',
       'devices_v0_4/display.yaml',
@@ -40,7 +40,8 @@ packages:
       'devices_v0_4/lm75b.yaml',
       'devices_v0_4/pcf.yaml',
       'boards/32x10_output.yaml',
-      #  devices_v0_7/one_wire.yaml',
+      # 'devices_v0_4/time.yaml',
+      # 'devices_v0_7/one_wire.yaml',
       ]
 
 logger:
