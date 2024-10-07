@@ -36,7 +36,7 @@ packages:
         'devices/serial_no.yaml',
         'devices_v0_7/display.yaml',
         'devices_v0_7/i2c.yaml',
-        'devices_v0_7/ina219.yaml',
+        'devices_v0_7-v0_9/ina219.yaml',
         'devices_v0_7/lm75b.yaml',
         'devices_v0_7/pcf_mosfet.yaml',
         'boards/mosfet48_output.yaml',
