@@ -47,7 +47,12 @@ packages:
 logger:
 api:
 ota:
-  platform: esphome
+  - platform: esphome
+
+# disable web server - for testing only
+web_server:
+  port: 80
+  local: true
 
 time:
   - platform: homeassistant
