@@ -22,7 +22,7 @@ ethernet:
   clk_mode: GPIO0_IN
   phy_addr: 1
   power_pin: GPIO16
-  #use_address: 
+  #use_address:
 
 dashboard_import:
   package_import_url: github://boneIO-eu/esphome/boneio-32x10_switches_v0_4.yaml@latest
@@ -31,7 +31,7 @@ dashboard_import:
 packages:
   internals_packages:
     url: https://github.com/boneIO-eu/esphome
-    ref: v1.1.0
+    ref: v1.3.0
     files: [
         'devices/serial_no.yaml',
         'devices_v0_4/display.yaml',
@@ -48,7 +48,7 @@ api:
 ota:
   platform: esphome
   password: boneio
-  
+
 # disable web server - for testing only
 web_server:
   port: 80
@@ -63,7 +63,7 @@ time:
       then:
         # ... and update the RTC when the synchronization was successful
         ds1307.write_time:
-        
+
 switch:
   - platform: output
     name: 'Switch 01'
