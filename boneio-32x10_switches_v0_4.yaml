@@ -30,18 +30,18 @@ dashboard_import:
 
 packages:
   internals_packages:
-    url: https://github.com/boneIO-eu/esphome 
-    ref: v1.3.0
+    url: https://github.com/boneIO-eu/esphome
+    ref: v1.4.0
     files: [
-      'devices/serial_no.yaml',
-      'devices_v0_4/display.yaml',
-      'devices_v0_4/i2c.yaml',
-      'devices_v0_4/ina219.yaml',
-      'devices_v0_4/lm75b.yaml',
-      'devices_v0_4/pcf.yaml',
-      'boards/32x10_output.yaml',
-      # 'devices_v0_4/time.yaml',
-      # 'devices_v0_7/one_wire.yaml',
+        'devices/serial_no.yaml',
+        'devices_v0_4/display.yaml',
+        'devices_v0_4/i2c.yaml',
+        'devices_v0_4/ina219.yaml',
+        'devices_v0_4/lm75b.yaml',
+        'devices_v0_4/pcf.yaml',
+        'boards/32x10_output.yaml',
+        # 'devices_v0_4/time.yaml',
+        # 'devices_v0_7/one_wire.yaml',
       ]
 
 logger:
@@ -621,7 +621,7 @@ binary_sensor:
       mode:
         input: true
       inverted: true
-      
+
   - platform: gpio
     name: 'IN_35'
     pin:
@@ -630,7 +630,6 @@ binary_sensor:
         input: true
         pullup: true
       inverted: false
-
 ######################
 ### MODBUS SECTION ###
 ######################
@@ -654,7 +653,3 @@ binary_sensor:
 #     setup_priority: -10
 #     update_interval: 60s
 
-      mode:
-        input: true
-        pullup: true
-      inverted: false

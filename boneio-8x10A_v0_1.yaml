@@ -30,13 +30,13 @@ dashboard_import:
 packages:
   internals_packages:
     url: https://github.com/boneIO-eu/esphome
-    ref: v1.3.0
+    ref: v1.4.0
     files:
       [
         'devices/buzzer.yaml',
         'devices/serial_no.yaml',
         'devices/dimmer_i2c.yaml',
-        'devices_v0_7/lm75b.yaml',
+        'devices_v0_7-v0_9/lm75b.yaml',
       ]
 
 logger:

@@ -21,7 +21,7 @@ external_components:
 packages:
   internals_packages:
     url: https://github.com/boneIO-eu/esphome
-    ref: v1.3.0
+    ref: v1.4.0
     files:
       [
         'devices/serial_no.yaml',
