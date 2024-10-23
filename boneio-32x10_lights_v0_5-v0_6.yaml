@@ -47,8 +47,9 @@ packages:
 logger:
   baud_rate: 0 #IMPORTANT FOR V0.5-V0.6 TO GET MODBUS WORKING
 api:
+  reboot_timeout: 0s
 ota:
-  platform: esphome
+  - platform: esphome
 
 web_server:
   port: 80
