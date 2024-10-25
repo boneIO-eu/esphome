@@ -30,7 +30,7 @@ dashboard_import:
 packages:
   internals_packages:
     url: https://github.com/boneIO-eu/esphome
-    ref: v1.2.0
+    ref: v1.4.0
     files: [
         'devices/buzzer.yaml',
         'devices/serial_no.yaml',
@@ -39,7 +39,6 @@ packages:
         'devices_v0_7-v0_9/ina219.yaml',
         'devices_v0_7-v0_9/lm75b.yaml',
         'devices_v0_7-v0_9/pcf.yaml',
-        'boards/32x10_output.yaml',
         'boards/8_covers_16_output.yaml',
         # 'devices_v0_7-v0_9/one_wire.yaml',
       ]

@@ -38,7 +38,7 @@ packages:
         'devices_v0_7/i2c.yaml',
         'devices_v0_7-v0_9/ina219.yaml',
         'devices_v0_7-v0_9/lm75b.yaml',
-        'devices_v0_7-v0_9/pcf.yaml',
+        'devices_v0_7-v0_9/pcf_with_mcp.yaml',
         'boards/24x16_output.yaml',
         # 'devices_v0_7-v0_9/one_wire.yaml',
       ]

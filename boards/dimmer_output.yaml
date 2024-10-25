@@ -1,0 +1,42 @@
+output:
+  - platform: ledc
+    pin: 33
+    frequency: 1000Hz
+    inverted: false
+    id: chl01
+  - platform: ledc
+    pin: 32
+    frequency: 1000Hz
+    inverted: false
+    id: chl02
+  - platform: ledc
+    pin: 12
+    frequency: 1000Hz
+    inverted: false
+    id: chl03
+  - platform: ledc
+    pin: 14
+    frequency: 1000Hz
+    inverted: false
+    id: chl04
+
+  - platform: ledc
+    pin: 13
+    frequency: 1000Hz
+    inverted: false
+    id: chr01
+  - platform: ledc
+    pin: 15
+    frequency: 1000Hz
+    inverted: false
+    id: chr02
+  - platform: ledc
+    pin: 2
+    frequency: 1000Hz
+    inverted: false
+    id: chr03
+  - platform: ledc
+    pin: 17
+    frequency: 1000Hz
+    inverted: false
+    id: chr04
