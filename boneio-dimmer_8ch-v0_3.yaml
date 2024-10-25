@@ -21,12 +21,13 @@ external_components:
 packages:
   internals_packages:
     url: https://github.com/boneIO-eu/esphome
-    ref: v1.4.0
+    ref: v1.5.0
     files:
       [
         'devices/serial_no.yaml',
         'devices/dimmer_i2c.yaml',
         'devices/dimmer_ina219.yaml',
+        'board/dimmer_output.yaml',
       ]
 
 ethernet:
@@ -76,107 +77,304 @@ text_sensor:
 binary_sensor:
   - platform: gpio
     name: 'IN_01'
+    id: in_01
     pin:
       pcf8574: pcf_inputs
       number: 1
       mode:
         input: true
       inverted: true
+    on_multi_click:
+      - timing:
+          - ON for at least 0.7s
+        then:
+          - while:
+              condition:
+                binary_sensor.is_on: in_01
+              then:
+                - if:
+                    condition:
+                      lambda: 'return id(chl_01).current_values.get_brightness() >= 0.90f;'
+                    then:
+                      - light.turn_on:
+                          id: chl_01
+                          brightness: 5%
+                          transition_length: 0.2s
+                    else:
+                      - light.dim_relative:
+                          id: chl_01
+                          relative_brightness: 5%
+                          transition_length: 0.2s
+                - delay: 200ms
+        invalid_cooldown: 0.5s
+      - timing: #single click
+          - ON for at most 0.4s
+          - OFF for at least 0.1s
+        then:
+          light.toggle: chl_01
+        invalid_cooldown: 0.5s
   - platform: gpio
     name: 'IN_02'
+    id: in_02
     pin:
       pcf8574: pcf_inputs
       number: 2
       mode:
         input: true
       inverted: true
+    on_multi_click:
+      - timing:
+          - ON for at least 0.7s
+        then:
+          - while:
+              condition:
+                binary_sensor.is_on: in_02
+              then:
+                - if:
+                    condition:
+                      lambda: 'return id(chl_02).current_values.get_brightness() >= 0.90f;'
+                    then:
+                      - light.turn_on:
+                          id: chl_02
+                          brightness: 5%
+                          transition_length: 0.2s
+                    else:
+                      - light.dim_relative:
+                          id: chl_02
+                          relative_brightness: 5%
+                          transition_length: 0.2s
+                - delay: 200ms
+        invalid_cooldown: 0.5s
+      - timing: #single click
+          - ON for at most 0.4s
+          - OFF for at least 0.1s
+        then:
+          light.toggle: chl_02
+        invalid_cooldown: 0.5s
   - platform: gpio
     name: 'IN_03'
+    id: in_03
     pin:
       pcf8574: pcf_inputs
       number: 3
       mode:
         input: true
       inverted: true
+    on_multi_click:
+      - timing:
+          - ON for at least 0.7s
+        then:
+          - while:
+              condition:
+                binary_sensor.is_on: in_03
+              then:
+                - if:
+                    condition:
+                      lambda: 'return id(chl_03).current_values.get_brightness() >= 0.90f;'
+                    then:
+                      - light.turn_on:
+                          id: chl_03
+                          brightness: 5%
+                          transition_length: 0.2s
+                    else:
+                      - light.dim_relative:
+                          id: chl_03
+                          relative_brightness: 5%
+                          transition_length: 0.2s
+                - delay: 200ms
+        invalid_cooldown: 0.5s
+      - timing: #single click
+          - ON for at most 0.4s
+          - OFF for at least 0.1s
+        then:
+          light.toggle: chl_03
+        invalid_cooldown: 0.5s
   - platform: gpio
     name: 'IN_04'
+    id: in_04
     pin:
       pcf8574: pcf_inputs
       number: 4
       mode:
         input: true
       inverted: true
+    on_multi_click:
+      - timing:
+          - ON for at least 0.7s
+        then:
+          - while:
+              condition:
+                binary_sensor.is_on: in_04
+              then:
+                - if:
+                    condition:
+                      lambda: 'return id(chl_04).current_values.get_brightness() >= 0.90f;'
+                    then:
+                      - light.turn_on:
+                          id: chl_04
+                          brightness: 5%
+                          transition_length: 0.2s
+                    else:
+                      - light.dim_relative:
+                          id: chl_04
+                          relative_brightness: 5%
+                          transition_length: 0.2s
+                - delay: 200ms
+        invalid_cooldown: 0.5s
+      - timing: #single click
+          - ON for at most 0.4s
+          - OFF for at least 0.1s
+        then:
+          light.toggle: chl_04
+        invalid_cooldown: 0.5s
   - platform: gpio
     name: 'IN_05'
+    id: in_05
     pin:
       number: 36
       mode:
         input: true
       inverted: true
+    on_multi_click:
+      - timing:
+          - ON for at least 0.7s
+        then:
+          - while:
+              condition:
+                binary_sensor.is_on: in_05
+              then:
+                - if:
+                    condition:
+                      lambda: 'return id(chl_05).current_values.get_brightness() >= 0.90f;'
+                    then:
+                      - light.turn_on:
+                          id: chl_05
+                          brightness: 5%
+                          transition_length: 0.2s
+                    else:
+                      - light.dim_relative:
+                          id: chl_05
+                          relative_brightness: 5%
+                          transition_length: 0.2s
+                - delay: 200ms
+        invalid_cooldown: 0.5s
+      - timing: #single click
+          - ON for at most 0.4s
+          - OFF for at least 0.1s
+        then:
+          light.toggle: chl_05
+        invalid_cooldown: 0.5s
   - platform: gpio
     name: 'IN_06'
+    id: in_06
     pin:
       number: 39
       mode:
         input: true
       inverted: true
+    on_multi_click:
+      - timing:
+          - ON for at least 0.7s
+        then:
+          - while:
+              condition:
+                binary_sensor.is_on: in_06
+              then:
+                - if:
+                    condition:
+                      lambda: 'return id(chl_06).current_values.get_brightness() >= 0.90f;'
+                    then:
+                      - light.turn_on:
+                          id: chl_06
+                          brightness: 5%
+                          transition_length: 0.2s
+                    else:
+                      - light.dim_relative:
+                          id: chl_06
+                          relative_brightness: 5%
+                          transition_length: 0.2s
+                - delay: 200ms
+        invalid_cooldown: 0.5s
+      - timing: #single click
+          - ON for at most 0.4s
+          - OFF for at least 0.1s
+        then:
+          light.toggle: chl_06
+        invalid_cooldown: 0.5s
   - platform: gpio
     name: 'IN_07'
+    id: in_07
     pin:
       number: 34
       mode:
         input: true
       inverted: true
+    on_multi_click:
+      - timing:
+          - ON for at least 0.7s
+        then:
+          - while:
+              condition:
+                binary_sensor.is_on: in_07
+              then:
+                - if:
+                    condition:
+                      lambda: 'return id(chl_07).current_values.get_brightness() >= 0.90f;'
+                    then:
+                      - light.turn_on:
+                          id: chl_07
+                          brightness: 5%
+                          transition_length: 0.2s
+                    else:
+                      - light.dim_relative:
+                          id: chl_07
+                          relative_brightness: 5%
+                          transition_length: 0.2s
+                - delay: 200ms
+        invalid_cooldown: 0.5s
+      - timing: #single click
+          - ON for at most 0.4s
+          - OFF for at least 0.1s
+        then:
+          light.toggle: chl_07
+        invalid_cooldown: 0.5s
   - platform: gpio
     name: 'IN_08'
+    id: in_08
     pin:
       number: 35
       mode:
         input: true
       inverted: true
-
-output:
-  - platform: ledc
-    pin: 33
-    frequency: 1000Hz
-    inverted: false
-    id: chl01
-  - platform: ledc
-    pin: 32
-    frequency: 1000Hz
-    inverted: false
-    id: chl02
-  - platform: ledc
-    pin: 12
-    frequency: 1000Hz
-    inverted: false
-    id: chl03
-  - platform: ledc
-    pin: 14
-    frequency: 1000Hz
-    inverted: false
-    id: chl04
-
-  - platform: ledc
-    pin: 13
-    frequency: 1000Hz
-    inverted: false
-    id: chr01
-  - platform: ledc
-    pin: 15
-    frequency: 1000Hz
-    inverted: false
-    id: chr02
-  - platform: ledc
-    pin: 2
-    frequency: 1000Hz
-    inverted: false
-    id: chr03
-  - platform: ledc
-    pin: 17
-    frequency: 1000Hz
-    inverted: false
-    id: chr04
+    on_multi_click:
+      - timing:
+          - ON for at least 0.7s
+        then:
+          - while:
+              condition:
+                binary_sensor.is_on: in_08
+              then:
+                - if:
+                    condition:
+                      lambda: 'return id(chl_08).current_values.get_brightness() >= 0.90f;'
+                    then:
+                      - light.turn_on:
+                          id: chl_08
+                          brightness: 5%
+                          transition_length: 0.2s
+                    else:
+                      - light.dim_relative:
+                          id: chl_08
+                          relative_brightness: 5%
+                          transition_length: 0.2s
+                - delay: 200ms
+        invalid_cooldown: 0.5s
+      - timing: #single click
+          - ON for at most 0.4s
+          - OFF for at least 0.1s
+        then:
+          light.toggle: chl_08
+        invalid_cooldown: 0.5s
 
 light:
   - platform: monochromatic
