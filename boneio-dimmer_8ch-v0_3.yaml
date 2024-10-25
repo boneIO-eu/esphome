@@ -245,15 +245,15 @@ binary_sensor:
               then:
                 - if:
                     condition:
-                      lambda: 'return id(chl_05).current_values.get_brightness() >= 0.90f;'
+                      lambda: 'return id(chr_01).current_values.get_brightness() >= 0.90f;'
                     then:
                       - light.turn_on:
-                          id: chl_05
+                          id: chr_01
                           brightness: 5%
                           transition_length: 0.2s
                     else:
                       - light.dim_relative:
-                          id: chl_05
+                          id: chr_01
                           relative_brightness: 5%
                           transition_length: 0.2s
                 - delay: 200ms
@@ -262,7 +262,7 @@ binary_sensor:
           - ON for at most 0.4s
           - OFF for at least 0.1s
         then:
-          light.toggle: chl_05
+          light.toggle: chr_01
         invalid_cooldown: 0.5s
   - platform: gpio
     name: 'IN_06'
@@ -282,15 +282,15 @@ binary_sensor:
               then:
                 - if:
                     condition:
-                      lambda: 'return id(chl_06).current_values.get_brightness() >= 0.90f;'
+                      lambda: 'return id(chr_02).current_values.get_brightness() >= 0.90f;'
                     then:
                       - light.turn_on:
-                          id: chl_06
+                          id: chr_02
                           brightness: 5%
                           transition_length: 0.2s
                     else:
                       - light.dim_relative:
-                          id: chl_06
+                          id: chr_02
                           relative_brightness: 5%
                           transition_length: 0.2s
                 - delay: 200ms
@@ -299,7 +299,7 @@ binary_sensor:
           - ON for at most 0.4s
           - OFF for at least 0.1s
         then:
-          light.toggle: chl_06
+          light.toggle: chr_02
         invalid_cooldown: 0.5s
   - platform: gpio
     name: 'IN_07'
@@ -319,15 +319,15 @@ binary_sensor:
               then:
                 - if:
                     condition:
-                      lambda: 'return id(chl_07).current_values.get_brightness() >= 0.90f;'
+                      lambda: 'return id(chr_03).current_values.get_brightness() >= 0.90f;'
                     then:
                       - light.turn_on:
-                          id: chl_07
+                          id: chr_03
                           brightness: 5%
                           transition_length: 0.2s
                     else:
                       - light.dim_relative:
-                          id: chl_07
+                          id: chr_03
                           relative_brightness: 5%
                           transition_length: 0.2s
                 - delay: 200ms
@@ -336,7 +336,7 @@ binary_sensor:
           - ON for at most 0.4s
           - OFF for at least 0.1s
         then:
-          light.toggle: chl_07
+          light.toggle: chr_03
         invalid_cooldown: 0.5s
   - platform: gpio
     name: 'IN_08'
@@ -356,15 +356,15 @@ binary_sensor:
               then:
                 - if:
                     condition:
-                      lambda: 'return id(chl_08).current_values.get_brightness() >= 0.90f;'
+                      lambda: 'return id(chr_04).current_values.get_brightness() >= 0.90f;'
                     then:
                       - light.turn_on:
-                          id: chl_08
+                          id: chr_04
                           brightness: 5%
                           transition_length: 0.2s
                     else:
                       - light.dim_relative:
-                          id: chl_08
+                          id: chr_04
                           relative_brightness: 5%
                           transition_length: 0.2s
                 - delay: 200ms
@@ -373,7 +373,7 @@ binary_sensor:
           - ON for at most 0.4s
           - OFF for at least 0.1s
         then:
-          light.toggle: chl_08
+          light.toggle: chr_04
         invalid_cooldown: 0.5s
 
 light:
