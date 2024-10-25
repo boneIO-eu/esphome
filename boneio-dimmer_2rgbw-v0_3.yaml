@@ -27,7 +27,7 @@ packages:
         'devices/serial_no.yaml',
         'devices/dimmer_i2c.yaml',
         'devices/dimmer_ina219.yaml',
-        'board/dimmer_output.yaml',
+        'boards/dimmer_output.yaml',
       ]
 
 ethernet:
