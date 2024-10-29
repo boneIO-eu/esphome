@@ -1,0 +1,23 @@
+switch:
+  - platform: gpio
+    id: cover_open_14_out27
+    pin:
+      pcf8574: pcf_right
+      number: 2
+      mode:
+        output: true
+      inverted: true
+    interlock: &cover_interlock_14 [cover_open_14_out27, cover_close_14_out28]
+    interlock_wait_time: 5ms
+    restore_mode: always off
+
+  - platform: gpio
+    id: cover_close_14_out28
+    pin:
+      pcf8574: pcf_right
+      number: 3
+      mode:
+        output: true
+      inverted: true
+    interlock: *cover_interlock_14
+    restore_mode: always off
