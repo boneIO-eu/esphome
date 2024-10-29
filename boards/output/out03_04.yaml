@@ -1,0 +1,18 @@
+output:
+  - platform: gpio
+    id: out_03
+    pin:
+      pcf8574: pcf_left
+      number: 13
+      mode:
+        output: true
+      inverted: true
+
+  - platform: gpio
+    id: out_04
+    pin:
+      pcf8574: pcf_left
+      number: 12
+      mode:
+        output: true
+      inverted: true
