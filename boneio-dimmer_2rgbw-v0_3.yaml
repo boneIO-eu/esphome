@@ -83,6 +83,26 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_multi_click:
+      - timing: # double click
+          - ON for at most 1s
+          - OFF for at most 0.5s
+          - ON for at most 1s
+          - OFF for at least 0.2s
+        then:
+          - light.toggle: rgbw_l
+          - logger.log: 'Double Click'
+      - timing: # single click
+          - ON for at most 1s
+          - OFF for at least 0.5s
+        then:
+          - light.toggle: rgbw_l
+          - logger.log: 'Single Click'
+      - timing: # long click
+          - ON for at least 1.4s
+        then:
+          - light.toggle: rgbw_r
+          - logger.log: 'Long Click'
   - platform: gpio
     name: 'IN_02'
     pin:
@@ -138,6 +158,7 @@ binary_sensor:
 
 light:
   - platform: rgbw
+    id: rgbw_l
     name: 'RGBW L'
     red: chl01
     green: chl02
@@ -146,6 +167,7 @@ light:
     default_transition_length: 2s
     gamma_correct: 0
   - platform: rgbw
+    id: rgbw_r
     name: 'RGBW R'
     red: chr01
     green: chr02
