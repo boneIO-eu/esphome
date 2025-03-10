@@ -1,0 +1,289 @@
+substitutions:
+  name: boneio-dev02
+  friendly_name: 'BoneIO Dimmer dev0.2'
+  serial_prefix: 'dim' #Don't change it.
+
+esphome:
+  name: '${name}'
+  friendly_name: '${friendly_name}'
+  name_add_mac_suffix: false
+  project:
+    name: boneio.dimmer-led
+    version: 'dev0.2'
+
+esp32:
+  board: esp32-s3-devkitc-1
+
+
+ethernet:
+  id: eth
+  type: W5500
+  clk_pin: GPIO12
+  mosi_pin: GPIO39
+  miso_pin: GPIO38
+  cs_pin: GPIO13
+  interrupt_pin: GPIO2
+  reset_pin: GPIO1
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+
+external_components:
+  - source: github://boneIO-eu/esphome-LM75@main #Original source and thank you note for BTomala https://github.com/boneIO-eu/esphome-lm75
+    components: [lm75]
+
+i2c:
+  sda: GPIO10
+  scl: GPIO11
+  scan: True
+  frequency: 400kHz
+
+uart:
+  id: uart_pin
+  rx_pin: GPIO14
+  tx_pin: GPIO21
+  baud_rate: 9600
+  stop_bits: 1
+
+output:
+  - platform: ledc
+    pin: GPIO18
+    frequency: 1000Hz
+    inverted: false
+    id: chl01
+  - platform: ledc
+    pin: GPIO17
+    frequency: 1000Hz
+    inverted: false
+    id: chl02
+  - platform: ledc
+    pin: GPIO16
+    frequency: 1000Hz
+    inverted: false
+    id: chl03
+  - platform: ledc
+    pin: GPIO15
+    frequency: 1000Hz
+    inverted: false
+    id: chl04
+
+  - platform: ledc
+    pin: GPIO7
+    frequency: 1000Hz
+    inverted: false
+    id: chr01
+  - platform: ledc
+    pin: GPIO6
+    frequency: 1000Hz
+    inverted: false
+    id: chr02
+  - platform: ledc
+    pin: GPIO5
+    frequency: 1000Hz
+    inverted: false
+    id: chr03
+  - platform: ledc
+    pin: GPIO4
+    frequency: 1000Hz
+    inverted: false
+    id: chr04
+
+  ##CAN gpio1 - tx, gpio2 rx
+
+# modbus:
+#   send_wait_time: 200ms
+#   uart_id: uart_pin8_9
+#   id: boneio_modbus
+
+packages:
+  internals_packages:
+    url: https://github.com/boneIO-eu/esphome
+    ref: v1.5.0
+    files: [
+        'devices/serial_no.yaml',
+        # 'devices/dimmer_i2c.yaml',
+      ]
+
+# dashboard_import:
+#   package_import_url: github://boneIO-eu/esphome/boneio-dimmer_8ch-v0_3.yaml@latest
+#   import_full_config: true
+
+pcf8574:
+  - id: 'pcf_inputs'
+    address: 0x38
+
+logger:
+api:
+  reboot_timeout: 0s
+ota:
+  - platform: esphome
+
+web_server:
+  port: 80
+  local: true
+
+
+light:
+  - platform: monochromatic
+    output: chl01
+    name: 'CHL 01'
+    id: chl_01
+    default_transition_length: 2s
+    gamma_correct: 0
+  - platform: monochromatic
+    output: chl02
+    name: 'CHL 02'
+    id: chl_02
+    default_transition_length: 2s
+    gamma_correct: 0
+  - platform: monochromatic
+    output: chl03
+    name: 'CHL 03'
+    id: chl_03
+    default_transition_length: 2s
+    gamma_correct: 0
+  - platform: monochromatic
+    output: chl04
+    name: 'CHL 04'
+    id: chl_04
+    default_transition_length: 2s
+    gamma_correct: 0
+
+  - platform: monochromatic
+    output: chr01
+    name: 'CHR 01'
+    id: chr_01
+    default_transition_length: 2s
+    gamma_correct: 0
+  - platform: monochromatic
+    output: chr02
+    name: 'CHR 02'
+    id: chr_02
+    default_transition_length: 2s
+    gamma_correct: 0
+  - platform: monochromatic
+    output: chr03
+    name: 'CHR 03'
+    id: chr_03
+    default_transition_length: 2s
+    gamma_correct: 0
+  - platform: monochromatic
+    output: chr04
+    name: 'CHR 04'
+    id: chr_04
+    default_transition_length: 2s
+    gamma_correct: 0
+
+debug:
+  update_interval: 15s
+
+sensor:
+  - platform: debug
+    free:
+      name: "Heap Free"
+    block:
+      name: "Heap Max Block"
+    loop_time:
+      name: "Loop Time"
+  - platform: lm75
+    id: boneIO_temp
+    name: 'Temperature'
+    update_interval: 30s
+    entity_category: diagnostic
+    on_value_range:
+      - above: 70.0
+        then:
+          - switch.turn_on: buzzer
+      - below: 70.0
+        then:
+          - switch.turn_off: buzzer
+
+switch:
+  - platform: gpio
+    id: buzzer
+    name: 'Buzzer'
+    pin:
+      number: GPIO9
+      mode:
+        output: true
+      inverted: false
+
+binary_sensor:
+  - platform: gpio
+    name: 'IN_01'
+    id: in_01
+    pin:
+      pcf8574: pcf_inputs
+      number: 0
+      mode:
+        input: true
+      inverted: true
+
+  - platform: gpio
+    name: 'IN_02'
+    id: in_02
+    pin:
+      pcf8574: pcf_inputs
+      number: 1
+      mode:
+        input: true
+      inverted: true
+
+  - platform: gpio
+    name: 'IN_03'
+    id: in_03
+    pin:
+      pcf8574: pcf_inputs
+      number: 2
+      mode:
+        input: true
+      inverted: true
+
+  - platform: gpio
+    name: 'IN_04'
+    id: in_04
+    pin:
+      pcf8574: pcf_inputs
+      number: 3
+      mode:
+        input: true
+      inverted: true
+
+  - platform: gpio
+    name: 'IN_05'
+    id: in_05
+    pin:
+      pcf8574: pcf_inputs
+      number: 4
+      mode:
+        input: true
+      inverted: true
+
+  - platform: gpio
+    name: 'IN_06'
+    id: in_06
+    pin:
+      pcf8574: pcf_inputs
+      number: 5
+      mode:
+        input: true
+      inverted: true
+
+  - platform: gpio
+    name: 'IN_07'
+    id: in_07
+    pin:
+      pcf8574: pcf_inputs
+      number: 6
+      mode:
+        input: true
+      inverted: true
+
+  - platform: gpio
+    name: 'IN_08'
+    id: in_08
+    pin:
+      pcf8574: pcf_inputs
+      number: 7
+      mode:
+        input: true
+      inverted: true
+    
