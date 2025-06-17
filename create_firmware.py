@@ -1,10 +1,10 @@
 #!/usr/bin/python
-import subprocess
 import glob
+import json
 import os
 import re
-import json
 import shutil
+import subprocess
 from pathlib import Path
 
 home = str(Path.home())

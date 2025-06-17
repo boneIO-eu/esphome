@@ -1,19 +1,18 @@
 substitutions:
-  name: boneio-dev02
-  friendly_name: 'BoneIO Dimmer dev0.2'
+  name: boneio-dr-gen2-8ch-dev04
+  friendly_name: 'BoneIO Dimmer dev0.4'
   serial_prefix: 'dim' #Don't change it.
-
+  firmware_manifest: 'https://boneio.eu/esp/boneio-dr-gen2-8ch-dev04.json'
 esphome:
   name: '${name}'
   friendly_name: '${friendly_name}'
   name_add_mac_suffix: false
   project:
-    name: boneio.dimmer-led
-    version: 'dev0.2'
+    name: boneio.dimmer-led-gen2
+    version: 'dev0.4'
 
 esp32:
   board: esp32-s3-devkitc-1
-
 
 ethernet:
   id: eth
@@ -37,9 +36,9 @@ i2c:
   frequency: 400kHz
 
 uart:
-  id: uart_pin
-  rx_pin: GPIO14
-  tx_pin: GPIO21
+  id: boneio_uart
+  rx_pin: GPIO21
+  tx_pin: GPIO14
   baud_rate: 9600
   stop_bits: 1
 
@@ -88,33 +87,47 @@ output:
 
   ##CAN gpio1 - tx, gpio2 rx
 
-# modbus:
-#   send_wait_time: 200ms
-#   uart_id: uart_pin8_9
-#   id: boneio_modbus
+modbus:
+  send_wait_time: 200ms
+  uart_id: boneio_uart
+  id: boneio_modbus
 
 packages:
   internals_packages:
     url: https://github.com/boneIO-eu/esphome
-    ref: v1.5.0
+    ref: v1.6.0
     files: [
         'devices/serial_no.yaml',
         # 'devices/dimmer_i2c.yaml',
       ]
+  boneiopackages:
+    url: https://github.com/boneIO-eu/esphome_packages
+    ref: main
+    refresh: 1min
+    files:
+      - path: sdm630/package.yaml
 
-# dashboard_import:
-#   package_import_url: github://boneIO-eu/esphome/boneio-dimmer_8ch-v0_3.yaml@latest
-#   import_full_config: true
+dashboard_import:
+  package_import_url: github://boneIO-eu/esphome/boneio-dimmer_g2_8ch-dev0_4.yaml@latest
+  import_full_config: true
 
 pcf8574:
   - id: 'pcf_inputs'
     address: 0x38
 
 logger:
+  hardware_uart: UART0
 api:
   reboot_timeout: 0s
 ota:
   - platform: esphome
+  - platform: http_request
+
+update:
+  - id: update_std
+    platform: http_request
+    name: Firmware Update
+    source: ${firmware_manifest}
 
 web_server:
   port: 80
