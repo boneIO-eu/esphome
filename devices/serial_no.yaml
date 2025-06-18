@@ -1,6 +1,7 @@
 text_sensor:
   - platform: template
     name: 'Serial No.'
+    id: serial_no
     lambda: |-
       std::string mac = get_mac_address();
       return to_string("${serial_prefix}") + mac.erase(0, mac.length()/2);
