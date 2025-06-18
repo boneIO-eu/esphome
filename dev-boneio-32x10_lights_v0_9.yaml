@@ -61,11 +61,13 @@ packages:
 logger:
 api:
   reboot_timeout: 0s
+# http_request:
+#   verify_ssl: false
 ota:
   - platform: esphome
-  - platform: http_request
-    name: Firmware Update
-    source: https://boneio.eu/esp/
+  # - platform: http_request
+  #   name: Firmware Update
+  #   source: https://boneio.eu/esp/
 
 web_server:
   port: 80

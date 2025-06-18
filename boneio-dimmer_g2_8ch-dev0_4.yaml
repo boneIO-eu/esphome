@@ -1,15 +1,27 @@
 substitutions:
   name: boneio-dr-gen2-8ch-dev04
   friendly_name: 'BoneIO Dimmer dev0.4'
-  serial_prefix: 'dim' #Don't change it.
+  serial_prefix: 'dim2' #Don't change it.
   firmware_manifest: 'https://boneio.eu/esp/boneio-dr-gen2-8ch-dev04.json'
 esphome:
   name: '${name}'
   friendly_name: '${friendly_name}'
-  name_add_mac_suffix: false
+  name_add_mac_suffix: true
   project:
     name: boneio.dimmer-led-gen2
     version: 'dev0.4'
+  on_boot:
+    priority: -100
+    then:
+      - delay: 5s
+      - if:
+          condition:
+            lambda: 'return id(serial_no) != nullptr;'
+          then:
+            - component.update: serial_no
+            - logger.log: "Serial No updated on boot"
+          else:
+            - logger.log: "Serial No component not found"
 
 esp32:
   board: esp32-s3-devkitc-1
@@ -17,13 +29,13 @@ esp32:
 ethernet:
   id: eth
   type: W5500
-  clk_pin: GPIO12
+  clk_pin: GPIO13
   mosi_pin: GPIO39
   miso_pin: GPIO38
-  cs_pin: GPIO13
+  cs_pin: GPIO12
   interrupt_pin: GPIO2
   reset_pin: GPIO1
-  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  clock_speed: 25MHz
 
 external_components:
   - source: github://boneIO-eu/esphome-LM75@main #Original source and thank you note for BTomala https://github.com/boneIO-eu/esphome-lm75
@@ -85,17 +97,18 @@ output:
     inverted: false
     id: chr04
 
-  ##CAN gpio1 - tx, gpio2 rx
+
+  ##CAN gpio48 - tx, gpio47 rx, gpio35 stb
 
 modbus:
-  send_wait_time: 200ms
+  send_wait_time: 80ms
   uart_id: boneio_uart
   id: boneio_modbus
 
 packages:
   internals_packages:
     url: https://github.com/boneIO-eu/esphome
-    ref: v1.6.0
+    ref: v1.6.1
     files: [
         'devices/serial_no.yaml',
         # 'devices/dimmer_i2c.yaml',
@@ -115,22 +128,27 @@ pcf8574:
   - id: 'pcf_inputs'
     address: 0x38
 
+# http_request:
+#   timeout: 7s
+#   verify_ssl: false
 logger:
   hardware_uart: UART0
 api:
   reboot_timeout: 0s
 ota:
   - platform: esphome
-  - platform: http_request
+  # - platform: http_request
 
-update:
-  - id: update_std
-    platform: http_request
-    name: Firmware Update
-    source: ${firmware_manifest}
+# update:
+#   - id: update_std
+#     platform: http_request
+#     name: boneIO FW Update
+#     update_interval: 3 minutes
+#     source: ${firmware_manifest}
 
 web_server:
   port: 80
+  version: 3
   local: true
 
 
@@ -220,6 +238,7 @@ switch:
       inverted: false
 
 binary_sensor:
+
   - platform: gpio
     name: 'IN_01'
     id: in_01
@@ -299,4 +318,40 @@ binary_sensor:
       mode:
         input: true
       inverted: true
-    
+  - platform: template
+    name: CAN Bus Button
+    id: can_bus_button
+
+
+canbus:
+  - platform: esp32_can
+    tx_pin: GPIO48
+    rx_pin: GPIO47
+    can_id: 4
+    bit_rate: 50kbps
+    on_frame:
+      - can_id: 5
+        then:
+          - lambda: |-
+              if(x.size() > 0) {
+                switch(x[0]) {
+                  case 0x12:  // button release
+                    id(can_bus_button).publish_state(false);
+                    break;
+                  case 0x11:  // button press
+                    id(can_bus_button).publish_state(true);
+                    break;
+                }
+              }
+
+button:
+  - platform: template
+    name: 'CAN Sensor ON'
+    on_press:
+      - logger.log: Button Pressed
+      - canbus.send: [0x11, 0x22, 0x33]
+  - platform: template
+    name: 'CAN Sensor OFF'
+    on_press:
+      - logger.log: Button Pressed
+      - canbus.send: [0x12, 0x22, 0x33]
