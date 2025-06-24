@@ -121,7 +121,7 @@ packages:
       - path: sdm630/package.yaml
 
 dashboard_import:
-  package_import_url: github://boneIO-eu/esphome/boneio-dimmer_g2_8ch-dev0_4.yaml@latest
+  package_import_url: github://boneIO-eu/esphome/boneio-dimmer_g2_8ch-dev0_4.yaml@main
   import_full_config: true
 
 pcf8574:
@@ -236,6 +236,20 @@ switch:
       mode:
         output: true
       inverted: false
+  - platform: gpio
+    id: can_bus_switch
+    name: 'CAN Bus Switch'
+    pin:
+      number: GPIO35
+      mode:
+        output: true
+      inverted: false
+  - platform: gpio
+    name: "CAN RX"
+    pin: GPIO47
+  - platform: gpio
+    name: "CAN TX"
+    pin: GPIO48
 
 binary_sensor:
 
@@ -323,35 +337,35 @@ binary_sensor:
     id: can_bus_button
 
 
-canbus:
-  - platform: esp32_can
-    tx_pin: GPIO48
-    rx_pin: GPIO47
-    can_id: 4
-    bit_rate: 50kbps
-    on_frame:
-      - can_id: 5
-        then:
-          - lambda: |-
-              if(x.size() > 0) {
-                switch(x[0]) {
-                  case 0x12:  // button release
-                    id(can_bus_button).publish_state(false);
-                    break;
-                  case 0x11:  // button press
-                    id(can_bus_button).publish_state(true);
-                    break;
-                }
-              }
+# canbus:
+#   - platform: esp32_can
+#     tx_pin: GPIO48
+#     rx_pin: GPIO47
+#     can_id: 4
+#     bit_rate: 50kbps
+#     on_frame:
+#       - can_id: 5
+#         then:
+#           - lambda: |-
+#               if(x.size() > 0) {
+#                 switch(x[0]) {
+#                   case 0x12:  // button release
+#                     id(can_bus_button).publish_state(false);
+#                     break;
+#                   case 0x11:  // button press
+#                     id(can_bus_button).publish_state(true);
+#                     break;
+#                 }
+#               }
 
-button:
-  - platform: template
-    name: 'CAN Sensor ON'
-    on_press:
-      - logger.log: Button Pressed
-      - canbus.send: [0x11, 0x22, 0x33]
-  - platform: template
-    name: 'CAN Sensor OFF'
-    on_press:
-      - logger.log: Button Pressed
-      - canbus.send: [0x12, 0x22, 0x33]
+# button:
+#   - platform: template
+#     name: 'CAN Sensor ON'
+#     on_press:
+#       - logger.log: Button Pressed
+#       - canbus.send: [0x11, 0x22, 0x33]
+#   - platform: template
+#     name: 'CAN Sensor OFF'
+#     on_press:
+#       - logger.log: Button Pressed
+#       - canbus.send: [0x12, 0x22, 0x33]
