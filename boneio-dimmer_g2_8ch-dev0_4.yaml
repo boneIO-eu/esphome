@@ -118,7 +118,7 @@ packages:
     ref: main
     refresh: 1min
     files:
-      - path: sdm630/package.yaml
+      - path: sdm630.yaml
 
 dashboard_import:
   package_import_url: github://boneIO-eu/esphome/boneio-dimmer_g2_8ch-dev0_4.yaml@main
