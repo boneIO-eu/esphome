@@ -1,10 +1,10 @@
 #!/usr/bin/python
-import subprocess
 import glob
+import json
 import os
 import re
-import json
 import shutil
+import subprocess
 from pathlib import Path
 
 home = str(Path.home())
@@ -21,7 +21,7 @@ firmware_destination = "../website/public/esp/firmware"
 def json_pattern(firmware_name):
     return {
         "name": "ESPHome",
-        "version": "2024.10.1",
+        "version": "2025.5.1",
         "home_assistant_domain": "esphome",
         "funding_url": "https://esphome.io/guides/supporters.html",
         "new_install_prompt_erase": False,

@@ -9,7 +9,7 @@ esphome:
   name_add_mac_suffix: true
   project:
     name: boneio.32x10-lights
-    version: '0.9'
+    version: 'dev0.9'
 
 esp32:
   board: nodemcu-32s
@@ -61,8 +61,13 @@ packages:
 logger:
 api:
   reboot_timeout: 0s
+# http_request:
+#   verify_ssl: false
 ota:
   - platform: esphome
+  # - platform: http_request
+  #   name: Firmware Update
+  #   source: https://boneio.eu/esp/
 
 web_server:
   port: 80
@@ -646,25 +651,85 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+  - platform: template
+    name: CAN Bus Button
+    id: can_bus_button
 ######################
 ### MODBUS SECTION ###
 ######################
 # UNCOMMENT BELOW TO USE MODBUS
-# uart:
-#   id: uart_pin14_15
-#   rx_pin: GPIO14
-#   tx_pin: GPIO15
-#   baud_rate: 9600
-#   stop_bits: 1
+uart:
+  id: uart_pin14_15
+  rx_pin: GPIO14
+  tx_pin: GPIO15
+  baud_rate: 9600
+  stop_bits: 1
 
-# modbus:
-#   send_wait_time: 200ms
-#   uart_id: uart_pin14_15
-#   id: boneio_modbus
+modbus:
+  send_wait_time: 200ms
+  uart_id: uart_pin14_15
+  id: boneio_modbus
 
-# modbus_controller:
-#   - id: YOURDEVICE ID
-#     address: 0x09
-#     modbus_id: mod_bus
-#     setup_priority: -10
-#     update_interval: 60s
+modbus_controller:
+  - id: sht20
+    address: 62
+    modbus_id: boneio_modbus
+    setup_priority: -10
+    update_interval: 20s
+sensor:
+  - platform: modbus_controller
+    modbus_controller_id: sht20
+    name: 'Temperature'
+    register_type: read
+    address: 1
+    unit_of_measurement: '°C'
+    device_class: 'temperature'
+    state_class: 'measurement'
+    value_type: S_WORD
+    accuracy_decimals: 2
+    filters:
+      - multiply: 0.1
+  - platform: modbus_controller
+    modbus_controller_id: sht20
+    name: 'Humidity'
+    register_type: read
+    address: 2
+    unit_of_measurement: '%'
+    device_class: 'humidity'
+    state_class: 'measurement'
+    value_type: S_WORD
+    accuracy_decimals: 2
+    filters:
+      - multiply: 0.1
+
+canbus:
+  - platform: esp32_can
+    tx_pin: GPIO05
+    rx_pin: GPIO04
+    can_id: 5
+    bit_rate: 50kbps
+    on_frame:
+      - can_id: 4
+        then:
+          - lambda: |-
+              if(x.size() > 0) {
+                switch(x[0]) {
+                  case 0x12:  // button release
+                    id(can_bus_button).publish_state(false);
+                    break;
+                  case 0x11:  // button press
+                    id(can_bus_button).publish_state(true);
+                    break;
+                }
+              }
+button:
+  - platform: template
+    name: 'CAN Sensor ON'
+    on_press:
+      - logger.log: Button Pressed
+      - canbus.send: [0x11, 0x22, 0x33]
+  - platform: template
+    name: 'CAN Sensor OFF'
+    on_press:
+      - logger.log: Button Pressed
+      - canbus.send: [0x12, 0x22, 0x33]
