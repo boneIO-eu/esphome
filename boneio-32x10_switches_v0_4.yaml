@@ -66,6 +66,7 @@ api:
   reboot_timeout: 0s
 ota:
   - platform: esphome
+  - platform: web_server
 
 # disable web server - for testing only
 web_server:

@@ -65,6 +65,7 @@ api:
 #   verify_ssl: false
 ota:
   - platform: esphome
+  - platform: web_server
   # - platform: http_request
   #   name: Firmware Update
   #   source: https://boneio.eu/esp/

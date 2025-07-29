@@ -137,6 +137,7 @@ api:
   reboot_timeout: 0s
 ota:
   - platform: esphome
+  - platform: web_server
   # - platform: http_request
 
 # update:
