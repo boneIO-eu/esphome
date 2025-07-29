@@ -97,7 +97,7 @@ output:
 packages:
   internals_packages:
     url: https://github.com/boneIO-eu/esphome
-    ref: v1.7.0
+    ref: v1.7.1
     files: [
         'devices/serial_no.yaml',
         # 'devices/dimmer_i2c.yaml',
@@ -117,6 +117,7 @@ api:
   reboot_timeout: 0s
 ota:
   - platform: esphome
+  - platform: web_server
 
 web_server:
   port: 80

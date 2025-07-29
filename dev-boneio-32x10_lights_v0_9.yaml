@@ -30,7 +30,7 @@ dashboard_import:
 packages:
   internals_packages:
     url: https://github.com/boneIO-eu/esphome
-    ref: v1.7.0
+    ref: v1.7.1
     files: [
         'devices/buzzer.yaml',
         'devices/serial_no.yaml',
@@ -65,6 +65,7 @@ api:
 #   verify_ssl: false
 ota:
   - platform: esphome
+  - platform: web_server
   # - platform: http_request
   #   name: Firmware Update
   #   source: https://boneio.eu/esp/

@@ -21,7 +21,7 @@ external_components:
 packages:
   internals_packages:
     url: https://github.com/boneIO-eu/esphome
-    ref: v1.7.0
+    ref: v1.7.1
     files:
       [
         'devices/serial_no.yaml',
@@ -35,7 +35,9 @@ ethernet:
   type: LAN8720
   mdc_pin: GPIO23
   mdio_pin: GPIO18
-  clk_mode: GPIO0_IN
+  clk:
+    pin: GPIO0
+    mode: CLK_EXT_IN
   phy_addr: 1
   power_pin: GPIO16
 
@@ -52,6 +54,7 @@ api:
   reboot_timeout: 0s
 ota:
   - platform: esphome
+  - platform: web_server
 
 web_server:
   port: 80
