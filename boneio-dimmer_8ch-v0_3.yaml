@@ -13,6 +13,8 @@ esphome:
 
 esp32:
   board: esp32dev
+  framework:                                                                            
+    type: esp-idf
 
 external_components:
   - source: github://boneIO-eu/esphome-LM75@main #Original source and thank you note for BTomala https://github.com/boneIO-eu/esphome-lm75
