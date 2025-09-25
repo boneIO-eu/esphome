@@ -14,11 +14,12 @@ cwd = os.getcwd()
 
 
 pattern = r"name:\s*(\S+)"
-json_destination = "../website/public/esp"
-firmware_destination = "../website/public/esp/firmware"
+json_destination = "../website2/public/fwesp"
+firmware_destination = "../website2/public/fwesp/firmware"
+firmware_destination2 = "../esphome_uploader/firmware"
 
 
-def json_pattern(firmware_name):
+def json_pattern(firmware_name, chip_family="ESP32"):
     return {
         "name": "ESPHome",
         "version": "2025.8.2",
@@ -27,10 +28,10 @@ def json_pattern(firmware_name):
         "new_install_prompt_erase": False,
         "builds": [
             {
-                "chipFamily": "ESP32",
+                "chipFamily": chip_family,
                 "parts": [
                     {
-                        "path": f"/esp/firmware/{firmware_name}.bin",
+                        "path": f"/fwesp/firmware/{firmware_name}.bin",
                         "offset": 0,
                     }
                 ],
@@ -51,7 +52,9 @@ def get_boneio_name(file):
 
 
 for file in glob.glob("*.yaml"):
+# for file in glob.glob("boneio-dimmer_gen2_8ch-v0_1.yaml"):
     filename = get_boneio_name(file)
+    chip_family = "ESP32-S3" if "gen2" in filename else "ESP32"
     if not filename:
         print("No file found.")
         break
@@ -66,12 +69,13 @@ for file in glob.glob("*.yaml"):
         print("Process failed, breaking.")
         break
     shutil.copyfile(firmware_path, f"{firmware_destination}/{filename}.bin")
+    shutil.copyfile(firmware_path, f"{firmware_destination2}/{filename}.bin")
 
     with open(
         f"{json_destination}/{filename}.json", "w", encoding="utf-8"
     ) as f:
         json.dump(
-            json_pattern(firmware_name=filename),
+            json_pattern(firmware_name=filename, chip_family=chip_family),
             f,
             ensure_ascii=False,
             indent=4,
