@@ -140,55 +140,32 @@ web_server:
 
 
 light:
-  - platform: monochromatic
-    output: chl01
-    name: 'CHL 01'
-    id: chl_01
-    default_transition_length: 2s
-    gamma_correct: 0
-  - platform: monochromatic
-    output: chl02
-    name: 'CHL 02'
-    id: chl_02
-    default_transition_length: 2s
-    gamma_correct: 0
-  - platform: monochromatic
-    output: chl03
-    name: 'CHL 03'
-    id: chl_03
-    default_transition_length: 2s
-    gamma_correct: 0
-  - platform: monochromatic
-    output: chl04
-    name: 'CHL 04'
-    id: chl_04
-    default_transition_length: 2s
-    gamma_correct: 0
+  - platform: cwww
+    name: 'CHL_01_02'
+    cold_white: chl01
+    warm_white: chl02
+    cold_white_color_temperature: 6536 K
+    warm_white_color_temperature: 2000 K
+  - platform: cwww
+    name: 'CHL_03_04'
+    cold_white: chl03
+    warm_white: chl04
+    cold_white_color_temperature: 6536 K
+    warm_white_color_temperature: 2000 K
 
-  - platform: monochromatic
-    output: chr01
-    name: 'CHR 01'
-    id: chr_01
-    default_transition_length: 2s
-    gamma_correct: 0
-  - platform: monochromatic
-    output: chr02
-    name: 'CHR 02'
-    id: chr_02
-    default_transition_length: 2s
-    gamma_correct: 0
-  - platform: monochromatic
-    output: chr03
-    name: 'CHR 03'
-    id: chr_03
-    default_transition_length: 2s
-    gamma_correct: 0
-  - platform: monochromatic
-    output: chr04
-    name: 'CHR 04'
-    id: chr_04
-    default_transition_length: 2s
-    gamma_correct: 0
+  - platform: cwww
+    name: 'CHR_01_02'
+    cold_white: chr01
+    warm_white: chr02
+    cold_white_color_temperature: 6536 K
+    warm_white_color_temperature: 2000 K
+
+  - platform: cwww
+    name: 'CHR_03_04'
+    cold_white: chr03
+    warm_white: chr04
+    cold_white_color_temperature: 6536 K
+    warm_white_color_temperature: 2000 K
 
 debug:
   update_interval: 15s

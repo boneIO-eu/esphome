@@ -18,6 +18,20 @@ json_destination = "../website2/public/fwesp"
 firmware_destination = "../website2/public/fwesp/firmware"
 firmware_destination2 = "../esphome_uploader/firmware"
 
+# Lista plików do wykluczenia z przetwarzania
+exclude_files = [
+    "boneio-8x10A_v0_1.yaml",
+    "dimmer_gen2_can.yaml",
+    "dimmer_gen2_emc.yaml",
+    "dev-boneio-32x10_lights_v0_9.yaml"
+    "boneio-mosfet48_lights_v0_7.yaml",
+    "boneio-mosfet48_switches_v0_7.yaml"
+    "boneio-8x10A_v0_1.yaml"
+    "boneio-dimmer_gen2_8ch-dev0_4.yaml"
+
+    # Dodaj tutaj kolejne pliki do wykluczenia
+]
+
 
 def json_pattern(firmware_name, chip_family="ESP32"):
     return {
@@ -52,7 +66,11 @@ def get_boneio_name(file):
 
 
 for file in glob.glob("*.yaml"):
-# for file in glob.glob("boneio-dimmer_gen2_8ch-v0_1.yaml"):
+    # Pomiń pliki z listy wykluczeń
+    if file in exclude_files:
+        print(f"Skipping excluded file: {file}")
+        continue
+    
     filename = get_boneio_name(file)
     chip_family = "ESP32-S3" if "gen2" in filename else "ESP32"
     if not filename:
