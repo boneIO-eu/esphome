@@ -10,6 +10,12 @@ esphome:
   project:
     name: boneio.32x10-lights
     version: '0.7'
+  on_boot:
+    - priority: 1001
+      then:
+        - lambda: |-
+            gpio_reset_pin((gpio_num_t)14);
+            gpio_reset_pin((gpio_num_t)15);    
 
 esp32:
   board: nodemcu-32s
@@ -657,7 +663,11 @@ binary_sensor:
 # UNCOMMENT BELOW TO USE MODBUS
 # uart:
 #   id: uart_pin14_15
-#   rx_pin: GPIO14
+#   rx_pin:
+#      number: GPIO14
+#      mode:
+#        input: true
+#        pullup: true
 #   tx_pin: GPIO15
 #   baud_rate: 9600
 #   stop_bits: 1
