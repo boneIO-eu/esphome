@@ -1,8 +1,8 @@
 substitutions:
-  name: boneio-dr-gen2-8ch-01
-  friendly_name: 'BoneIO Dimmer 8ch Gen2'
+  name: boneio-dr-gen2-4cct-01
+  friendly_name: 'BoneIO Dimmer Gen2'
   serial_prefix: 'dim2' #Don't change it.
-  firmware_manifest: 'https://boneio.eu/fwesp/boneio-dr-gen2-8ch-01.json'
+  firmware_manifest: 'https://boneio.eu/fwesp/boneio-dr-gen2-4cct-01.json'
 esphome:
   name: '${name}'
   friendly_name: '${friendly_name}'
@@ -118,7 +118,7 @@ packages:
   #     - path: sdm630.yaml
 
 dashboard_import:
-  package_import_url: github://boneIO-eu/esphome/boneio-dimmer_gen2_8ch-v0_1.yaml@main
+  package_import_url: github://boneIO-eu/esphome/boneio-dimmer_gen2_4cct-v0_1.yaml@main
   import_full_config: true
 
 pcf8574:

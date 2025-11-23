@@ -1,15 +1,15 @@
 substitutions:
-  name: boneio-dr-gen2-8ch-01
-  friendly_name: 'BoneIO Dimmer Gen2'
+  name: boneio-dr-gen2-8ch-dev04
+  friendly_name: 'BoneIO Dimmer dev0.4'
   serial_prefix: 'dim2' #Don't change it.
-  firmware_manifest: 'https://boneio.eu/fwesp/boneio-dr-gen2-8ch-01.json'
+  firmware_manifest: 'https://boneio.eu/esp/boneio-dr-gen2-8ch-dev04.json'
 esphome:
   name: '${name}'
   friendly_name: '${friendly_name}'
   name_add_mac_suffix: true
   project:
     name: boneio.dimmer-led-gen2
-    version: '0.1'
+    version: 'dev0.4'
   on_boot:
     priority: -100
     then:
@@ -39,13 +39,22 @@ ethernet:
   reset_pin: GPIO1
   clock_speed: 25MHz
 
+external_components:
+  - source: github://boneIO-eu/esphome-LM75@main #Original source and thank you note for BTomala https://github.com/boneIO-eu/esphome-lm75
+    components: [lm75]
+
 i2c:
   sda: GPIO10
   scl: GPIO11
   scan: True
   frequency: 400kHz
 
-
+uart:
+  id: boneio_uart
+  rx_pin: GPIO21
+  tx_pin: GPIO14
+  baud_rate: 9600
+  stop_bits: 1
 
 output:
   - platform: ledc
@@ -91,17 +100,12 @@ output:
     id: chr04
 
 
-# CAN gpio48 - tx, gpio47 rx, gpio35 stb
-# uart:
-#   id: boneio_uart
-#   rx_pin: GPIO21
-#   tx_pin: GPIO14
-#   baud_rate: 9600
-#   stop_bits: 1
-# modbus:
-#   send_wait_time: 80ms
-#   uart_id: boneio_uart
-#   id: boneio_modbus
+  ##CAN gpio48 - tx, gpio47 rx, gpio35 stb
+
+modbus:
+  send_wait_time: 80ms
+  uart_id: boneio_uart
+  id: boneio_modbus
 
 packages:
   internals_packages:
@@ -109,22 +113,26 @@ packages:
     ref: v1.7.1
     files: [
         'devices/serial_no.yaml',
+        # 'devices/dimmer_i2c.yaml',
       ]
-  # boneiopackages:
-  #   url: https://github.com/boneIO-eu/esphome_packages
-  #   ref: main
-  #   refresh: 1min
-  #   files:
-  #     - path: sdm630.yaml
+  boneiopackages:
+    url: https://github.com/boneIO-eu/esphome_packages
+    ref: main
+    refresh: 1min
+    files:
+      - path: sdm630.yaml
 
 dashboard_import:
-  package_import_url: github://boneIO-eu/esphome/boneio-dimmer_gen2_8ch-v0_1.yaml@main
+  package_import_url: github://boneIO-eu/esphome/boneio-dimmer_gen2_8ch-dev0_4.yaml@main
   import_full_config: true
 
 pcf8574:
   - id: 'pcf_inputs'
     address: 0x38
 
+# http_request:
+#   timeout: 7s
+#   verify_ssl: false
 logger:
   hardware_uart: UART0
 api:
@@ -132,6 +140,14 @@ api:
 ota:
   - platform: esphome
   - platform: web_server
+  # - platform: http_request
+
+# update:
+#   - id: update_std
+#     platform: http_request
+#     name: boneIO FW Update
+#     update_interval: 3 minutes
+#     source: ${firmware_manifest}
 
 web_server:
   port: 80
@@ -201,7 +217,7 @@ sensor:
       name: "Heap Max Block"
     loop_time:
       name: "Loop Time"
-  - platform: lm75b
+  - platform: lm75
     id: boneIO_temp
     name: 'Temperature'
     update_interval: 30s
@@ -231,8 +247,15 @@ switch:
       mode:
         output: true
       inverted: false
+  - platform: gpio
+    name: "CAN RX"
+    pin: GPIO47
+  - platform: gpio
+    name: "CAN TX"
+    pin: GPIO48
 
 binary_sensor:
+
   - platform: gpio
     name: 'IN_01'
     id: in_01
@@ -312,3 +335,40 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+  - platform: template
+    name: CAN Bus Button
+    id: can_bus_button
+
+
+# canbus:
+#   - platform: esp32_can
+#     tx_pin: GPIO48
+#     rx_pin: GPIO47
+#     can_id: 4
+#     bit_rate: 50kbps
+#     on_frame:
+#       - can_id: 5
+#         then:
+#           - lambda: |-
+#               if(x.size() > 0) {
+#                 switch(x[0]) {
+#                   case 0x12:  // button release
+#                     id(can_bus_button).publish_state(false);
+#                     break;
+#                   case 0x11:  // button press
+#                     id(can_bus_button).publish_state(true);
+#                     break;
+#                 }
+#               }
+
+# button:
+#   - platform: template
+#     name: 'CAN Sensor ON'
+#     on_press:
+#       - logger.log: Button Pressed
+#       - canbus.send: [0x11, 0x22, 0x33]
+#   - platform: template
+#     name: 'CAN Sensor OFF'
+#     on_press:
+#       - logger.log: Button Pressed
+#       - canbus.send: [0x12, 0x22, 0x33]
