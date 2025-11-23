@@ -1,0 +1,194 @@
+substitutions:
+  name: boneio-ps-01
+  friendly_name: 'BoneIO PS-01 Czujnik Obecności'
+  serial_prefix: 'ps01' #Don't change it.
+  firmware_manifest: 'https://boneio.eu/esp/boneio-ps-01.json' # URL manifestu
+
+esphome:
+  name: '${name}'
+  friendly_name: '${friendly_name}'
+  name_add_mac_suffix: true
+  project:
+    name: boneio.presence-sensor-ps01
+    version: 'dev0.1' # Przykładowa wersja
+  on_boot:
+    priority: -100
+    then:
+      - delay: 5s
+      - if:
+          condition:
+            lambda: 'return id(serial_no) != nullptr;'
+          then:
+            - component.update: serial_no
+            - logger.log: "Serial No updated on boot"
+          else:
+            - logger.log: "Serial No component not found"
+
+esp32:
+  variant: esp32s3
+  flash_size: 16MB
+  framework:
+    type: esp-idf
+psram:
+  mode: octal
+  speed: 80MHz
+# --- NOWA SEKCJA: WiFi ---
+wifi:
+  ssid: "TwojeSSID"
+  password: "TwojeHaslo"
+  
+  # Tryb AP do pierwszej konfiguracji
+  ap:
+    ssid: "PS-01 Sensor Setup"
+    password: "boneio-setup"
+
+captive_portal:
+
+
+i2c:
+  id: i2c_bus # Dodano ID dla czujników
+  sda: GPIO10
+  scl: GPIO11
+  scan: True
+  frequency: 400kHz
+
+# --- ZAKTUALIZOWANY UART (dla radaru) ---
+uart:
+  - id: radar_uart
+    tx_pin: GPIO21 # ESP TX -> Radar RX
+    rx_pin: GPIO14 # ESP RX -> Radar TX
+    baud_rate: 115200 # Standard dla LD2412
+  - id: boneio_uart
+    rx_pin: GPIO47 # CAN RX wg tabeli (dla CAN Bus)
+    tx_pin: GPIO48 # CAN TX wg tabeli (dla CAN Bus)
+    baud_rate: 9600
+    stop_bits: 1
+
+# --- NOWA SEKCJA: Radar LD2412 ---
+ld2412:
+  uart_id: radar_uart
+
+packages:
+  internals_packages:
+    url: https://github.com/boneIO-eu/esphome
+    ref: v1.7.1
+    files: [
+        'devices/serial_no.yaml',
+      ]
+
+dashboard_import:
+  package_import_url: github://boneIO-eu/esphome/boneio-ps-01-presence-sensor.yaml@main # Zgadywany URL
+  import_full_config: true
+
+# --- USUNIĘTY pcf8574 ---
+
+logger:
+  hardware_uart: UART0
+api:
+  reboot_timeout: 0s
+ota:
+  - platform: esphome
+  - platform: web_server
+
+web_server:
+  port: 80
+  version: 3
+  local: true
+
+# --- USUNIĘTE 'output' i 'light' ---
+
+debug:
+  update_interval: 15s
+
+sensor:
+  - platform: lm75b
+    id: boneIO_temp
+    name: 'Temperature'
+    update_interval: 30s
+    entity_category: diagnostic
+    on_value_range:
+      - above: 70.0
+        then:
+          - switch.turn_on: buzzer
+      - below: 70.0
+        then:
+          - switch.turn_off: buzzer
+  - platform: debug
+    free:
+      name: "Heap Free"
+    block:
+      name: "Heap Max Block"
+  
+  # --- NOWA SEKCJA: Czujniki I2C ---
+  - platform: sht4x
+    i2c_id: i2c_bus
+    address: 0x44 # Z tabeli
+    temperature:
+      name: "Temperatura"
+    humidity:
+      name: "Wilgotność"
+    update_interval: 15s
+  
+  - platform: veml7700
+    address: 0x10
+    update_interval: 60s
+
+    # short variant of sensor definition:
+    ambient_light: "Ambient light"
+    # longer variant of sensor definition:
+    actual_gain:
+      name: "Actual gain"
+
+  # Czujniki dla radaru LD2412 (dystans, energia)
+  # zostaną dodane automatycznie przez komponent 'ld2412'
+
+switch:
+  - platform: gpio
+    id: buzzer
+    name: 'Buzzer'
+    pin:
+      number: GPIO12 # Zaktualizowany pin
+      mode: output
+      inverted: false
+  
+  - platform: gpio
+    id: can_stb
+    name: 'CAN STB'
+    pin:
+      number: GPIO13 # Zaktualizowany pin
+      mode: output
+      inverted: false
+
+  # --- NOWA SEKCJA: Przełączniki ---
+  - platform: gpio
+    id: led_status
+    name: 'LED Status'
+    pin:
+      number: GPIO1 # Zaktualizowany pin
+      mode: output
+      inverted: false
+
+  - platform: gpio
+    id: relay_1
+    name: 'Przekaźnik 1'
+    pin:
+      number: GPIO18 # Z tabeli
+      mode: output
+      inverted: false
+  
+  - platform: gpio
+    id: relay_2
+    name: 'Przekaźnik 2'
+    pin:
+      number: GPIO17 # Z tabeli
+      mode: output
+      inverted: false
+
+
+binary_sensor:
+  - platform: gpio
+    name: 'Obecność (Pin OUT)'
+    pin:
+      number: GPIO41 # RADAR_OUT
+      mode: input
+    device_class: presence

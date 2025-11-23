@@ -32,11 +32,16 @@ exclude_files = [
     # Dodaj tutaj kolejne pliki do wykluczenia
 ]
 
+include_files = [
+    "boneio-dimmer_gen2_4cct-v0_1.yaml",
+    "boneio-dimmer_gen2_2rgbw-v0_1.yaml",
+]
+
 
 def json_pattern(firmware_name, chip_family="ESP32"):
     return {
         "name": "ESPHome",
-        "version": "2025.8.2",
+        "version": "2025.10.2",
         "home_assistant_domain": "esphome",
         "funding_url": "https://esphome.io/guides/supporters.html",
         "new_install_prompt_erase": False,
@@ -70,6 +75,9 @@ for file in glob.glob("*.yaml"):
     if file in exclude_files:
         print(f"Skipping excluded file: {file}")
         continue
+    if file not in include_files:
+        print(f"Skipping file: {file}")
+        continue
     
     filename = get_boneio_name(file)
     chip_family = "ESP32-S3" if "gen2" in filename else "ESP32"
@@ -92,6 +100,7 @@ for file in glob.glob("*.yaml"):
     with open(
         f"{json_destination}/{filename}.json", "w", encoding="utf-8"
     ) as f:
+        print(f"Creating JSON file: {json_destination}/{filename}.json")
         json.dump(
             json_pattern(firmware_name=filename, chip_family=chip_family),
             f,

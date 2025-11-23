@@ -198,7 +198,7 @@ switch:
     id: can_led
     name: 'CAN LED'
     pin:
-      number: GPIO19 # Pin dla CAN_LED
+      number: GPIO8 # Pin dla CAN_LED
       mode:
         output: true
       inverted: false
