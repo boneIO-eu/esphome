@@ -1,5 +1,5 @@
 substitutions:
-  name: boneio-8x10A-gen2-01
+  name: boneio-8x10a-gen2-01
   friendly_name: 'BoneIO 8x10A Gen2'
   serial_prefix: 'dim2' #Don't change it.
   firmware_manifest: 'https://boneio.eu/fwesp/boneio-8x10a-gen2-01.json'
