@@ -14,23 +14,42 @@ cwd = os.getcwd()
 
 
 pattern = r"name:\s*(\S+)"
-json_destination = "../website/public/esp"
-firmware_destination = "../website/public/esp/firmware"
+json_destination = "../website2/public/fwesp"
+firmware_destination = "../website2/public/fwesp/firmware"
+firmware_destination2 = "../esphome_uploader/firmware"
+
+# Lista plików do wykluczenia z przetwarzania
+exclude_files = [
+    "dimmer_gen2_can.yaml",
+    "dimmer_gen2_emc.yaml",
+    "dev-boneio-32x10_lights_v0_9.yaml"
+    "boneio-mosfet48_lights_v0_7.yaml",
+    "boneio-mosfet48_switches_v0_7.yaml"
+    "boneio-8x10A_v0_1.yaml"
+    "boneio-dimmer_gen2_8ch-dev0_4.yaml"
+
+    # Dodaj tutaj kolejne pliki do wykluczenia
+]
+
+include_files = [
+    "boneio-8x10A_gen2_lights-v0_1.yaml",
+    # "boneio-dimmer_gen2_2rgbw-v0_1.yaml",
+]
 
 
-def json_pattern(firmware_name):
+def json_pattern(firmware_name, chip_family="ESP32"):
     return {
         "name": "ESPHome",
-        "version": "2025.8.2",
+        "version": "2025.11.2",
         "home_assistant_domain": "esphome",
         "funding_url": "https://esphome.io/guides/supporters.html",
         "new_install_prompt_erase": False,
         "builds": [
             {
-                "chipFamily": "ESP32",
+                "chipFamily": chip_family,
                 "parts": [
                     {
-                        "path": f"/esp/firmware/{firmware_name}.bin",
+                        "path": f"/fwesp/firmware/{firmware_name}.bin",
                         "offset": 0,
                     }
                 ],
@@ -51,7 +70,16 @@ def get_boneio_name(file):
 
 
 for file in glob.glob("*.yaml"):
+    # Pomiń pliki z listy wykluczeń
+    if file in exclude_files:
+        print(f"Skipping excluded file: {file}")
+        continue
+    if file not in include_files:
+        print(f"Skipping file: {file}")
+        continue
+    
     filename = get_boneio_name(file)
+    chip_family = "ESP32-S3" if "gen2" in filename else "ESP32"
     if not filename:
         print("No file found.")
         break
@@ -66,12 +94,14 @@ for file in glob.glob("*.yaml"):
         print("Process failed, breaking.")
         break
     shutil.copyfile(firmware_path, f"{firmware_destination}/{filename}.bin")
+    shutil.copyfile(firmware_path, f"{firmware_destination2}/{filename}.bin")
 
     with open(
         f"{json_destination}/{filename}.json", "w", encoding="utf-8"
     ) as f:
+        print(f"Creating JSON file: {json_destination}/{filename}.json")
         json.dump(
-            json_pattern(firmware_name=filename),
+            json_pattern(firmware_name=filename, chip_family=chip_family),
             f,
             ensure_ascii=False,
             indent=4,

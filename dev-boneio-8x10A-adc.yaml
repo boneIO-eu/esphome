@@ -1,0 +1,355 @@
+substitutions:
+  name: boneio-8x10a-cover-dev01
+  friendly_name: 'BoneIO Relay 8x10A dev0.1'
+  serial_prefix: 'dim2' #Don't change it.
+  firmware_manifest: 'https://boneio.eu/esp/boneio-relay-8x10a-cover-dev0.3.json'
+
+esphome:
+  name: '${name}'
+  friendly_name: '${friendly_name}'
+  name_add_mac_suffix: true
+  project:
+    name: boneio.relay-8x10a-cover
+    version: 'dev0.3'
+  on_boot:
+    priority: -100
+    then:
+      - delay: 5s
+      - if:
+          condition:
+            lambda: 'return id(serial_no) != nullptr;'
+          then:
+            - component.update: serial_no
+            - logger.log: "Serial No updated on boot"
+          else:
+            - logger.log: "Serial No component not found"
+
+esp32:
+  board: esp32-s3-devkitc-1
+  framework:
+    type: esp-idf
+
+ethernet:
+  id: eth
+  type: W5500
+  clk_pin: GPIO13
+  mosi_pin: GPIO39
+  miso_pin: GPIO38
+  cs_pin: GPIO12
+  interrupt_pin: GPIO2
+  reset_pin: GPIO1
+  clock_speed: 25MHz
+
+external_components:
+  - source: github://boneIO-eu/esphome-LM75@main #Original source and thank you note for BTomala https://github.com/boneIO-eu/esphome-lm75
+    components: [lm75]
+
+i2c:
+  sda: GPIO10
+  scl: GPIO11
+  scan: True
+  frequency: 400kHz
+
+uart:
+  id: boneio_uart
+  rx_pin: GPIO21
+  tx_pin: GPIO14
+  baud_rate: 9600
+  stop_bits: 1
+
+spi:
+  - id: spi_ade7953
+    mosi_pin: GPIO35
+    miso_pin: GPIO37
+    clk_pin: GPIO36
+
+modbus:
+  send_wait_time: 80ms
+  uart_id: boneio_uart
+  id: boneio_modbus
+
+packages:
+  internals_packages:
+    url: https://github.com/boneIO-eu/esphome
+    ref: v1.7.1
+    files: [
+        'devices/serial_no.yaml',
+      ]
+  boneiopackages:
+    url: https://github.com/boneIO-eu/esphome_packages
+    ref: main
+    refresh: 1min
+    files:
+      - path: sdm630.yaml
+
+dashboard_import:
+  package_import_url: github://boneIO-eu/esphome/boneio-relay-8x10a-cover-dev0.3.yaml@main
+  import_full_config: true
+
+pcf8574:
+  - id: 'pcf_inputs'
+    address: 0x38
+
+logger:
+  hardware_uart: UART0
+api:
+  reboot_timeout: 0s
+ota:
+  - platform: esphome
+  - platform: web_server
+
+# update:
+#   - id: update_std
+#     platform: http_request
+#     name: boneIO FW Update
+#     update_interval: 3 minutes
+#     source: ${firmware_manifest}
+
+web_server:
+  port: 80
+  version: 3
+  local: true
+
+debug:
+  update_interval: 15s
+
+sensor:
+  - platform: debug
+    free:
+      name: "Heap Free"
+    block:
+      name: "Heap Max Block"
+    loop_time:
+      name: "Loop Time"
+  - platform: lm75
+    id: boneIO_temp
+    name: 'Temperature'
+    update_interval: 30s
+    entity_category: diagnostic
+    on_value_range:
+      - above: 70.0
+        then:
+          - switch.turn_on: buzzer
+      - below: 70.0
+        then:
+          - switch.turn_off: buzzer
+
+  - platform: ade7953_spi
+    spi_id: spi_ade7953
+    cs_pin: GPIO40
+    irq_pin: GPIO15
+    update_interval: 10s
+    voltage:
+      name: "ADE7953 1 Voltage"
+    current_a:
+      name: "ADE7953 1 Current"
+
+  - platform: ade7953_spi
+    spi_id: spi_ade7953
+    cs_pin: GPIO41
+    irq_pin: GPIO16
+    update_interval: 10s
+    voltage:
+      name: "ADE7953 2 Voltage"
+    current_a:
+      name: "ADE7953 2 Current"
+
+  - platform: ade7953_spi
+    spi_id: spi_ade7953
+    cs_pin: GPIO42
+    irq_pin: GPIO17
+    update_interval: 10s
+    voltage:
+      name: "ADE7953 3 Voltage"
+    current_a:
+      name: "ADE7953 3 Current"
+
+  - platform: ade7953_spi
+    spi_id: spi_ade7953
+    cs_pin: GPIO45
+    irq_pin: GPIO18
+    update_interval: 10s
+    voltage:
+      name: "ADE7953 4 Voltage"
+    current_a:
+      name: "ADE7953 4 Current"
+
+
+switch:
+  - platform: gpio
+    id: buzzer
+    name: 'Buzzer'
+    pin:
+      number: GPIO9
+      mode:
+        output: true
+      inverted: false
+  
+  # *** POCZĄTEK AKTUALIZACJI ***
+  - platform: gpio
+    id: can_stb         # Poprzednio id: can_bus_switch
+    name: 'CAN STB'     # Poprzednio name: 'CAN Bus Switch'
+    pin:
+      number: GPIO20 # Pin dla CAN_STB
+      mode:
+        output: true
+      inverted: false
+  - platform: gpio
+    id: can_led
+    name: 'CAN LED'
+    pin:
+      number: GPIO8 # Pin dla CAN_LED
+      mode:
+        output: true
+      inverted: false
+  # *** KONIEC AKTUALIZACJI ***
+
+  - platform: gpio
+    name: "CAN RX"
+    pin: GPIO47
+  - platform: gpio
+    name: "CAN TX"
+    pin: GPIO48
+
+  # Przełączniki dla linii RST układów ADE7953
+  - platform: gpio
+    name: "ADE7953 RST 1"
+    pin: GPIO4
+  - platform: gpio
+    name: "ADE7953 RST 2"
+    pin: GPIO5
+  - platform: gpio
+    name: "ADE7953 RST 3"
+    pin: GPIO6
+  - platform: gpio
+    name: "ADE7953 RST 4"
+    pin: GPIO7
+  
+  # !!! BRAKUJĄCA SEKCJA !!!
+  # Musisz tutaj dodać definicje dla 8 przekaźników.
+  # Na przykład:
+  # - platform: gpio
+  #   name: "Relay 1"
+  #   pin: GPIO_PIN_PRZEKAŹNIKA_1
+  # - platform: gpio
+  #   name: "Relay 2"
+  #   pin: GPIO_PIN_PRZEKAŹNIKA_2
+  # ... i tak 8 razy
+
+binary_sensor:
+  - platform: gpio
+    name: 'IN_01'
+    id: in_01
+    pin:
+      pcf8574: pcf_inputs
+      number: 0
+      mode:
+        input: true
+      inverted: true
+
+  - platform: gpio
+    name: 'IN_02'
+    id: in_02
+    pin:
+      pcf8574: pcf_inputs
+      number: 1
+      mode:
+        input: true
+      inverted: true
+
+  - platform: gpio
+    name: 'IN_03'
+    id: in_03
+    pin:
+      pcf8574: pcf_inputs
+      number: 2
+      mode:
+        input: true
+      inverted: true
+
+  - platform: gpio
+    name: 'IN_04'
+    id: in_04
+    pin:
+      pcf8574: pcf_inputs
+      number: 3
+      mode:
+        input: true
+      inverted: true
+
+  - platform: gpio
+    name: 'IN_05'
+    id: in_05
+    pin:
+      pcf8574: pcf_inputs
+      number: 4
+      mode:
+        input: true
+      inverted: true
+
+  - platform: gpio
+    name: 'IN_06'
+    id: in_06
+    pin:
+      pcf8574: pcf_inputs
+      number: 5
+      mode:
+        input: true
+      inverted: true
+
+  - platform: gpio
+    name: 'IN_07'
+    id: in_07
+    pin:
+      pcf8574: pcf_inputs
+      number: 6
+      mode:
+        input: true
+      inverted: true
+
+  - platform: gpio
+    name: 'IN_08'
+    id: in_08
+    pin:
+      pcf8574: pcf_inputs
+      number: 7
+      mode:
+        input: true
+      inverted: true
+  - platform: template
+    name: CAN Bus Button
+    id: can_bus_button
+
+
+# canbus:
+#   - platform: esp32_can
+#     tx_pin: GPIO48
+#     rx_pin: GPIO47
+#     can_id: 4
+#     bit_rate: 50kbps
+#     on_frame:
+#       - can_id: 5
+#         then:
+#           - lambda: |-
+#               if(x.size() > 0) {
+#                 switch(x[0]) {
+#                   case 0x12:  // button release
+#                     id(can_bus_button).publish_state(false);
+#                     break;
+#                   case 0x11:  // button press
+#                     id(can_bus_button).publish_state(true);
+#                     break;
+#                 }
+#               }
+
+# button:
+#   - platform: template
+#     name: 'CAN Sensor ON'
+#     on_press:
+#       - logger.log: Button Pressed
+#       - canbus.send: [0x11, 0x22, 0x33]
+#   - platform: template
+#     name: 'CAN Sensor OFF'
+#     on_press:
+#       - logger.log: Button Pressed
+#       - canbus.send: [0x12, 0x22, 0x33]
