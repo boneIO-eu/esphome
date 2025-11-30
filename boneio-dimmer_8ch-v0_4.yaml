@@ -137,7 +137,7 @@ text_sensor:
     id: hostname
     entity_category: diagnostic
     lambda: |-
-      return id(eth).get_use_address();
+      return std::string(id(eth).get_use_address());
     update_interval: 5min
 
 binary_sensor:
