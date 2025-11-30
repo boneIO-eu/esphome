@@ -20,7 +20,6 @@ firmware_destination2 = "../esphome_uploader/firmware"
 
 # Lista plików do wykluczenia z przetwarzania
 exclude_files = [
-    "boneio-8x10A_v0_1.yaml",
     "dimmer_gen2_can.yaml",
     "dimmer_gen2_emc.yaml",
     "dev-boneio-32x10_lights_v0_9.yaml"
@@ -33,15 +32,15 @@ exclude_files = [
 ]
 
 include_files = [
-    "boneio-dimmer_gen2_4cct-v0_1.yaml",
-    "boneio-dimmer_gen2_2rgbw-v0_1.yaml",
+    "boneio-8x10A_gen2_lights-v0_1.yaml",
+    # "boneio-dimmer_gen2_2rgbw-v0_1.yaml",
 ]
 
 
 def json_pattern(firmware_name, chip_family="ESP32"):
     return {
         "name": "ESPHome",
-        "version": "2025.10.2",
+        "version": "2025.11.2",
         "home_assistant_domain": "esphome",
         "funding_url": "https://esphome.io/guides/supporters.html",
         "new_install_prompt_erase": False,
