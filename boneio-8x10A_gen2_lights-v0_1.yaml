@@ -169,13 +169,6 @@ debug:
   update_interval: 15s
 
 sensor:
-  - platform: debug
-    free:
-      name: "Heap Free"
-    block:
-      name: "Heap Max Block"
-    loop_time:
-      name: "Loop Time"
   - platform: lm75b
     id: boneIO_temp
     name: 'Temperature'
