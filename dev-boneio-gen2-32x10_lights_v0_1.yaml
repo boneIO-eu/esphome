@@ -438,6 +438,13 @@ output:
     channel: 1
 
 light:
+  - platform: esp32_rmt_led_strip
+    id: status_led
+    name: "Status LED"
+    rgb_order: GRB
+    pin: GPIO8
+    num_leds: 1
+    chipset: WS2812
   - platform: binary
     name: 'Light 01'
     output: out_01
