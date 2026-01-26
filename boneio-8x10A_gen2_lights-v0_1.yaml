@@ -110,7 +110,7 @@ packages:
   #     - path: sdm630.yaml
 
 dashboard_import:
-  package_import_url: github://boneIO-eu/esphome/boneio-8x10A_gen2-v0_1.yaml@latest
+  package_import_url: github://boneIO-eu/esphome/boneio-8x10A_gen2_lights-v0_1.yaml@latest
   import_full_config: true
 
 pcf8574:
