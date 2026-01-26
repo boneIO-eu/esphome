@@ -11,9 +11,6 @@ on:
         required: true
         default: '2026.1.2'
 
-env:
-  ESPHOME_VERSION: "2026.1.2"
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -22,69 +19,34 @@ jobs:
         include:
           # Testing with single firmware first
           - yaml_file: boneio-dimmer_gen2_8ch-v0_1.yaml
-            chip_family: ESP32-S3
           # Uncomment below after testing:
           # - yaml_file: boneio-dimmer_gen2_2rgbw-v0_1.yaml
-          #   chip_family: ESP32-S3
           # - yaml_file: boneio-32x10_lights_v0_7.yaml
-          #   chip_family: ESP32
           # - yaml_file: boneio-32x10_switches_v0_7.yaml
-          #   chip_family: ESP32
           # - yaml_file: boneio-24x16_switches_v0_7.yaml
-          #   chip_family: ESP32
           # - yaml_file: boneio-cover_v0_7.yaml
-          #   chip_family: ESP32
           # - yaml_file: boneio-cover_mix_lights_v0_7.yaml
-          #   chip_family: ESP32
           # - yaml_file: boneio-cover_mix_switches_v0_7.yaml
-          #   chip_family: ESP32
           # - yaml_file: boneio-8x10A_gen2_lights-v0_1.yaml
-          #   chip_family: ESP32-S3
           # - yaml_file: boneio-mosfet48_lights_v0_7.yaml
-          #   chip_family: ESP32
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
-      - name: Install ESPHome
-        run: pip install esphome==${{ env.ESPHOME_VERSION }}
-
       - name: Build firmware
-        run: esphome compile ${{ matrix.yaml_file }}
-
-      - name: Get firmware name from YAML
-        id: get_name
-        run: |
-          NAME=$(grep -m1 'name:' ${{ matrix.yaml_file }} | sed 's/.*name:\s*//' | tr -d ' ')
-          echo "firmware_name=$NAME" >> $GITHUB_OUTPUT
-          echo "chip_family=${{ matrix.chip_family }}" >> $GITHUB_OUTPUT
-
-      - name: Copy firmware to output
-        run: |
-          mkdir -p output
-          FIRMWARE_NAME="${{ steps.get_name.outputs.firmware_name }}"
-          cp .esphome/build/${FIRMWARE_NAME}/.pioenvs/${FIRMWARE_NAME}/firmware.factory.bin output/${FIRMWARE_NAME}.bin
+        uses: esphome/build-action@v4
+        id: esphome-build
+        with:
+          yaml-file: ${{ matrix.yaml_file }}
+          version: latest
+          complete-manifest: true
 
       - name: Upload firmware artifact
         uses: actions/upload-artifact@v4
         with:
-          name: firmware-${{ steps.get_name.outputs.firmware_name }}
-          path: output/*.bin
-
-      - name: Upload chip family info
-        run: echo "${{ matrix.chip_family }}" > output/${{ steps.get_name.outputs.firmware_name }}.chip
-      
-      - name: Upload chip info artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: chip-${{ steps.get_name.outputs.firmware_name }}
-          path: output/*.chip
+          name: firmware-${{ steps.esphome-build.outputs.original-name }}
+          path: ${{ steps.esphome-build.outputs.name }}
 
   deploy:
     needs: build
@@ -95,21 +57,11 @@ jobs:
       id-token: write
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
       - name: Download firmware artifacts
         uses: actions/download-artifact@v4
         with:
           path: artifacts
           pattern: firmware-*
-          merge-multiple: true
-
-      - name: Download chip info artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: chip-info
-          pattern: chip-*
           merge-multiple: true
 
       - name: Get version
@@ -124,38 +76,14 @@ jobs:
       - name: Prepare GitHub Pages content
         run: |
           mkdir -p gh-pages/firmware
-          cp artifacts/*.bin gh-pages/firmware/
           
-          # Generate manifest JSON files for ESP Web Tools
-          for bin in gh-pages/firmware/*.bin; do
-            FIRMWARE_NAME=$(basename "$bin" .bin)
-            CHIP_FAMILY="ESP32"
-            if [ -f "chip-info/${FIRMWARE_NAME}.chip" ]; then
-              CHIP_FAMILY=$(cat "chip-info/${FIRMWARE_NAME}.chip")
-            elif [[ "$FIRMWARE_NAME" == *"gen2"* ]]; then
-              CHIP_FAMILY="ESP32-S3"
-            fi
-            
-            cat > gh-pages/${FIRMWARE_NAME}.json << EOF
-          {
-              "name": "boneIO ESPHome",
-              "version": "${{ steps.version.outputs.version }}",
-              "home_assistant_domain": "esphome",
-              "funding_url": "https://esphome.io/guides/supporters.html",
-              "new_install_prompt_erase": false,
-              "builds": [
-                  {
-                      "chipFamily": "${CHIP_FAMILY}",
-                      "parts": [
-                          {
-                              "path": "firmware/${FIRMWARE_NAME}.bin",
-                              "offset": 0
-                          }
-                      ]
-                  }
-              ]
-          }
-          EOF
+          # esphome/build-action outputs: name/, name/manifest.json, name/*.bin
+          for dir in artifacts/*/; do
+            NAME=$(basename "$dir")
+            # Copy firmware binary
+            cp "$dir"*.bin gh-pages/firmware/
+            # Copy manifest and rename to firmware name
+            cp "$dir"manifest.json gh-pages/${NAME}.json
           done
           
           # Create version file
@@ -170,8 +98,8 @@ jobs:
           <h1>boneIO ESPHome Firmware</h1>
           <ul>
           EOF
-          for bin in gh-pages/firmware/*.bin; do
-            NAME=$(basename "$bin" .bin)
+          for json in gh-pages/*.json; do
+            NAME=$(basename "$json" .json)
             echo "<li><a href=\"${NAME}.json\">${NAME}</a></li>" >> gh-pages/index.html
           done
           cat >> gh-pages/index.html << 'EOF'
@@ -192,5 +120,5 @@ jobs:
         with:
           tag_name: v${{ steps.version.outputs.version }}
           name: Firmware v${{ steps.version.outputs.version }}
-          files: artifacts/*.bin
+          files: gh-pages/firmware/*.bin
           generate_release_notes: true
