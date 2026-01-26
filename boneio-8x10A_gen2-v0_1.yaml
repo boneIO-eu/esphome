@@ -1,1 +1,306 @@
-boneio-8x10A_gen2_lights-v0_1.yaml
+substitutions:
+  name: boneio-8x10a-gen2-01
+  friendly_name: 'boneIO ESP 8x10A Gen2'
+  serial_prefix: 'esp8' #Don't change it.
+  firmware_manifest: 'https://boneio.eu/fwesp/boneio-8x10a-gen2-01.json'
+esphome:
+  name: '${name}'
+  friendly_name: '${friendly_name}'
+  name_add_mac_suffix: true
+  project:
+    name: boneio.8x10a-gen2
+    version: '0.1'
+  on_boot:
+    priority: -100
+    then:
+      - delay: 5s
+      - if:
+          condition:
+            lambda: 'return id(serial_no) != nullptr;'
+          then:
+            - component.update: serial_no
+            - logger.log: "Serial No updated on boot"
+          else:
+            - logger.log: "Serial No component not found"
+
+esp32:
+  board: esp32-s3-devkitc-1
+  framework:                                                                            
+    type: esp-idf
+
+ethernet:
+  id: eth
+  type: W5500
+  clk_pin: GPIO13
+  mosi_pin: GPIO39
+  miso_pin: GPIO38
+  cs_pin: GPIO12
+  interrupt_pin: GPIO2
+  reset_pin: GPIO1
+  clock_speed: 25MHz
+
+i2c:
+  sda: GPIO10
+  scl: GPIO11
+  scan: True
+  frequency: 400kHz
+
+
+
+output:
+  - platform: gpio
+    pin: GPIO18
+    inverted: false
+    id: out_01
+  - platform: gpio
+    pin: GPIO17
+    inverted: false
+    id: out_02
+  - platform: gpio
+    pin: GPIO16
+    inverted: false
+    id: out_03
+  - platform: gpio
+    pin: GPIO15
+    inverted: false
+    id: out_04
+
+  - platform: gpio
+    pin: GPIO7
+    inverted: false
+    id: out_05
+  - platform: gpio
+    pin: GPIO6
+    inverted: false
+    id: out_06
+  - platform: gpio
+    pin: GPIO5
+    inverted: false
+    id: out_07
+  - platform: gpio
+    pin: GPIO4
+    inverted: false
+    id: out_08
+
+
+# CAN gpio48 - tx, gpio47 rx, gpio35 stb
+# uart:
+#   id: boneio_uart
+#   rx_pin: GPIO21
+#   tx_pin: GPIO14
+#   baud_rate: 9600
+#   stop_bits: 1
+# modbus:
+#   send_wait_time: 80ms
+#   uart_id: boneio_uart
+#   id: boneio_modbus
+
+packages:
+  internals_packages:
+    url: https://github.com/boneIO-eu/esphome
+    ref: packages-v1.7.2
+    files: [
+        'devices/serial_no.yaml',
+      ]
+  # boneiopackages:
+  #   url: https://github.com/boneIO-eu/esphome_packages
+  #   ref: main
+  #   refresh: 1min
+  #   files:
+  #     - path: sdm630.yaml
+
+dashboard_import:
+  package_import_url: github://boneIO-eu/esphome/boneio-8x10A_gen2_lights-v0_1.yaml@latest
+  import_full_config: true
+
+pcf8574:
+  - id: 'pcf_inputs'
+    address: 0x38
+
+logger:
+  hardware_uart: UART0
+api:
+  reboot_timeout: 0s
+ota:
+  - platform: esphome
+  - platform: web_server
+
+web_server:
+  port: 80
+  version: 3
+  local: true
+
+
+light:
+  - platform: binary
+    output: out_01
+    name: 'OUT 01'
+    id: light_01
+  - platform: binary
+    output: out_02
+    name: 'OUT 02'
+    id: light_02
+  - platform: binary
+    output: out_03
+    name: 'OUT 03'
+    id: light_03
+  - platform: binary
+    output: out_04
+    name: 'OUT 04'
+    id: light_04
+  - platform: binary
+    output: out_05
+    name: 'OUT 05'
+    id: light_05
+  - platform: binary
+    output: out_06
+    name: 'OUT 06'
+    id: light_06
+  - platform: binary
+    output: out_07
+    name: 'OUT 07'
+    id: light_07
+  - platform: binary
+    output: out_08
+    name: 'OUT 08'
+    id: light_08
+
+debug:
+  update_interval: 15s
+
+sensor:
+  - platform: lm75b
+    id: boneIO_temp
+    name: 'Temperature'
+    update_interval: 30s
+    entity_category: diagnostic
+    on_value_range:
+      - above: 70.0
+        then:
+          - switch.turn_on: buzzer
+      - below: 70.0
+        then:
+          - switch.turn_off: buzzer
+
+switch:
+  - platform: gpio
+    id: buzzer
+    name: 'Buzzer'
+    pin:
+      number: GPIO9
+      mode:
+        output: true
+      inverted: false
+  - platform: gpio
+    id: can_bus_switch
+    name: 'CAN Bus Switch'
+    pin:
+      number: GPIO35
+      mode:
+        output: true
+      inverted: false
+
+binary_sensor:
+  - platform: gpio
+    name: 'IN_01'
+    id: in_01
+    pin:
+      pcf8574: pcf_inputs
+      number: 0
+      mode:
+        input: true
+      inverted: true
+    on_press:
+      then:
+        - light.toggle: light_01
+
+  - platform: gpio
+    name: 'IN_02'
+    id: in_02
+    pin:
+      pcf8574: pcf_inputs
+      number: 1
+      mode:
+        input: true
+      inverted: true
+    on_press:
+      then:
+        - light.toggle: light_02
+
+  - platform: gpio
+    name: 'IN_03'
+    id: in_03
+    pin:
+      pcf8574: pcf_inputs
+      number: 2
+      mode:
+        input: true
+      inverted: true
+    on_press:
+      then:
+        - light.toggle: light_03
+
+  - platform: gpio
+    name: 'IN_04'
+    id: in_04
+    pin:
+      pcf8574: pcf_inputs
+      number: 3
+      mode:
+        input: true
+      inverted: true
+    on_press:
+      then:
+        - light.toggle: light_04
+
+  - platform: gpio
+    name: 'IN_05'
+    id: in_05
+    pin:
+      pcf8574: pcf_inputs
+      number: 4
+      mode:
+        input: true
+      inverted: true
+    on_press:
+      then:
+        - light.toggle: light_05
+
+  - platform: gpio
+    name: 'IN_06'
+    id: in_06
+    pin:
+      pcf8574: pcf_inputs
+      number: 5
+      mode:
+        input: true
+      inverted: true
+    on_press:
+      then:
+        - light.toggle: light_06
+
+  - platform: gpio
+    name: 'IN_07'
+    id: in_07
+    pin:
+      pcf8574: pcf_inputs
+      number: 6
+      mode:
+        input: true
+      inverted: true
+    on_press:
+      then:
+        - light.toggle: light_07
+
+  - platform: gpio
+    name: 'IN_08'
+    id: in_08
+    pin:
+      pcf8574: pcf_inputs
+      number: 7
+      mode:
+        input: true
+      inverted: true
+    on_press:
+      then:
+        - light.toggle: light_08
