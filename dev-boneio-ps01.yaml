@@ -71,7 +71,7 @@ ld2412:
 packages:
   internals_packages:
     url: https://github.com/boneIO-eu/esphome
-    ref: v1.7.1
+    ref: packages-v1.7.2
     files: [
         'devices/serial_no.yaml',
       ]

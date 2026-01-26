@@ -1,0 +1,124 @@
+name: Build ESPHome Firmware
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version tag (e.g., 2026.1.2)'
+        required: true
+        default: '2026.1.2'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          # Testing with single firmware first
+          - yaml_file: boneio-dimmer_gen2_8ch-v0_1.yaml
+          # Uncomment below after testing:
+          # - yaml_file: boneio-dimmer_gen2_2rgbw-v0_1.yaml
+          # - yaml_file: boneio-32x10_lights_v0_7.yaml
+          # - yaml_file: boneio-32x10_switches_v0_7.yaml
+          # - yaml_file: boneio-24x16_switches_v0_7.yaml
+          # - yaml_file: boneio-cover_v0_7.yaml
+          # - yaml_file: boneio-cover_mix_lights_v0_7.yaml
+          # - yaml_file: boneio-cover_mix_switches_v0_7.yaml
+          # - yaml_file: boneio-8x10A_gen2_lights-v0_1.yaml
+          # - yaml_file: boneio-mosfet48_lights_v0_7.yaml
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build firmware
+        uses: esphome/build-action@v4
+        id: esphome-build
+        with:
+          yaml-file: ${{ matrix.yaml_file }}
+          version: latest
+          complete-manifest: true
+
+      - name: Upload firmware artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: firmware-${{ steps.esphome-build.outputs.original-name }}
+          path: ${{ steps.esphome-build.outputs.name }}
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+
+    steps:
+      - name: Download firmware artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          pattern: firmware-*
+          merge-multiple: true
+
+      - name: Get version
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "version=${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
+          else
+            echo "version=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Prepare GitHub Pages content
+        run: |
+          mkdir -p gh-pages/firmware
+          
+          # esphome/build-action outputs: name/, name/manifest.json, name/*.bin
+          for dir in artifacts/*/; do
+            NAME=$(basename "$dir")
+            # Copy firmware binary
+            cp "$dir"*.bin gh-pages/firmware/
+            # Copy manifest and rename to firmware name
+            cp "$dir"manifest.json gh-pages/${NAME}.json
+          done
+          
+          # Create version file
+          echo "${{ steps.version.outputs.version }}" > gh-pages/version.txt
+          
+          # Create index with firmware list
+          cat > gh-pages/index.html << 'EOF'
+          <!DOCTYPE html>
+          <html>
+          <head><title>boneIO Firmware</title></head>
+          <body>
+          <h1>boneIO ESPHome Firmware</h1>
+          <ul>
+          EOF
+          for json in gh-pages/*.json; do
+            NAME=$(basename "$json" .json)
+            echo "<li><a href=\"${NAME}.json\">${NAME}</a></li>" >> gh-pages/index.html
+          done
+          cat >> gh-pages/index.html << 'EOF'
+          </ul>
+          </body>
+          </html>
+          EOF
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./gh-pages
+          force_orphan: true
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.version.outputs.version }}
+          name: Firmware v${{ steps.version.outputs.version }}
+          files: gh-pages/firmware/*.bin
+          generate_release_notes: true

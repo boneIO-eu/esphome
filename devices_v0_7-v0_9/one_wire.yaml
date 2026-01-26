@@ -2,14 +2,14 @@ one_wire:
   - platform: gpio
     pin: GPIO32
 # sensor:
-#   - platform: dallas
+#   - platform: dallas_temp
 #     address: 0x283c01d607d4df28
 #     name: "Dallas Sensor 1"
 #
-#   - platform: dallas
+#   - platform: dallas_temp
 #     address: 0xdfe67a061e64ff28
 #     name: "Dallas Sensor 2"
 #
-#   - platform: dallas
+#   - platform: dallas_temp
 #     address: 0xa7a89f071e64ff28
 #     name: "Dallas Sensor 3"
