@@ -1,0 +1,18 @@
+{
+    "name": "boneIO ESPHome",
+    "version": "2026.1.0a",
+    "home_assistant_domain": "esphome",
+    "funding_url": "https://esphome.io/guides/supporters.html",
+    "new_install_prompt_erase": false,
+    "builds": [
+        {
+            "chipFamily": "ESP32-S3",
+            "parts": [
+                {
+                    "path": "firmware/boneio-dr-gen2-8ch-01.bin",
+                    "offset": 0
+                }
+            ]
+        }
+    ]
+}
