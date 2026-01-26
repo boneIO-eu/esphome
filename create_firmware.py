@@ -32,15 +32,23 @@ exclude_files = [
 ]
 
 include_files = [
-    "boneio-8x10A_gen2_lights-v0_1.yaml",
-    # "boneio-dimmer_gen2_2rgbw-v0_1.yaml",
+    # "boneio-8x10A_gen2_lights-v0_1.yaml",
+    "boneio-dimmer_gen2_2rgbw-v0_1.yaml",
+    "boneio-dimmer_gen2_8ch-v0_1"
 ]
 
 
+GITHUB_PAGES_URL = "https://boneio-eu.github.io/esphome"
+FIRMWARE_VERSION = "2026.1.2"
+
+
 def json_pattern(firmware_name, chip_family="ESP32"):
+    # GitHub Pages supports CORS - works with ESP Web Tools
+    firmware_path = f"{GITHUB_PAGES_URL}/firmware/{firmware_name}.bin"
+    
     return {
         "name": "ESPHome",
-        "version": "2025.11.2",
+        "version": FIRMWARE_VERSION,
         "home_assistant_domain": "esphome",
         "funding_url": "https://esphome.io/guides/supporters.html",
         "new_install_prompt_erase": False,
@@ -49,7 +57,7 @@ def json_pattern(firmware_name, chip_family="ESP32"):
                 "chipFamily": chip_family,
                 "parts": [
                     {
-                        "path": f"/fwesp/firmware/{firmware_name}.bin",
+                        "path": firmware_path,
                         "offset": 0,
                     }
                 ],
@@ -84,7 +92,7 @@ for file in glob.glob("*.yaml"):
         print("No file found.")
         break
     firmware_path = f"{cwd}/.esphome/build/{filename}/.pioenvs/{filename}/firmware.factory.bin"
-    cmd = f'docker run --rm -p 6052:6052 -v "{cwd}":/config -it ghcr.io/esphome/esphome compile {file}'
+    cmd = f'docker run --rm -p 6053:6052 -v "{cwd}":/config -it ghcr.io/esphome/esphome compile {file}'
     print(cmd)
     result = subprocess.run(
         cmd,
