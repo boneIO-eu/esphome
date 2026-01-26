@@ -12,7 +12,7 @@ on:
         default: '2026.1.2'
 
 env:
-  ESPHOME_VERSION: "2024.12.4"
+  ESPHOME_VERSION: "2026.1.2"
 
 jobs:
   build:
@@ -20,26 +20,28 @@ jobs:
     strategy:
       matrix:
         include:
-          - yaml_file: boneio-dimmer_gen2_2rgbw-v0_1.yaml
-            chip_family: ESP32-S3
+          # Testing with single firmware first
           - yaml_file: boneio-dimmer_gen2_8ch-v0_1.yaml
             chip_family: ESP32-S3
-          - yaml_file: boneio-32x10_lights_v0_7.yaml
-            chip_family: ESP32
-          - yaml_file: boneio-32x10_switches_v0_7.yaml
-            chip_family: ESP32
-          - yaml_file: boneio-24x16_switches_v0_7.yaml
-            chip_family: ESP32
-          - yaml_file: boneio-cover_v0_7.yaml
-            chip_family: ESP32
-          - yaml_file: boneio-cover_mix_lights_v0_7.yaml
-            chip_family: ESP32
-          - yaml_file: boneio-cover_mix_switches_v0_7.yaml
-            chip_family: ESP32
-          - yaml_file: boneio-8x10A_gen2_lights-v0_1.yaml
-            chip_family: ESP32-S3
-          - yaml_file: boneio-mosfet48_lights_v0_7.yaml
-            chip_family: ESP32
+          # Uncomment below after testing:
+          # - yaml_file: boneio-dimmer_gen2_2rgbw-v0_1.yaml
+          #   chip_family: ESP32-S3
+          # - yaml_file: boneio-32x10_lights_v0_7.yaml
+          #   chip_family: ESP32
+          # - yaml_file: boneio-32x10_switches_v0_7.yaml
+          #   chip_family: ESP32
+          # - yaml_file: boneio-24x16_switches_v0_7.yaml
+          #   chip_family: ESP32
+          # - yaml_file: boneio-cover_v0_7.yaml
+          #   chip_family: ESP32
+          # - yaml_file: boneio-cover_mix_lights_v0_7.yaml
+          #   chip_family: ESP32
+          # - yaml_file: boneio-cover_mix_switches_v0_7.yaml
+          #   chip_family: ESP32
+          # - yaml_file: boneio-8x10A_gen2_lights-v0_1.yaml
+          #   chip_family: ESP32-S3
+          # - yaml_file: boneio-mosfet48_lights_v0_7.yaml
+          #   chip_family: ESP32
 
     steps:
       - name: Checkout repository
