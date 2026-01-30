@@ -32,9 +32,10 @@ exclude_files = [
 ]
 
 include_files = [
+    "boneio-input24_gen2-v0_01.yaml",
     # "boneio-8x10A_gen2_lights-v0_1.yaml",
-    "boneio-dimmer_gen2_2rgbw-v0_1.yaml",
-    "boneio-dimmer_gen2_8ch-v0_1"
+    # "boneio-dimmer_gen2_2rgbw-v0_1.yaml",
+    # "boneio-dimmer_gen2_8ch-v0_1"
 ]
 
 
