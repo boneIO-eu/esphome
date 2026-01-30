@@ -46,43 +46,6 @@ i2c:
   frequency: 400kHz
 
 
-
-output:
-  - platform: gpio
-    pin: GPIO18
-    inverted: false
-    id: out_01
-  - platform: gpio
-    pin: GPIO17
-    inverted: false
-    id: out_02
-  - platform: gpio
-    pin: GPIO16
-    inverted: false
-    id: out_03
-  - platform: gpio
-    pin: GPIO15
-    inverted: false
-    id: out_04
-
-  - platform: gpio
-    pin: GPIO7
-    inverted: false
-    id: out_05
-  - platform: gpio
-    pin: GPIO6
-    inverted: false
-    id: out_06
-  - platform: gpio
-    pin: GPIO5
-    inverted: false
-    id: out_07
-  - platform: gpio
-    pin: GPIO4
-    inverted: false
-    id: out_08
-
-
 # CAN gpio48 - tx, gpio47 rx, gpio35 stb
 # uart:
 #   id: boneio_uart
@@ -110,7 +73,7 @@ packages:
   #     - path: sdm630.yaml
 
 dashboard_import:
-  package_import_url: github://boneIO-eu/esphome/boneio-input24_gen2-v0_01.yaml.yaml@latest
+  package_import_url: github://boneIO-eu/esphome/boneio-input24_gen2-v0_1.yaml.yaml@latest
   import_full_config: true
 
 pcf8574:
