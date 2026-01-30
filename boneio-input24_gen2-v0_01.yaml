@@ -1,0 +1,407 @@
+substitutions:
+  name: boneio-input24-gen2-01
+  friendly_name: 'boneIO ESP Input24 Gen2'
+  serial_prefix: 'esp24' #Don't change it.
+  firmware_manifest: 'https://boneio.eu/fwesp/boneio-input24-gen2-01.json'
+esphome:
+  name: '${name}'
+  friendly_name: '${friendly_name}'
+  name_add_mac_suffix: true
+  project:
+    name: boneio.input24-gen2
+    version: '0.1'
+  on_boot:
+    priority: -100
+    then:
+      - delay: 5s
+      - if:
+          condition:
+            lambda: 'return id(serial_no) != nullptr;'
+          then:
+            - component.update: serial_no
+            - logger.log: "Serial No updated on boot"
+          else:
+            - logger.log: "Serial No component not found"
+
+esp32:
+  board: esp32-s3-devkitc-1
+  framework:                                                                            
+    type: esp-idf
+
+ethernet:
+  id: eth
+  type: W5500
+  clk_pin: GPIO13
+  mosi_pin: GPIO39
+  miso_pin: GPIO38
+  cs_pin: GPIO12
+  interrupt_pin: GPIO2
+  reset_pin: GPIO1
+  clock_speed: 25MHz
+
+i2c:
+  sda: GPIO10
+  scl: GPIO11
+  scan: True
+  frequency: 400kHz
+
+
+
+output:
+  - platform: gpio
+    pin: GPIO18
+    inverted: false
+    id: out_01
+  - platform: gpio
+    pin: GPIO17
+    inverted: false
+    id: out_02
+  - platform: gpio
+    pin: GPIO16
+    inverted: false
+    id: out_03
+  - platform: gpio
+    pin: GPIO15
+    inverted: false
+    id: out_04
+
+  - platform: gpio
+    pin: GPIO7
+    inverted: false
+    id: out_05
+  - platform: gpio
+    pin: GPIO6
+    inverted: false
+    id: out_06
+  - platform: gpio
+    pin: GPIO5
+    inverted: false
+    id: out_07
+  - platform: gpio
+    pin: GPIO4
+    inverted: false
+    id: out_08
+
+
+# CAN gpio48 - tx, gpio47 rx, gpio35 stb
+# uart:
+#   id: boneio_uart
+#   rx_pin: GPIO21
+#   tx_pin: GPIO14
+#   baud_rate: 9600
+#   stop_bits: 1
+# modbus:
+#   send_wait_time: 80ms
+#   uart_id: boneio_uart
+#   id: boneio_modbus
+
+packages:
+  internals_packages:
+    url: https://github.com/boneIO-eu/esphome
+    ref: packages-v1.7.2
+    files: [
+        'devices/serial_no.yaml',
+      ]
+  # boneiopackages:
+  #   url: https://github.com/boneIO-eu/esphome_packages
+  #   ref: main
+  #   refresh: 1min
+  #   files:
+  #     - path: sdm630.yaml
+
+dashboard_import:
+  package_import_url: github://boneIO-eu/esphome/boneio-input24_gen2-v0_01.yaml.yaml@latest
+  import_full_config: true
+
+pcf8574:
+  - id: pcf_inputs_1_to_8
+    address: 0x38
+  - id: pcf_inputs_9_to_24
+    address: 0x20
+    pcf8575: true
+
+logger:
+  hardware_uart: UART0
+api:
+  reboot_timeout: 0s
+ota:
+  - platform: esphome
+  - platform: web_server
+
+web_server:
+  port: 80
+  version: 3
+  local: true
+
+sensor:
+  - platform: lm75b
+    id: boneIO_temp
+    name: 'Temperature'
+    update_interval: 30s
+    entity_category: diagnostic
+    on_value_range:
+      - above: 70.0
+        then:
+          - switch.turn_on: buzzer
+      - below: 70.0
+        then:
+          - switch.turn_off: buzzer
+
+switch:
+  - platform: gpio
+    id: buzzer
+    name: 'Buzzer'
+    pin:
+      number: GPIO9
+      mode:
+        output: true
+      inverted: false
+  - platform: gpio
+    id: can_bus_switch
+    name: 'CAN Bus Switch'
+    pin:
+      number: GPIO35
+      mode:
+        output: true
+      inverted: false
+
+binary_sensor:
+  - platform: gpio
+    name: 'IN_01'
+    id: in_01
+    pin:
+      pcf8574: pcf_inputs_1_to_8
+      number: 0
+      mode:
+        input: true
+      inverted: true
+
+  - platform: gpio
+    name: 'IN_02'
+    id: in_02
+    pin:
+      pcf8574: pcf_inputs_1_to_8
+      number: 1
+      mode:
+        input: true
+      inverted: true
+
+  - platform: gpio
+    name: 'IN_03'
+    id: in_03
+    pin:
+      pcf8574: pcf_inputs_1_to_8
+      number: 2
+      mode:
+        input: true
+      inverted: true
+
+  - platform: gpio
+    name: 'IN_04'
+    id: in_04
+    pin:
+      pcf8574: pcf_inputs_1_to_8
+      number: 3
+      mode:
+        input: true
+      inverted: true
+
+  - platform: gpio
+    name: 'IN_05'
+    id: in_05
+    pin:
+      pcf8574: pcf_inputs_1_to_8
+      number: 4
+      mode:
+        input: true
+      inverted: true
+
+  - platform: gpio
+    name: 'IN_06'
+    id: in_06
+    pin:
+      pcf8574: pcf_inputs_1_to_8
+      number: 5
+      mode:
+        input: true
+      inverted: true
+
+  - platform: gpio
+    name: 'IN_07'
+    id: in_07
+    pin:
+      pcf8574: pcf_inputs_1_to_8
+      number: 6
+      mode:
+        input: true
+      inverted: true
+
+  - platform: gpio
+    name: 'IN_08'
+    id: in_08
+    pin:
+      pcf8574: pcf_inputs_1_to_8
+      number: 7
+      mode:
+        input: true
+      inverted: true
+
+  - platform: gpio
+    name: 'IN_09'
+    id: in_09
+    pin:
+      pcf8574: pcf_inputs_9_to_24
+      number: 7
+      mode:
+        input: true
+      inverted: true
+
+  - platform: gpio
+    name: 'IN_10'
+    id: in_10
+    pin:
+      pcf8574: pcf_inputs_9_to_24
+      number: 6
+      mode:
+        input: true
+      inverted: true
+
+  - platform: gpio
+    name: 'IN_11'
+    id: in_11
+    pin:
+      pcf8574: pcf_inputs_9_to_24
+      number: 5
+      mode:
+        input: true
+      inverted: true
+
+  - platform: gpio
+    name: 'IN_12'
+    id: in_12
+    pin:
+      pcf8574: pcf_inputs_9_to_24
+      number: 4
+      mode:
+        input: true
+      inverted: true
+
+  - platform: gpio
+    name: 'IN_13'
+    id: in_13
+    pin:
+      pcf8574: pcf_inputs_9_to_24
+      number: 3
+      mode:
+        input: true
+      inverted: true
+
+  - platform: gpio
+    name: 'IN_14'
+    id: in_14
+    pin:
+      pcf8574: pcf_inputs_9_to_24
+      number: 2
+      mode:
+        input: true
+      inverted: true
+
+  - platform: gpio
+    name: 'IN_15'
+    id: in_15
+    pin:
+      pcf8574: pcf_inputs_9_to_24
+      number: 1
+      mode:
+        input: true
+      inverted: true
+
+  - platform: gpio
+    name: 'IN_16'
+    id: in_16
+    pin:
+      pcf8574: pcf_inputs_9_to_24
+      number: 0
+      mode:
+        input: true
+      inverted: true
+
+  - platform: gpio
+    name: 'IN_17'
+    id: in_17
+    pin:
+      pcf8574: pcf_inputs_9_to_24
+      number: 15
+      mode:
+        input: true
+      inverted: true
+
+  - platform: gpio
+    name: 'IN_18'
+    id: in_18
+    pin:
+      pcf8574: pcf_inputs_9_to_24
+      number: 14
+      mode:
+        input: true
+      inverted: true
+
+  - platform: gpio
+    name: 'IN_19'
+    id: in_19
+    pin:
+      pcf8574: pcf_inputs_9_to_24
+      number: 13
+      mode:
+        input: true
+      inverted: true
+
+  - platform: gpio
+    name: 'IN_20'
+    id: in_20
+    pin:
+      pcf8574: pcf_inputs_9_to_24
+      number: 12
+      mode:
+        input: true
+      inverted: true
+
+  - platform: gpio
+    name: 'IN_21'
+    id: in_21
+    pin:
+      pcf8574: pcf_inputs_9_to_24
+      number: 11
+      mode:
+        input: true
+      inverted: true
+
+  - platform: gpio
+    name: 'IN_22'
+    id: in_22
+    pin:
+      pcf8574: pcf_inputs_9_to_24
+      number: 10
+      mode:
+        input: true
+      inverted: true
+
+  - platform: gpio
+    name: 'IN_23'
+    id: in_23
+    pin:
+      pcf8574: pcf_inputs_9_to_24
+      number: 9
+      mode:
+        input: true
+      inverted: true
+
+  - platform: gpio
+    name: 'IN_24'
+    id: in_24
+    pin:
+      pcf8574: pcf_inputs_9_to_24
+      number: 8
+      mode:
+        input: true
+      inverted: true
