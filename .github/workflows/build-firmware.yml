@@ -3,50 +3,218 @@ name: Build ESPHome Firmware
 on:
   push:
     tags:
-      - 'v*'
+      - "v*"
   workflow_dispatch:
     inputs:
       version:
-        description: 'Version tag (e.g., 2026.1.2)'
+        description: "Version tag (e.g., 2026.1.5)"
         required: true
-        default: '2026.1.2'
+        default: "2026.1.5"
 
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         include:
-          # Testing with single firmware first
+          # Dimmer LED v0.3
+          - yaml_file: boneio-dimmer_8ch-v0_3.yaml
+            board_name: "Dimmer LED"
+            board_value: "dimmer"
+            version: "v0.3"
+            version_key: "v0.3"
+            output_option: "8 Channels"
+            chip_family: "ESP32"
+          - yaml_file: boneio-dimmer_2rgbw-v0_3.yaml
+            board_name: "Dimmer LED"
+            board_value: "dimmer"
+            version: "v0.3"
+            version_key: "v0.3"
+            output_option: "2xRGBW"
+            chip_family: "ESP32"
+          - yaml_file: boneio-dimmer_4cct-v0_3.yaml
+            board_name: "Dimmer LED"
+            board_value: "dimmer"
+            version: "v0.3"
+            version_key: "v0.3"
+            output_option: "4 CCT"
+            chip_family: "ESP32"
+
+          # Dimmer LED gen2 v0.1
           - yaml_file: boneio-dimmer_gen2_8ch-v0_1.yaml
-          # Uncomment below after testing:
-          # - yaml_file: boneio-dimmer_gen2_2rgbw-v0_1.yaml
-          # - yaml_file: boneio-32x10_lights_v0_7.yaml
-          # - yaml_file: boneio-32x10_switches_v0_7.yaml
-          # - yaml_file: boneio-24x16_switches_v0_7.yaml
-          # - yaml_file: boneio-cover_v0_7.yaml
-          # - yaml_file: boneio-cover_mix_lights_v0_7.yaml
-          # - yaml_file: boneio-cover_mix_switches_v0_7.yaml
-          # - yaml_file: boneio-8x10A_gen2_lights-v0_1.yaml
-          # - yaml_file: boneio-mosfet48_lights_v0_7.yaml
+            board_name: "Dimmer LED gen2"
+            board_value: "dimmer_g2"
+            version: "v0.1"
+            version_key: "v0.1"
+            output_option: "8 Channels"
+            chip_family: "ESP32-S3"
+          - yaml_file: boneio-dimmer_gen2_2rgbw-v0_1.yaml
+            board_name: "Dimmer LED gen2"
+            board_value: "dimmer_g2"
+            version: "v0.1"
+            version_key: "v0.1"
+            output_option: "2xRGBW"
+            chip_family: "ESP32-S3"
+          - yaml_file: boneio-dimmer_gen2_4cct-v0_1.yaml
+            board_name: "Dimmer LED gen2"
+            board_value: "dimmer_g2"
+            version: "v0.1"
+            version_key: "v0.1"
+            output_option: "4 CCT"
+            chip_family: "ESP32-S3"
+
+          # Input24 gen2
+          - yaml_file: boneio-input24_gen2-v0_1.yaml
+            board_name: "boneIO ESP Input24 gen2"
+            board_value: "input24"
+            version: "v0.1"
+            version_key: "v0.1"
+            output_option: "None"
+            chip_family: "ESP32-S3"
+
+          # 8x10A gen2
+          - yaml_file: boneio-8x10A_gen2_lights-v0_1.yaml
+            board_name: "boneIO ESP 8x10A gen2"
+            board_value: "8x10A"
+            version: "v0.1"
+            version_key: "v0.1"
+            output_option: "Lights"
+            chip_family: "ESP32-S3"
+
+          # 32x10 v0.7
+          - yaml_file: boneio-32x10_lights_v0_7.yaml
+            board_name: "boneIO ESP 32x10"
+            board_value: "32x10"
+            version: "v0.7 PP"
+            version_key: "v0.7"
+            output_option: "Lights"
+            chip_family: "ESP32"
+          - yaml_file: boneio-32x10_switches_v0_7.yaml
+            board_name: "boneIO ESP 32x10"
+            board_value: "32x10"
+            version: "v0.7 PP"
+            version_key: "v0.7"
+            output_option: "Switches"
+            chip_family: "ESP32"
+
+          # 32x10 v0.6
+          - yaml_file: boneio-32x10_lights_v0_5-v0_6.yaml
+            board_name: "boneIO ESP 32x10"
+            board_value: "32x10"
+            version: "v0.5/v0.6 PP"
+            version_key: "v0.6"
+            output_option: "Lights"
+            chip_family: "ESP32"
+          - yaml_file: boneio-32x10_switches_v0_5-v0_6.yaml
+            board_name: "boneIO ESP 32x10"
+            board_value: "32x10"
+            version: "v0.5/v0.6 PP"
+            version_key: "v0.6"
+            output_option: "Switches"
+            chip_family: "ESP32"
+
+          # 24x16
+          - yaml_file: boneio-24x16_switches_v0_7.yaml
+            board_name: "boneIO ESP 24x16"
+            board_value: "24x16"
+            version: "v0.7 MP"
+            version_key: "v0.7"
+            output_option: "Switches"
+            chip_family: "ESP32"
+          - yaml_file: boneio-24x16_switches_v0_5-v0_6.yaml
+            board_name: "boneIO ESP 24x16"
+            board_value: "24x16"
+            version: "v0.5/v0.6 MP"
+            version_key: "v0.6"
+            output_option: "Switches"
+            chip_family: "ESP32"
+
+          # Cover
+          - yaml_file: boneio-cover_v0_7.yaml
+            board_name: "boneIO ESP Cover"
+            board_value: "cover"
+            version: "v0.7 PP"
+            version_key: "v0.7"
+            output_option: ""
+            chip_family: "ESP32"
+          - yaml_file: boneio-cover_v0_5-v0_6.yaml
+            board_name: "boneIO ESP Cover"
+            board_value: "cover"
+            version: "v0.5/v0.6 PP"
+            version_key: "v0.6"
+            output_option: ""
+            chip_family: "ESP32"
+
+          # Cover Mix
+          - yaml_file: boneio-cover_mix_lights_v0_7.yaml
+            board_name: "boneIO ESP Cover Mix"
+            board_value: "mix"
+            version: "v0.7 PP"
+            version_key: "v0.7"
+            output_option: "Lights"
+            chip_family: "ESP32"
+          - yaml_file: boneio-cover_mix_switches_v0_7.yaml
+            board_name: "boneIO ESP Cover Mix"
+            board_value: "mix"
+            version: "v0.7 PP"
+            version_key: "v0.7"
+            output_option: "Switches"
+            chip_family: "ESP32"
+          - yaml_file: boneio-cover_mix_lights_v0_5-v0_6.yaml
+            board_name: "boneIO ESP Cover Mix"
+            board_value: "mix"
+            version: "v0.5/v0.6 PP"
+            version_key: "v0.6"
+            output_option: "Lights"
+            chip_family: "ESP32"
+          - yaml_file: boneio-cover_mix_switches_v0_5-v0_6.yaml
+            board_name: "boneIO ESP Cover Mix"
+            board_value: "mix"
+            version: "v0.5/v0.6 PP"
+            version_key: "v0.6"
+            output_option: "Switches"
+            chip_family: "ESP32"
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Build firmware
-        uses: esphome/build-action@v4
+        uses: esphome/build-action@v7
         id: esphome-build
         with:
           yaml-file: ${{ matrix.yaml_file }}
           version: latest
           complete-manifest: true
 
+      - name: Save build metadata
+        run: |
+          mkdir -p metadata
+          cat > metadata/${{ steps.esphome-build.outputs.original-name }}.json << 'METADATA_EOF'
+          {
+            "firmware_name": "${{ steps.esphome-build.outputs.original-name }}",
+            "yaml_file": "${{ matrix.yaml_file }}",
+            "board_name": "${{ matrix.board_name }}",
+            "board_value": "${{ matrix.board_value }}",
+            "version": "${{ matrix.version }}",
+            "version_key": "${{ matrix.version_key }}",
+            "output_option": "${{ matrix.output_option }}",
+            "chip_family": "${{ matrix.chip_family }}"
+          }
+          METADATA_EOF
+
       - name: Upload firmware artifact
         uses: actions/upload-artifact@v4
         with:
           name: firmware-${{ steps.esphome-build.outputs.original-name }}
           path: ${{ steps.esphome-build.outputs.name }}
+
+      - name: Upload metadata artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: metadata-${{ steps.esphome-build.outputs.original-name }}
+          path: metadata/
 
   deploy:
     needs: build
@@ -64,6 +232,13 @@ jobs:
           pattern: firmware-*
           merge-multiple: true
 
+      - name: Download metadata artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: metadata
+          pattern: metadata-*
+          merge-multiple: true
+
       - name: Get version
         id: version
         run: |
@@ -75,32 +250,166 @@ jobs:
 
       - name: Prepare GitHub Pages content
         run: |
-          mkdir -p gh-pages/firmware
-          
-          # esphome/build-action outputs: name/, name/manifest.json, name/*.bin
-          for dir in artifacts/*/; do
-            NAME=$(basename "$dir")
-            # Copy firmware binary
-            cp "$dir"*.bin gh-pages/firmware/
-            # Copy manifest and rename to firmware name
-            cp "$dir"manifest.json gh-pages/${NAME}.json
+          mkdir -p gh-pages/firmware gh-pages/manifests release
+          export VERSION="${{ steps.version.outputs.version }}"
+          export BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          export GITHUB_PAGES_URL="https://boneio-eu.github.io/esphome"
+
+          # Debug: show artifact structure
+          echo "=== Artifacts structure ==="
+          find artifacts/ -type f | head -80
+          echo "=== End artifacts ==="
+
+          # Copy and rename firmware binaries
+          # esphome/build-action outputs: name-chip/name-chip.factory.bin and name-chip.ota.bin
+          for factory_bin in $(find artifacts/ -name '*.factory.bin'); do
+            BASENAME=$(basename "$factory_bin")
+            # Remove .factory from name: boneio-dr-8ch-03-esp32.factory.bin -> boneio-dr-8ch-03-esp32.bin
+            SIMPLE_NAME="${BASENAME/.factory.bin/.bin}"
+            cp "$factory_bin" "gh-pages/firmware/${SIMPLE_NAME}"
+            echo "  Copied to gh-pages/firmware/${SIMPLE_NAME}"
           done
-          
+
+          # Copy all binaries (factory + ota) to release folder for GitHub Release
+          find artifacts/ -name '*.factory.bin' -exec cp {} release/ \;
+          find artifacts/ -name '*.ota.bin' -exec cp {} release/ \;
+          echo "=== Release files ==="
+          ls -la release/
+          echo "=== End release ==="
+
+          # Generate manifest JSONs + firmware-catalog.json from metadata
+          python3 << 'PYTHON_EOF'
+          import json
+          import glob
+          import os
+
+          version = os.environ.get("VERSION", "unknown")
+          build_date = os.environ.get("BUILD_DATE", "unknown")
+          github_pages_url = os.environ.get("GITHUB_PAGES_URL", "")
+
+          # Read all metadata files
+          builds = []
+          for meta_file in glob.glob("metadata/*.json"):
+              with open(meta_file) as f:
+                  builds.append(json.load(f))
+
+          # Discover actual firmware files on gh-pages to map metadata -> binary
+          fw_files = {}
+          for f in glob.glob("gh-pages/firmware/*.bin"):
+              fw_files[os.path.basename(f)] = f
+
+          print(f"Found {len(fw_files)} firmware files: {list(fw_files.keys())}")
+
+          # Generate individual ESP Web Tools manifests
+          for build in builds:
+              fw_name = build["firmware_name"]
+              chip = build["chip_family"]
+              chip_suffix = chip.lower().replace("-", "")  # ESP32-S3 -> esp32s3
+
+              # Find matching binary file
+              bin_filename = f"{fw_name}-{chip_suffix}.bin"
+              if bin_filename not in fw_files:
+                  # Fallback: try without chip suffix
+                  bin_filename = f"{fw_name}.bin"
+              if bin_filename not in fw_files:
+                  print(f"  WARNING: No binary found for {fw_name} (tried {fw_name}-{chip_suffix}.bin)")
+                  # List candidates
+                  candidates = [k for k in fw_files if fw_name in k]
+                  if candidates:
+                      bin_filename = candidates[0]
+                      print(f"    Using candidate: {bin_filename}")
+                  else:
+                      continue
+
+              manifest = {
+                  "name": f'{build["board_name"]} {build["output_option"]} {build["version"]}'.strip(),
+                  "version": version,
+                  "builds": [
+                      {
+                          "chipFamily": chip,
+                          "parts": [
+                              {
+                                  "path": f'{github_pages_url}/firmware/{bin_filename}',
+                                  "offset": 0
+                              }
+                          ]
+                      }
+                  ]
+              }
+              manifest_path = f'gh-pages/manifests/{fw_name}.json'
+              with open(manifest_path, 'w') as f:
+                  json.dump(manifest, f, indent=2)
+              print(f'  Generated manifest: {fw_name}.json -> {bin_filename}')
+
+          # Group by board for catalog
+          boards_map = {}
+          for build in builds:
+              board_value = build["board_value"]
+              if board_value not in boards_map:
+                  boards_map[board_value] = {
+                      "name": build["board_name"],
+                      "value": board_value,
+                      "versions_map": {}
+                  }
+
+              version_key = build["version_key"]
+              if version_key not in boards_map[board_value]["versions_map"]:
+                  boards_map[board_value]["versions_map"][version_key] = {
+                      "version": build["version"],
+                      "versionKey": version_key,
+                      "options": []
+                  }
+
+              manifest_url = f'{github_pages_url}/manifests/{build["firmware_name"]}.json'
+              yaml_url = f'https://github.com/boneIO-eu/esphome/blob/main/{build["yaml_file"]}'
+
+              option = {
+                  "name": build["output_option"] if build["output_option"] else "Standard",
+                  "manifest_url": manifest_url,
+                  "yaml_url": yaml_url
+              }
+              boards_map[board_value]["versions_map"][version_key]["options"].append(option)
+
+          # Convert to final structure
+          boards = []
+          for board_value, board_data in boards_map.items():
+              versions = list(board_data["versions_map"].values())
+              boards.append({
+                  "name": board_data["name"],
+                  "value": board_data["value"],
+                  "versions": versions
+              })
+
+          catalog = {
+              "version": version,
+              "build_date": build_date,
+              "boards": boards
+          }
+
+          with open("gh-pages/firmware-catalog.json", "w") as f:
+              json.dump(catalog, f, indent=2)
+
+          print(f"Generated firmware-catalog.json with {len(boards)} boards")
+          print(f"Generated {len(builds)} manifest files")
+          PYTHON_EOF
+
           # Create version file
-          echo "${{ steps.version.outputs.version }}" > gh-pages/version.txt
-          
-          # Create index with firmware list
+          echo "$VERSION" > gh-pages/version.txt
+
+          # Create index page
           cat > gh-pages/index.html << 'EOF'
           <!DOCTYPE html>
           <html>
           <head><title>boneIO Firmware</title></head>
           <body>
           <h1>boneIO ESPHome Firmware</h1>
+          <p><a href="firmware-catalog.json">Firmware Catalog (JSON API)</a></p>
+          <h2>Manifests</h2>
           <ul>
           EOF
-          for json in gh-pages/*.json; do
-            NAME=$(basename "$json" .json)
-            echo "<li><a href=\"${NAME}.json\">${NAME}</a></li>" >> gh-pages/index.html
+          for json_file in gh-pages/manifests/*.json; do
+            NAME=$(basename "$json_file" .json)
+            echo "<li><a href=\"manifests/${NAME}.json\">${NAME}</a></li>" >> gh-pages/index.html
           done
           cat >> gh-pages/index.html << 'EOF'
           </ul>
@@ -120,5 +429,5 @@ jobs:
         with:
           tag_name: v${{ steps.version.outputs.version }}
           name: Firmware v${{ steps.version.outputs.version }}
-          files: gh-pages/firmware/*.bin
+          files: release/*
           generate_release_notes: true

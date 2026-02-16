@@ -106,9 +106,9 @@ output:
 packages:
   internals_packages:
     url: https://github.com/boneIO-eu/esphome
-    ref: packages-v1.7.2
+    ref: packages-v2.0.0
     files: [
-        'devices/serial_no.yaml',
+        'packages/devices/serial_no.yaml',
       ]
   # boneiopackages:
   #   url: https://github.com/boneIO-eu/esphome_packages

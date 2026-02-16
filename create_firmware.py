@@ -26,13 +26,13 @@ exclude_files = [
     "boneio-mosfet48_lights_v0_7.yaml",
     "boneio-mosfet48_switches_v0_7.yaml"
     "boneio-8x10A_v0_1.yaml"
-    "boneio-dimmer_gen2_8ch-dev0_4.yaml"
+    "boneio-dimmer_gen2_8ch-dev0_4.yaml",
 
     # Dodaj tutaj kolejne pliki do wykluczenia
 ]
 
 include_files = [
-    "boneio-input24_gen2-v0_01.yaml",
+    "boneio-input24_gen2-v0_1.yaml",
     # "boneio-8x10A_gen2_lights-v0_1.yaml",
     # "boneio-dimmer_gen2_2rgbw-v0_1.yaml",
     # "boneio-dimmer_gen2_8ch-v0_1"

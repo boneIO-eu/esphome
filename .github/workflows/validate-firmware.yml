@@ -1,0 +1,54 @@
+name: Validate ESPHome Configs
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "boneio-*.yaml"
+      - "packages/**"
+  pull_request:
+    paths:
+      - "boneio-*.yaml"
+      - "packages/**"
+
+jobs:
+  validate-urls:
+    name: Validate package_import_url
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check package_import_url consistency
+        run: |
+          ERRORS=0
+          for FILE in boneio-*.yaml; do
+            BASENAME=$(basename "$FILE")
+
+            # Check package_import_url
+            URL=$(grep 'package_import_url:' "$FILE" 2>/dev/null | awk '{print $2}' | tr -d "'\"")
+            if [ -z "$URL" ]; then
+              echo "::warning::No package_import_url found in $FILE"
+              continue
+            fi
+
+            # Extract filename from URL (format: github://org/repo/path/file.yaml@ref)
+            URL_FILE=$(echo "$URL" | sed 's|.*esphome/||' | sed 's|@.*||')
+
+            if [ "$URL_FILE" != "$BASENAME" ]; then
+              echo "::error file=$FILE::package_import_url mismatch: URL references '$URL_FILE' but file is '$BASENAME'"
+              ERRORS=$((ERRORS + 1))
+            fi
+
+            # Check for double extensions
+            if echo "$URL" | grep -q '\.yaml\.yaml'; then
+              echo "::error file=$FILE::Double .yaml.yaml extension in package_import_url"
+              ERRORS=$((ERRORS + 1))
+            fi
+          done
+
+          if [ $ERRORS -gt 0 ]; then
+            echo ""
+            echo "Found $ERRORS error(s) in package_import_url validation"
+            exit 1
+          fi
+          echo "All package_import_url checks passed!"

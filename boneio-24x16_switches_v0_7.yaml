@@ -34,17 +34,17 @@ dashboard_import:
 packages:
   internals_packages:
     url: https://github.com/boneIO-eu/esphome
-    ref: packages-v1.7.2
+    ref: packages-v2.0.0
     files: [
-        'devices/buzzer.yaml',
-        'devices/serial_no.yaml',
-        'devices_v0_7/display.yaml',
-        'devices_v0_7/i2c.yaml',
-        'devices_v0_7-v0_9/ina219.yaml',
-        'devices_v0_7-v0_9/lm75b.yaml',
-        'devices_v0_7-v0_9/pcf_with_mcp.yaml',
-        'boards/24x16_output.yaml',
-        # 'devices_v0_7-v0_9/one_wire.yaml',
+        'packages/devices/buzzer.yaml',
+        'packages/devices/serial_no.yaml',
+        'packages/devices_v0_7/display.yaml',
+        'packages/devices_v0_7/i2c.yaml',
+        'packages/devices_v0_7-v0_9/ina219.yaml',
+        'packages/devices_v0_7-v0_9/lm75b.yaml',
+        'packages/devices_v0_7-v0_9/pcf_with_mcp.yaml',
+        'packages/boards/24x16_output.yaml',
+        # 'packages/devices_v0_7-v0_9/one_wire.yaml',
       ]
 
 logger:
