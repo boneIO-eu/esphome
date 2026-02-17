@@ -3,13 +3,17 @@ name: Build ESPHome Firmware
 on:
   push:
     tags:
-      - "v*"
+      - "esphome-*"
   workflow_dispatch:
     inputs:
-      version:
-        description: "Version tag (e.g., 2026.1.5)"
+      esphome_version:
+        description: "ESPHome version (e.g., 2026.1.5)"
         required: true
         default: "2026.1.5"
+      build:
+        description: "Build number (e.g., b1)"
+        required: true
+        default: "b1"
 
 jobs:
   build:
@@ -250,15 +254,23 @@ jobs:
         id: version
         run: |
           if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-            echo "version=${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
+            ESPHOME_VER="${{ github.event.inputs.esphome_version }}"
+            BUILD="${{ github.event.inputs.build }}"
           else
-            echo "version=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+            # Tag format: esphome-2026.1.5-b1
+            TAG="${GITHUB_REF#refs/tags/esphome-}"
+            ESPHOME_VER=$(echo "$TAG" | sed 's/-b[0-9]*$//')
+            BUILD=$(echo "$TAG" | grep -oP 'b\d+$' || echo 'b1')
           fi
+          echo "esphome_version=$ESPHOME_VER" >> $GITHUB_OUTPUT
+          echo "build=$BUILD" >> $GITHUB_OUTPUT
+          echo "full_version=${ESPHOME_VER}-${BUILD}" >> $GITHUB_OUTPUT
+          echo "Version: $ESPHOME_VER, Build: $BUILD"
 
       - name: Prepare GitHub Pages content
         run: |
           mkdir -p gh-pages/firmware gh-pages/manifests release
-          export VERSION="${{ steps.version.outputs.version }}"
+          export VERSION="${{ steps.version.outputs.full_version }}"
           export BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
           export GITHUB_PAGES_URL="https://boneio-eu.github.io/esphome"
 
@@ -432,9 +444,9 @@ jobs:
           force_orphan: true
 
       - name: Create GitHub Release
+        if: github.event_name == 'push'
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v${{ steps.version.outputs.version }}
-          name: Firmware v${{ steps.version.outputs.version }}
+          name: "Firmware ${{ steps.version.outputs.esphome_version }} (${{ steps.version.outputs.build }})"
           files: release/*
           generate_release_notes: true
