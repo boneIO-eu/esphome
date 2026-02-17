@@ -1,0 +1,15 @@
+{
+  "name": "boneIO ESP 32x10 Lights v0.5/v0.6 PP",
+  "version": "2026.1.5-b1",
+  "builds": [
+    {
+      "chipFamily": "ESP32",
+      "parts": [
+        {
+          "path": "https://boneio-eu.github.io/esphome/firmware/boneio-32-l-06-esp32.bin",
+          "offset": 0
+        }
+      ]
+    }
+  ]
+}

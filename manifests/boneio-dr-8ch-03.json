@@ -1,0 +1,15 @@
+{
+  "name": "Dimmer LED 8 Channels v0.3",
+  "version": "2026.1.5-b1",
+  "builds": [
+    {
+      "chipFamily": "ESP32",
+      "parts": [
+        {
+          "path": "https://boneio-eu.github.io/esphome/firmware/boneio-dr-8ch-03-esp32.bin",
+          "offset": 0
+        }
+      ]
+    }
+  ]
+}

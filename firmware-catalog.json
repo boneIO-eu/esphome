@@ -1,0 +1,231 @@
+{
+  "version": "2026.1.5-b1",
+  "build_date": "2026-02-17T11:31:56Z",
+  "boards": [
+    {
+      "name": "boneIO ESP 32x10",
+      "value": "32x10",
+      "versions": [
+        {
+          "version": "v0.5/v0.6 PP",
+          "versionKey": "v0.6",
+          "options": [
+            {
+              "name": "Lights",
+              "manifest_url": "https://boneio-eu.github.io/esphome/manifests/boneio-32-l-06.json",
+              "yaml_url": "https://github.com/boneIO-eu/esphome/blob/main/boneio-32x10_lights_v0_5-v0_6.yaml"
+            },
+            {
+              "name": "Switches",
+              "manifest_url": "https://boneio-eu.github.io/esphome/manifests/boneio-32-sw-06.json",
+              "yaml_url": "https://github.com/boneIO-eu/esphome/blob/main/boneio-32x10_switches_v0_5-v0_6.yaml"
+            }
+          ]
+        },
+        {
+          "version": "v0.7 PP",
+          "versionKey": "v0.7",
+          "options": [
+            {
+              "name": "Lights",
+              "manifest_url": "https://boneio-eu.github.io/esphome/manifests/boneio-32-l-07.json",
+              "yaml_url": "https://github.com/boneIO-eu/esphome/blob/main/boneio-32x10_lights_v0_7.yaml"
+            },
+            {
+              "name": "Switches",
+              "manifest_url": "https://boneio-eu.github.io/esphome/manifests/boneio-32-sw-07.json",
+              "yaml_url": "https://github.com/boneIO-eu/esphome/blob/main/boneio-32x10_switches_v0_7.yaml"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Dimmer LED gen2",
+      "value": "dimmer_g2",
+      "versions": [
+        {
+          "version": "v0.1",
+          "versionKey": "v0.1",
+          "options": [
+            {
+              "name": "4 CCT",
+              "manifest_url": "https://boneio-eu.github.io/esphome/manifests/boneio-dr-gen2-4cct-01.json",
+              "yaml_url": "https://github.com/boneIO-eu/esphome/blob/main/boneio-dimmer_gen2_4cct-v0_1.yaml"
+            },
+            {
+              "name": "8 Channels",
+              "manifest_url": "https://boneio-eu.github.io/esphome/manifests/boneio-dr-gen2-8ch-01.json",
+              "yaml_url": "https://github.com/boneIO-eu/esphome/blob/main/boneio-dimmer_gen2_8ch-v0_1.yaml"
+            },
+            {
+              "name": "2xRGBW",
+              "manifest_url": "https://boneio-eu.github.io/esphome/manifests/boneio-dr-gen2-2rgbw-01.json",
+              "yaml_url": "https://github.com/boneIO-eu/esphome/blob/main/boneio-dimmer_gen2_2rgbw-v0_1.yaml"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "boneIO ESP Cover Mix",
+      "value": "mix",
+      "versions": [
+        {
+          "version": "v0.5/v0.6 PP",
+          "versionKey": "v0.6",
+          "options": [
+            {
+              "name": "Switches",
+              "manifest_url": "https://boneio-eu.github.io/esphome/manifests/boneio-cm-sw-06.json",
+              "yaml_url": "https://github.com/boneIO-eu/esphome/blob/main/boneio-cover_mix_switches_v0_5-v0_6.yaml"
+            },
+            {
+              "name": "Lights",
+              "manifest_url": "https://boneio-eu.github.io/esphome/manifests/boneio-cm-l-06.json",
+              "yaml_url": "https://github.com/boneIO-eu/esphome/blob/main/boneio-cover_mix_lights_v0_5-v0_6.yaml"
+            }
+          ]
+        },
+        {
+          "version": "v0.7 PP",
+          "versionKey": "v0.7",
+          "options": [
+            {
+              "name": "Switches",
+              "manifest_url": "https://boneio-eu.github.io/esphome/manifests/boneio-cm-sw-07.json",
+              "yaml_url": "https://github.com/boneIO-eu/esphome/blob/main/boneio-cover_mix_switches_v0_7.yaml"
+            },
+            {
+              "name": "Lights",
+              "manifest_url": "https://boneio-eu.github.io/esphome/manifests/boneio-cm-l-07.json",
+              "yaml_url": "https://github.com/boneIO-eu/esphome/blob/main/boneio-cover_mix_lights_v0_7.yaml"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Dimmer LED",
+      "value": "dimmer",
+      "versions": [
+        {
+          "version": "v0.3",
+          "versionKey": "v0.3",
+          "options": [
+            {
+              "name": "4 CCT",
+              "manifest_url": "https://boneio-eu.github.io/esphome/manifests/boneio-dr-4cct-03.json",
+              "yaml_url": "https://github.com/boneIO-eu/esphome/blob/main/boneio-dimmer_4cct-v0_3.yaml"
+            },
+            {
+              "name": "8 Channels",
+              "manifest_url": "https://boneio-eu.github.io/esphome/manifests/boneio-dr-8ch-03.json",
+              "yaml_url": "https://github.com/boneIO-eu/esphome/blob/main/boneio-dimmer_8ch-v0_3.yaml"
+            },
+            {
+              "name": "2xRGBW",
+              "manifest_url": "https://boneio-eu.github.io/esphome/manifests/boneio-dr-rgbw-03.json",
+              "yaml_url": "https://github.com/boneIO-eu/esphome/blob/main/boneio-dimmer_2rgbw-v0_3.yaml"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "boneIO ESP 24x16",
+      "value": "24x16",
+      "versions": [
+        {
+          "version": "v0.7 MP",
+          "versionKey": "v0.7",
+          "options": [
+            {
+              "name": "Switches",
+              "manifest_url": "https://boneio-eu.github.io/esphome/manifests/boneio-24-sw-07.json",
+              "yaml_url": "https://github.com/boneIO-eu/esphome/blob/main/boneio-24x16_switches_v0_7.yaml"
+            }
+          ]
+        },
+        {
+          "version": "v0.5/v0.6 MP",
+          "versionKey": "v0.6",
+          "options": [
+            {
+              "name": "Switches",
+              "manifest_url": "https://boneio-eu.github.io/esphome/manifests/boneio-24-sw-06.json",
+              "yaml_url": "https://github.com/boneIO-eu/esphome/blob/main/boneio-24x16_switches_v0_5-v0_6.yaml"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "boneIO ESP Cover",
+      "value": "cover",
+      "versions": [
+        {
+          "version": "v0.7 PP",
+          "versionKey": "v0.7",
+          "options": [
+            {
+              "name": "Standard",
+              "manifest_url": "https://boneio-eu.github.io/esphome/manifests/boneio-c-07.json",
+              "yaml_url": "https://github.com/boneIO-eu/esphome/blob/main/boneio-cover_v0_7.yaml"
+            }
+          ]
+        },
+        {
+          "version": "v0.5/v0.6 PP",
+          "versionKey": "v0.6",
+          "options": [
+            {
+              "name": "Standard",
+              "manifest_url": "https://boneio-eu.github.io/esphome/manifests/boneio-c-06.json",
+              "yaml_url": "https://github.com/boneIO-eu/esphome/blob/main/boneio-cover_v0_5-v0_6.yaml"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "boneIO ESP Input24 gen2",
+      "value": "input24",
+      "versions": [
+        {
+          "version": "v0.1",
+          "versionKey": "v0.1",
+          "options": [
+            {
+              "name": "None",
+              "manifest_url": "https://boneio-eu.github.io/esphome/manifests/boneio-input24-gen2-01.json",
+              "yaml_url": "https://github.com/boneIO-eu/esphome/blob/main/boneio-input24_gen2-v0_1.yaml"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "boneIO ESP 8x10A gen2",
+      "value": "8x10A",
+      "versions": [
+        {
+          "version": "v0.1",
+          "versionKey": "v0.1",
+          "options": [
+            {
+              "name": "Lights",
+              "manifest_url": "https://boneio-eu.github.io/esphome/manifests/boneio-8x10a-gen2-01.json",
+              "yaml_url": "https://github.com/boneIO-eu/esphome/blob/main/boneio-8x10A_gen2_lights-v0_1.yaml"
+            },
+            {
+              "name": "Switches",
+              "manifest_url": "https://boneio-eu.github.io/esphome/manifests/boneio-8x10a-gen2-sw-01.json",
+              "yaml_url": "https://github.com/boneIO-eu/esphome/blob/main/boneio-8x10A_gen2_switches-v0_1.yaml"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
