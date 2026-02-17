@@ -46,16 +46,16 @@ i2c:
   frequency: 400kHz
 
 # CAN gpio48 - tx, gpio47 rx, gpio35 stb
-# uart:
-#   id: boneio_uart
-#   rx_pin: GPIO21
-#   tx_pin: GPIO14
-#   baud_rate: 9600
-#   stop_bits: 1
-# modbus:
-#   send_wait_time: 80ms
-#   uart_id: boneio_uart
-#   id: boneio_modbus
+uart:
+  id: boneio_uart
+  rx_pin: GPIO21
+  tx_pin: GPIO14
+  baud_rate: 9600
+  stop_bits: 1
+modbus:
+  send_wait_time: 80ms
+  uart_id: boneio_uart
+  id: boneio_modbus
 
 packages:
   internals_packages:

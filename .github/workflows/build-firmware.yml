@@ -81,6 +81,13 @@ jobs:
             version_key: "v0.1"
             output_option: "Lights"
             chip_family: "ESP32-S3"
+          - yaml_file: boneio-8x10A_gen2_switches-v0_1.yaml
+            board_name: "boneIO ESP 8x10A gen2"
+            board_value: "8x10A"
+            version: "v0.1"
+            version_key: "v0.1"
+            output_option: "Switches"
+            chip_family: "ESP32-S3"
 
           # 32x10 v0.7
           - yaml_file: boneio-32x10_lights_v0_7.yaml

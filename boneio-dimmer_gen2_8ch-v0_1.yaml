@@ -1,22 +1,22 @@
 substitutions:
   name: boneio-dr-gen2-8ch-01
-  friendly_name: 'BoneIO Dimmer Gen2'
-  serial_prefix: 'dim2' #Don't change it.
-  firmware_manifest: 'https://boneio.eu/fwesp/boneio-dr-gen2-8ch-01.json'
+  friendly_name: "BoneIO Dimmer Gen2"
+  serial_prefix: "dim2" #Don't change it.
+  firmware_manifest: "https://boneio.eu/fwesp/boneio-dr-gen2-8ch-01.json"
 esphome:
-  name: '${name}'
-  friendly_name: '${friendly_name}'
+  name: "${name}"
+  friendly_name: "${friendly_name}"
   name_add_mac_suffix: true
   project:
     name: boneio.dimmer-led-gen2
-    version: '0.1'
+    version: "0.1"
   on_boot:
     priority: -100
     then:
       - delay: 5s
       - if:
           condition:
-            lambda: 'return id(serial_no) != nullptr;'
+            lambda: "return id(serial_no) != nullptr;"
           then:
             - component.update: serial_no
             - logger.log: "Serial No updated on boot"
@@ -25,7 +25,7 @@ esphome:
 
 esp32:
   board: esp32-s3-devkitc-1
-  framework:                                                                            
+  framework:
     type: esp-idf
 
 ethernet:
@@ -44,8 +44,6 @@ i2c:
   scl: GPIO11
   scan: True
   frequency: 400kHz
-
-
 
 output:
   - platform: ledc
@@ -90,26 +88,23 @@ output:
     inverted: false
     id: chr04
 
-
 # CAN gpio48 - tx, gpio47 rx, gpio35 stb
-# uart:
-#   id: boneio_uart
-#   rx_pin: GPIO21
-#   tx_pin: GPIO14
-#   baud_rate: 9600
-#   stop_bits: 1
-# modbus:
-#   send_wait_time: 80ms
-#   uart_id: boneio_uart
-#   id: boneio_modbus
+uart:
+  id: boneio_uart
+  rx_pin: GPIO21
+  tx_pin: GPIO14
+  baud_rate: 9600
+  stop_bits: 1
+modbus:
+  send_wait_time: 80ms
+  uart_id: boneio_uart
+  id: boneio_modbus
 
 packages:
   internals_packages:
     url: https://github.com/boneIO-eu/esphome
     ref: packages-v2.0.0
-    files: [
-        'packages/devices/serial_no.yaml',
-      ]
+    files: ["packages/devices/serial_no.yaml"]
   # boneiopackages:
   #   url: https://github.com/boneIO-eu/esphome_packages
   #   ref: main
@@ -122,7 +117,7 @@ dashboard_import:
   import_full_config: true
 
 pcf8574:
-  - id: 'pcf_inputs'
+  - id: "pcf_inputs"
     address: 0x38
 
 logger:
@@ -138,54 +133,53 @@ web_server:
   version: 3
   local: true
 
-
 light:
   - platform: monochromatic
     output: chl01
-    name: 'CHL 01'
+    name: "CHL 01"
     id: chl_01
     default_transition_length: 2s
     gamma_correct: 0
   - platform: monochromatic
     output: chl02
-    name: 'CHL 02'
+    name: "CHL 02"
     id: chl_02
     default_transition_length: 2s
     gamma_correct: 0
   - platform: monochromatic
     output: chl03
-    name: 'CHL 03'
+    name: "CHL 03"
     id: chl_03
     default_transition_length: 2s
     gamma_correct: 0
   - platform: monochromatic
     output: chl04
-    name: 'CHL 04'
+    name: "CHL 04"
     id: chl_04
     default_transition_length: 2s
     gamma_correct: 0
 
   - platform: monochromatic
     output: chr01
-    name: 'CHR 01'
+    name: "CHR 01"
     id: chr_01
     default_transition_length: 2s
     gamma_correct: 0
   - platform: monochromatic
     output: chr02
-    name: 'CHR 02'
+    name: "CHR 02"
     id: chr_02
     default_transition_length: 2s
     gamma_correct: 0
   - platform: monochromatic
     output: chr03
-    name: 'CHR 03'
+    name: "CHR 03"
     id: chr_03
     default_transition_length: 2s
     gamma_correct: 0
   - platform: monochromatic
     output: chr04
-    name: 'CHR 04'
+    name: "CHR 04"
     id: chr_04
     default_transition_length: 2s
     gamma_correct: 0
@@ -203,7 +197,7 @@ sensor:
       name: "Loop Time"
   - platform: lm75b
     id: boneIO_temp
-    name: 'Temperature'
+    name: "Temperature"
     update_interval: 30s
     entity_category: diagnostic
     on_value_range:
@@ -217,7 +211,7 @@ sensor:
 switch:
   - platform: gpio
     id: buzzer
-    name: 'Buzzer'
+    name: "Buzzer"
     pin:
       number: GPIO9
       mode:
@@ -225,7 +219,7 @@ switch:
       inverted: false
   - platform: gpio
     id: can_bus_switch
-    name: 'CAN Bus Switch'
+    name: "CAN Bus Switch"
     pin:
       number: GPIO35
       mode:
@@ -234,7 +228,7 @@ switch:
 
 binary_sensor:
   - platform: gpio
-    name: 'IN_01'
+    name: "IN_01"
     id: in_01
     pin:
       pcf8574: pcf_inputs
@@ -244,7 +238,7 @@ binary_sensor:
       inverted: true
 
   - platform: gpio
-    name: 'IN_02'
+    name: "IN_02"
     id: in_02
     pin:
       pcf8574: pcf_inputs
@@ -254,7 +248,7 @@ binary_sensor:
       inverted: true
 
   - platform: gpio
-    name: 'IN_03'
+    name: "IN_03"
     id: in_03
     pin:
       pcf8574: pcf_inputs
@@ -264,7 +258,7 @@ binary_sensor:
       inverted: true
 
   - platform: gpio
-    name: 'IN_04'
+    name: "IN_04"
     id: in_04
     pin:
       pcf8574: pcf_inputs
@@ -274,7 +268,7 @@ binary_sensor:
       inverted: true
 
   - platform: gpio
-    name: 'IN_05'
+    name: "IN_05"
     id: in_05
     pin:
       pcf8574: pcf_inputs
@@ -284,7 +278,7 @@ binary_sensor:
       inverted: true
 
   - platform: gpio
-    name: 'IN_06'
+    name: "IN_06"
     id: in_06
     pin:
       pcf8574: pcf_inputs
@@ -294,7 +288,7 @@ binary_sensor:
       inverted: true
 
   - platform: gpio
-    name: 'IN_07'
+    name: "IN_07"
     id: in_07
     pin:
       pcf8574: pcf_inputs
@@ -304,7 +298,7 @@ binary_sensor:
       inverted: true
 
   - platform: gpio
-    name: 'IN_08'
+    name: "IN_08"
     id: in_08
     pin:
       pcf8574: pcf_inputs
