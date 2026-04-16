@@ -1,5 +1,8 @@
 name: Build ESPHome Firmware
 
+env:
+  DEFAULT_ESPHOME_VERSION: "2026.4.0"
+
 on:
   push:
     tags:
@@ -7,16 +10,47 @@ on:
   workflow_dispatch:
     inputs:
       esphome_version:
-        description: "ESPHome version (e.g., 2026.1.5)"
+        description: "ESPHome version (e.g., 2026.4.0)"
         required: true
-        default: "2026.1.5"
+        default: "2026.4.0"
       build:
         description: "Build number (e.g., b1)"
         required: true
         default: "b1"
 
 jobs:
+  resolve-version:
+    runs-on: ubuntu-latest
+    outputs:
+      esphome_version: ${{ steps.version.outputs.esphome_version }}
+      build: ${{ steps.version.outputs.build }}
+      full_version: ${{ steps.version.outputs.full_version }}
+      release_tag: ${{ steps.version.outputs.release_tag }}
+    steps:
+      - name: Resolve release version
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            ESPHOME_VER="${{ github.event.inputs.esphome_version }}"
+            BUILD="${{ github.event.inputs.build }}"
+          else
+            TAG="${GITHUB_REF#refs/tags/esphome-}"
+            ESPHOME_VER=$(echo "$TAG" | sed 's/-b[0-9]*$//')
+            BUILD=$(echo "$TAG" | grep -oP 'b\d+$' || echo 'b1')
+          fi
+
+          if [ -z "$ESPHOME_VER" ]; then
+            ESPHOME_VER="${DEFAULT_ESPHOME_VERSION}"
+          fi
+
+          echo "esphome_version=$ESPHOME_VER" >> "$GITHUB_OUTPUT"
+          echo "build=$BUILD" >> "$GITHUB_OUTPUT"
+          echo "full_version=${ESPHOME_VER}-${BUILD}" >> "$GITHUB_OUTPUT"
+          echo "release_tag=esphome-${ESPHOME_VER}-${BUILD}" >> "$GITHUB_OUTPUT"
+          echo "Version: $ESPHOME_VER, Build: $BUILD"
+
   build:
+    needs: resolve-version
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -196,7 +230,7 @@ jobs:
         id: esphome-build
         with:
           yaml-file: ${{ matrix.yaml_file }}
-          version: latest
+          version: ${{ needs.resolve-version.outputs.esphome_version }}
           complete-manifest: true
 
       - name: Save build metadata
@@ -211,7 +245,8 @@ jobs:
             "version": "${{ matrix.version }}",
             "version_key": "${{ matrix.version_key }}",
             "output_option": "${{ matrix.output_option }}",
-            "chip_family": "${{ matrix.chip_family }}"
+            "chip_family": "${{ matrix.chip_family }}",
+            "esphome_version": "${{ needs.resolve-version.outputs.esphome_version }}"
           }
           METADATA_EOF
 
@@ -228,7 +263,9 @@ jobs:
           path: metadata/
 
   deploy:
-    needs: build
+    needs:
+      - resolve-version
+      - build
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -250,27 +287,10 @@ jobs:
           pattern: metadata-*
           merge-multiple: true
 
-      - name: Get version
-        id: version
-        run: |
-          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-            ESPHOME_VER="${{ github.event.inputs.esphome_version }}"
-            BUILD="${{ github.event.inputs.build }}"
-          else
-            # Tag format: esphome-2026.1.5-b1
-            TAG="${GITHUB_REF#refs/tags/esphome-}"
-            ESPHOME_VER=$(echo "$TAG" | sed 's/-b[0-9]*$//')
-            BUILD=$(echo "$TAG" | grep -oP 'b\d+$' || echo 'b1')
-          fi
-          echo "esphome_version=$ESPHOME_VER" >> $GITHUB_OUTPUT
-          echo "build=$BUILD" >> $GITHUB_OUTPUT
-          echo "full_version=${ESPHOME_VER}-${BUILD}" >> $GITHUB_OUTPUT
-          echo "Version: $ESPHOME_VER, Build: $BUILD"
-
       - name: Prepare GitHub Pages content
         run: |
           mkdir -p gh-pages/firmware gh-pages/manifests release
-          export VERSION="${{ steps.version.outputs.full_version }}"
+          export VERSION="${{ needs.resolve-version.outputs.full_version }}"
           export BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
           export GITHUB_PAGES_URL="https://boneio-eu.github.io/esphome"
 
@@ -436,6 +456,44 @@ jobs:
           </html>
           EOF
 
+      - name: Generate release notes
+        run: |
+          python3 << 'PYTHON_EOF' > release-notes.md
+          import json
+          import glob
+
+          metadata_files = sorted(glob.glob("metadata/*.json"))
+          builds = []
+          for path in metadata_files:
+              with open(path) as handle:
+                  builds.append(json.load(handle))
+
+          esphome_version = "${{ needs.resolve-version.outputs.esphome_version }}"
+          build_number = "${{ needs.resolve-version.outputs.build }}"
+          full_version = "${{ needs.resolve-version.outputs.full_version }}"
+
+          board_lines = []
+          seen = set()
+          for build in builds:
+              label = f'- {build["board_name"]} {build["version"]} / {build["output_option"] or "Standard"} ({build["chip_family"]})'
+              if label not in seen:
+                  seen.add(label)
+                  board_lines.append(label)
+
+          print(f"# ESPHome {esphome_version} ({build_number})")
+          print()
+          print("## Build summary")
+          print()
+          print(f"- ESPHome version: `{esphome_version}`")
+          print(f"- Firmware bundle version: `{full_version}`")
+          print(f"- Firmware variants built: `{len(builds)}`")
+          print("- GitHub Pages catalog: `https://boneio-eu.github.io/esphome/firmware-catalog.json`")
+          print()
+          print("## Included firmware variants")
+          print()
+          print("\n".join(board_lines))
+          PYTHON_EOF
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
@@ -447,6 +505,6 @@ jobs:
         if: github.event_name == 'push'
         uses: softprops/action-gh-release@v2
         with:
-          name: "Firmware ${{ steps.version.outputs.esphome_version }} (${{ steps.version.outputs.build }})"
+          name: "Firmware ${{ needs.resolve-version.outputs.esphome_version }} (${{ needs.resolve-version.outputs.build }})"
+          body_path: release-notes.md
           files: release/*
-          generate_release_notes: true
