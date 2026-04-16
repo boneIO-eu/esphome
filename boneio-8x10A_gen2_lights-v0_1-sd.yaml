@@ -1,14 +1,14 @@
 substitutions:
-  name: boneio-dr-gen2-2rgbw-01
-  friendly_name: "BoneIO Dimmer Gen2"
-  serial_prefix: "dim2" #Don't change it.
-  firmware_manifest: "https://boneio.eu/fwesp/boneio-dr-gen2-2rgbw-01.json"
+  name: boneio-8x10a-gen2-01
+  friendly_name: "boneIO ESP 8x10A Gen2"
+  serial_prefix: "esp8" #Don't change it.
+  firmware_manifest: "https://boneio.eu/fwesp/boneio-8x10a-gen2-01.json"
 esphome:
   name: "${name}"
   friendly_name: "${friendly_name}"
   name_add_mac_suffix: true
   project:
-    name: boneio.dimmer-led-gen2
+    name: boneio.8x10a-gen2
     version: "0.1"
   on_boot:
     priority: -100
@@ -22,6 +22,41 @@ esphome:
             - logger.log: "Serial No updated on boot"
           else:
             - logger.log: "Serial No component not found"
+  devices:
+  - id: main_device
+    name: "Main device"
+  - id: output_01
+    name: "OUT 01"
+  - id: output_02
+    name: "OUT 02"
+  - id: output_03
+    name: "OUT 03"
+  - id: output_04
+    name: "OUT 04"
+  - id: output_05
+    name: "OUT 05"
+  - id: output_06
+    name: "OUT 06"
+  - id: output_07
+    name: "OUT 07"
+  - id: output_08
+    name: "OUT 08"
+  - id: input_01
+    name: "IN 01"
+  - id: input_02
+    name: "IN 02"
+  - id: input_03
+    name: "IN 03"
+  - id: input_04
+    name: "IN 04"
+  - id: input_05
+    name: "IN 05"
+  - id: input_06
+    name: "IN 06"
+  - id: input_07
+    name: "IN 07"
+  - id: input_08
+    name: "IN 08"
 
 esp32:
   board: esp32-s3-devkitc-1
@@ -46,47 +81,38 @@ i2c:
   frequency: 400kHz
 
 output:
-  - platform: ledc
+  - platform: gpio
     pin: GPIO18
-    frequency: 1000Hz
     inverted: false
-    id: chl01
-  - platform: ledc
+    id: out_01
+  - platform: gpio
     pin: GPIO17
-    frequency: 1000Hz
     inverted: false
-    id: chl02
-  - platform: ledc
+    id: out_02
+  - platform: gpio
     pin: GPIO16
-    frequency: 1000Hz
     inverted: false
-    id: chl03
-  - platform: ledc
+    id: out_03
+  - platform: gpio
     pin: GPIO15
-    frequency: 1000Hz
     inverted: false
-    id: chl04
-
-  - platform: ledc
+    id: out_04
+  - platform: gpio
     pin: GPIO7
-    frequency: 1000Hz
     inverted: false
-    id: chr01
-  - platform: ledc
+    id: out_05
+  - platform: gpio
     pin: GPIO6
-    frequency: 1000Hz
     inverted: false
-    id: chr02
-  - platform: ledc
+    id: out_06
+  - platform: gpio
     pin: GPIO5
-    frequency: 1000Hz
     inverted: false
-    id: chr03
-  - platform: ledc
+    id: out_07
+  - platform: gpio
     pin: GPIO4
-    frequency: 1000Hz
     inverted: false
-    id: chr04
+    id: out_08
 
 # CAN gpio48 - tx, gpio47 rx, gpio35 stb
 uart:
@@ -113,7 +139,7 @@ packages:
   #     - path: sdm630.yaml
 
 dashboard_import:
-  package_import_url: github://boneIO-eu/esphome/boneio-dimmer_gen2_2rgbw-v0_1.yaml@main
+  package_import_url: github://boneIO-eu/esphome/boneio-8x10A_gen2_lights-v0_1-sd.yaml@latest
   import_full_config: true
 
 pcf8574:
@@ -134,36 +160,51 @@ web_server:
   local: true
 
 light:
-  - platform: rgbw
-    id: rgbw_l
-    name: "RGBW L"
-    red: chl01
-    green: chl02
-    blue: chl03
-    white: chl04
-    default_transition_length: 2s
-    gamma_correct: 0
-  - platform: rgbw
-    id: rgbw_r
-    name: "RGBW R"
-    red: chr01
-    green: chr02
-    blue: chr03
-    white: chr04
-    default_transition_length: 2s
-    gamma_correct: 0
+  - platform: binary
+    output: out_01
+    name: None
+    device_id: output_01
+    id: light_01
+  - platform: binary
+    output: out_02
+    name: "OUT 02A"
+    device_id: output_02
+    id: light_02a
+  - platform: binary
+    output: out_03
+    name: None
+    device_id: output_03
+    id: light_03
+  - platform: binary
+    output: out_04
+    name: None
+    device_id: output_04
+    id: light_04
+  - platform: binary
+    output: out_05
+    name: None
+    device_id: output_05
+    id: light_05
+  - platform: binary
+    output: out_06
+    name: None
+    device_id: output_06
+    id: light_06
+  - platform: binary
+    output: out_07
+    name: None
+    device_id: output_07
+    id: light_07
+  - platform: binary
+    output: out_08
+    name: None
+    device_id: output_08
+    id: light_08
 
 debug:
   update_interval: 15s
 
 sensor:
-  - platform: debug
-    free:
-      name: "Heap Free"
-    block:
-      name: "Heap Max Block"
-    loop_time:
-      name: "Loop Time"
   - platform: lm75b
     id: boneIO_temp
     name: "Temperature"
@@ -197,7 +238,8 @@ switch:
 
 binary_sensor:
   - platform: gpio
-    name: "IN_01"
+    name: None
+    device_id: input_01
     id: in_01
     pin:
       pcf8574: pcf_inputs
@@ -205,9 +247,13 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - light.toggle: light_01
 
   - platform: gpio
-    name: "IN_02"
+    name: None
+    device_id: input_02
     id: in_02
     pin:
       pcf8574: pcf_inputs
@@ -215,9 +261,13 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - light.toggle: light_02a
 
   - platform: gpio
-    name: "IN_03"
+    name: None
+    device_id: input_03
     id: in_03
     pin:
       pcf8574: pcf_inputs
@@ -225,9 +275,13 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - light.toggle: light_03
 
   - platform: gpio
-    name: "IN_04"
+    name: None
+    device_id: input_04
     id: in_04
     pin:
       pcf8574: pcf_inputs
@@ -235,9 +289,13 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - light.toggle: light_04
 
   - platform: gpio
-    name: "IN_05"
+    name: None
+    device_id: input_05
     id: in_05
     pin:
       pcf8574: pcf_inputs
@@ -245,9 +303,13 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - light.toggle: light_05
 
   - platform: gpio
-    name: "IN_06"
+    name: None
+    device_id: input_06
     id: in_06
     pin:
       pcf8574: pcf_inputs
@@ -255,9 +317,13 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - light.toggle: light_06
 
   - platform: gpio
-    name: "IN_07"
+    name: None
+    device_id: input_07
     id: in_07
     pin:
       pcf8574: pcf_inputs
@@ -265,9 +331,13 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - light.toggle: light_07
 
   - platform: gpio
-    name: "IN_08"
+    name: None
+    device_id: input_08
     id: in_08
     pin:
       pcf8574: pcf_inputs
@@ -275,3 +345,6 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - light.toggle: light_08

@@ -1,14 +1,14 @@
 substitutions:
-  name: boneio-dr-gen2-2rgbw-01
-  friendly_name: "BoneIO Dimmer Gen2"
-  serial_prefix: "dim2" #Don't change it.
-  firmware_manifest: "https://boneio.eu/fwesp/boneio-dr-gen2-2rgbw-01.json"
+  name: boneio-8x10a-gen2-sw-01
+  friendly_name: "boneIO ESP 8x10A Gen2"
+  serial_prefix: "esp8" #Don't change it.
+  firmware_manifest: "https://boneio.eu/fwesp/boneio-8x10a-gen2-sw-01.json"
 esphome:
   name: "${name}"
   friendly_name: "${friendly_name}"
   name_add_mac_suffix: true
   project:
-    name: boneio.dimmer-led-gen2
+    name: boneio.8x10a-gen2
     version: "0.1"
   on_boot:
     priority: -100
@@ -46,47 +46,39 @@ i2c:
   frequency: 400kHz
 
 output:
-  - platform: ledc
+  - platform: gpio
     pin: GPIO18
-    frequency: 1000Hz
     inverted: false
-    id: chl01
-  - platform: ledc
+    id: out_01
+  - platform: gpio
     pin: GPIO17
-    frequency: 1000Hz
     inverted: false
-    id: chl02
-  - platform: ledc
+    id: out_02
+  - platform: gpio
     pin: GPIO16
-    frequency: 1000Hz
     inverted: false
-    id: chl03
-  - platform: ledc
+    id: out_03
+  - platform: gpio
     pin: GPIO15
-    frequency: 1000Hz
     inverted: false
-    id: chl04
+    id: out_04
 
-  - platform: ledc
+  - platform: gpio
     pin: GPIO7
-    frequency: 1000Hz
     inverted: false
-    id: chr01
-  - platform: ledc
+    id: out_05
+  - platform: gpio
     pin: GPIO6
-    frequency: 1000Hz
     inverted: false
-    id: chr02
-  - platform: ledc
+    id: out_06
+  - platform: gpio
     pin: GPIO5
-    frequency: 1000Hz
     inverted: false
-    id: chr03
-  - platform: ledc
+    id: out_07
+  - platform: gpio
     pin: GPIO4
-    frequency: 1000Hz
     inverted: false
-    id: chr04
+    id: out_08
 
 # CAN gpio48 - tx, gpio47 rx, gpio35 stb
 uart:
@@ -113,7 +105,7 @@ packages:
   #     - path: sdm630.yaml
 
 dashboard_import:
-  package_import_url: github://boneIO-eu/esphome/boneio-dimmer_gen2_2rgbw-v0_1.yaml@main
+  package_import_url: github://boneIO-eu/esphome/boneio-8x10A_gen2_switches-v0_1.yaml@latest
   import_full_config: true
 
 pcf8574:
@@ -133,51 +125,39 @@ web_server:
   version: 3
   local: true
 
-light:
-  - platform: rgbw
-    id: rgbw_l
-    name: "RGBW L"
-    red: chl01
-    green: chl02
-    blue: chl03
-    white: chl04
-    default_transition_length: 2s
-    gamma_correct: 0
-  - platform: rgbw
-    id: rgbw_r
-    name: "RGBW R"
-    red: chr01
-    green: chr02
-    blue: chr03
-    white: chr04
-    default_transition_length: 2s
-    gamma_correct: 0
-
-debug:
-  update_interval: 15s
-
-sensor:
-  - platform: debug
-    free:
-      name: "Heap Free"
-    block:
-      name: "Heap Max Block"
-    loop_time:
-      name: "Loop Time"
-  - platform: lm75b
-    id: boneIO_temp
-    name: "Temperature"
-    update_interval: 30s
-    entity_category: diagnostic
-    on_value_range:
-      - above: 70.0
-        then:
-          - switch.turn_on: buzzer
-      - below: 70.0
-        then:
-          - switch.turn_off: buzzer
-
 switch:
+  - platform: output
+    output: out_01
+    name: "OUT 01"
+    id: switch_01
+  - platform: output
+    output: out_02
+    name: "OUT 02"
+    id: switch_02
+  - platform: output
+    output: out_03
+    name: "OUT 03"
+    id: switch_03
+  - platform: output
+    output: out_04
+    name: "OUT 04"
+    id: switch_04
+  - platform: output
+    output: out_05
+    name: "OUT 05"
+    id: switch_05
+  - platform: output
+    output: out_06
+    name: "OUT 06"
+    id: switch_06
+  - platform: output
+    output: out_07
+    name: "OUT 07"
+    id: switch_07
+  - platform: output
+    output: out_08
+    name: "OUT 08"
+    id: switch_08
   - platform: gpio
     id: buzzer
     name: "Buzzer"
@@ -195,6 +175,23 @@ switch:
         output: true
       inverted: false
 
+debug:
+  update_interval: 15s
+
+sensor:
+  - platform: lm75b
+    id: boneIO_temp
+    name: "Temperature"
+    update_interval: 30s
+    entity_category: diagnostic
+    on_value_range:
+      - above: 70.0
+        then:
+          - switch.turn_on: buzzer
+      - below: 70.0
+        then:
+          - switch.turn_off: buzzer
+
 binary_sensor:
   - platform: gpio
     name: "IN_01"
@@ -205,6 +202,9 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - switch.toggle: switch_01
 
   - platform: gpio
     name: "IN_02"
@@ -215,6 +215,9 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - switch.toggle: switch_02
 
   - platform: gpio
     name: "IN_03"
@@ -225,6 +228,9 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - switch.toggle: switch_03
 
   - platform: gpio
     name: "IN_04"
@@ -235,6 +241,9 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - switch.toggle: switch_04
 
   - platform: gpio
     name: "IN_05"
@@ -245,6 +254,9 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - switch.toggle: switch_05
 
   - platform: gpio
     name: "IN_06"
@@ -255,6 +267,9 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - switch.toggle: switch_06
 
   - platform: gpio
     name: "IN_07"
@@ -265,6 +280,9 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - switch.toggle: switch_07
 
   - platform: gpio
     name: "IN_08"
@@ -275,3 +293,6 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      then:
+        - switch.toggle: switch_08

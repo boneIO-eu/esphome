@@ -26,13 +26,13 @@ exclude_files = [
     "boneio-mosfet48_lights_v0_7.yaml",
     "boneio-mosfet48_switches_v0_7.yaml"
     "boneio-8x10A_v0_1.yaml"
-    "boneio-dimmer_gen2_8ch-dev0_4.yaml"
+    "boneio-dimmer_gen2_8ch-dev0_4.yaml",
 
     # Dodaj tutaj kolejne pliki do wykluczenia
 ]
 
 include_files = [
-    "boneio-input24_gen2-v0_01.yaml",
+    "boneio-input24_gen2-v0_1.yaml",
     # "boneio-8x10A_gen2_lights-v0_1.yaml",
     # "boneio-dimmer_gen2_2rgbw-v0_1.yaml",
     # "boneio-dimmer_gen2_8ch-v0_1"
@@ -40,7 +40,9 @@ include_files = [
 
 
 GITHUB_PAGES_URL = "https://boneio-eu.github.io/esphome"
-FIRMWARE_VERSION = "2026.1.2"
+ESPHOME_VERSION = "2026.4.0"
+ESPHOME_DOCKER_IMAGE = f"ghcr.io/esphome/esphome:{ESPHOME_VERSION}"
+FIRMWARE_VERSION = ESPHOME_VERSION
 
 
 def json_pattern(firmware_name, chip_family="ESP32"):
@@ -93,7 +95,7 @@ for file in glob.glob("*.yaml"):
         print("No file found.")
         break
     firmware_path = f"{cwd}/.esphome/build/{filename}/.pioenvs/{filename}/firmware.factory.bin"
-    cmd = f'docker run --rm -p 6053:6052 -v "{cwd}":/config -it ghcr.io/esphome/esphome compile {file}'
+    cmd = f'docker run --rm -p 6053:6052 -v "{cwd}":/config -it {ESPHOME_DOCKER_IMAGE} compile {file}'
     print(cmd)
     result = subprocess.run(
         cmd,
