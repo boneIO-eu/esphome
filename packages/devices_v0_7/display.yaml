@@ -33,10 +33,10 @@ text_sensor:
     entity_category: diagnostic
     icon: 'mdi:ip-network'
     lambda: |-
-      if (id(eth).get_ip_addresses().empty()) return "Unset";
-      char buf[IP_ADDRESS_BUFFER_SIZE];
+      if (id(eth).get_ip_addresses().empty()) return {"Unset"};
+      char buf[esphome::network::IP_ADDRESS_BUFFER_SIZE];
       id(eth).get_ip_addresses()[0].str_to(buf);
-      return buf;
+      return {buf};
     update_interval: 60s
 
 script:
