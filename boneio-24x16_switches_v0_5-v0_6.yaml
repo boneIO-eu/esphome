@@ -13,7 +13,7 @@ esphome:
 
 esp32:
   board: nodemcu-32s
-  framework:                                                                            
+  framework:
     type: esp-idf
 
 ethernet:
@@ -35,22 +35,23 @@ packages:
   internals_packages:
     url: https://github.com/boneIO-eu/esphome
     ref: packages-v2.0.0
-    files: [
-        'packages/devices/buzzer.yaml',
-        'packages/devices/serial_no.yaml',
-        'packages/devices_v0_5-v0_6/display.yaml',
-        'packages/devices_v0_5-v0_6/time.yaml',
-        'packages/devices_v0_5-v0_6/i2c.yaml',
-        'packages/devices_v0_5-v0_6/ina219.yaml',
-        'packages/devices_v0_5-v0_6/lm75b.yaml',
-        'packages/devices_v0_5-v0_6/pcf_with_mcp.yaml',
-        'packages/boards/24x16_output.yaml',
-        # 'packages/devices_v0_5-v0_6/one_wire.yaml',
-      ]
+    files:
+      - packages/devices/buzzer.yaml
+      - packages/devices/serial_no.yaml
+      - packages/devices_v0_5-v0_6/display.yaml
+      - packages/devices_v0_5-v0_6/time.yaml
+      - packages/devices_v0_5-v0_6/i2c.yaml
+      - packages/devices_v0_5-v0_6/ina219.yaml
+      - packages/devices_v0_5-v0_6/lm75b.yaml
+      - packages/devices_v0_5-v0_6/pcf_with_mcp.yaml
+      - packages/boards/24x16_output.yaml
+      # - packages/devices_v0_5-v0_6/one_wire.yaml
 
 logger:
+
 api:
   reboot_timeout: 0s
+
 ota:
   - platform: esphome
   - platform: web_server
@@ -560,6 +561,7 @@ binary_sensor:
 
   - platform: gpio
     name: 'IN_33'
+    id: in_33
     pin:
       pcf8574: pcf_inputs_28to35_menu
       number: 4
@@ -569,6 +571,7 @@ binary_sensor:
 
   - platform: gpio
     name: 'IN_34'
+    id: in_34
     pin:
       pcf8574: pcf_inputs_28to35_menu
       number: 5
@@ -578,12 +581,14 @@ binary_sensor:
 
   - platform: gpio
     name: 'IN_35'
+    id: in_35
     pin:
       pcf8574: pcf_inputs_28to35_menu
       number: 6
       mode:
         input: true
       inverted: true
+
 ######################
 ### MODBUS SECTION ###
 ######################
