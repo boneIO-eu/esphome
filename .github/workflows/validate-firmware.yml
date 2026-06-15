@@ -1,7 +1,7 @@
 name: Validate ESPHome Configs
 
 env:
-  ESPHOME_VERSION: "2026.4.0"
+  ESPHOME_VERSION: "2026.5.3"
 
 on:
   push:
@@ -56,7 +56,7 @@ jobs:
           echo "All package_import_url checks passed!"
 
   validate-configs:
-    name: Validate configs on ESPHome 2026.4.0
+    name: Validate configs on ESPHome 2026.5.3
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
