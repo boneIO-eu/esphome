@@ -1,7 +1,7 @@
 name: Build ESPHome Firmware
 
 env:
-  DEFAULT_ESPHOME_VERSION: "2026.5.3"
+  DEFAULT_ESPHOME_VERSION: "2026.8.1"
 
 on:
   push:
@@ -12,7 +12,7 @@ on:
       esphome_version:
         description: "ESPHome version (e.g., 2026.4.0)"
         required: true
-        default: "2026.5.3"
+        default: "2026.8.1"
       build:
         description: "Build number (e.g., b1)"
         required: true
