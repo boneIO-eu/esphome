@@ -21,7 +21,7 @@ jobs:
     name: Validate package_import_url
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Check package_import_url consistency
         run: |
@@ -59,7 +59,7 @@ jobs:
     name: Validate configs on ESPHome 2026.8.1
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Validate top-level firmware configs
         run: |

@@ -223,7 +223,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Build firmware
         uses: esphome/build-action@v7
@@ -251,7 +251,7 @@ jobs:
           METADATA_EOF
 
       - name: Upload firmware artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: firmware-${{ steps.esphome-build.outputs.original-name }}
           path: ${{ steps.esphome-build.outputs.name }}
@@ -274,7 +274,7 @@ jobs:
 
     steps:
       - name: Download firmware artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           path: artifacts
           pattern: firmware-*
@@ -503,7 +503,7 @@ jobs:
 
       - name: Create GitHub Release
         if: github.event_name == 'push'
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           name: "Firmware ${{ needs.resolve-version.outputs.esphome_version }} (${{ needs.resolve-version.outputs.build }})"
           body_path: release-notes.md
