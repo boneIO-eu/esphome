@@ -11,3 +11,7 @@ packages:
 esphome:
   project:
     version: "0.6-${firmware_version}"
+
+# The device web page has no per-device password; the installer offers it as
+# a separate "+ web panel" option (factory/web/).
+web_server: !remove

@@ -20,6 +20,6 @@ select:
           const char *variant = x == "2x RGBW" ? "boneio-dr-gen2-2rgbw-01"
                               : x == "4x CCT"  ? "boneio-dr-gen2-4cct-01"
                                                : "boneio-dr-gen2-8ch-01";
-          std::string url = std::string("${update_manifest_dir}/") + variant + ".json";
+          std::string url = std::string("${update_manifest_dir}/") + variant + "${manifest_suffix}.json";
           id(firmware_update).set_source_url(url.c_str(), url.size());
       - component.update: firmware_update

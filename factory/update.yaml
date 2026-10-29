@@ -4,7 +4,9 @@
 # replace the owner's configuration with the factory one.
 substitutions:
   update_manifest_dir: "https://boneio-eu.github.io/esphome/manifests"
-  update_manifest: "${update_manifest_dir}/${name}.json"
+  update_manifest: "${update_manifest_dir}/${name}${manifest_suffix}.json"
+  # "-web" in factory/web/: keeps the panel build on its own manifest
+  manifest_suffix: ""
 
 ota:
   - platform: http_request

@@ -1,0 +1,19 @@
+# Factory firmware with the device web page, the installer's "+ web panel"
+# option: boneio-dimmer_gen2_2rgbw-v0_1.yaml
+# plus boneIO updates. Same device name as the default build; the manifest
+# suffix keeps its updates on this variant.
+substitutions:
+  manifest_suffix: "-web"
+  # CI sets the release; the update entity compares it with the manifest.
+  firmware_version: "dev"
+  dimmer_mode: "2x RGBW"
+
+packages:
+  device: !include ../../boneio-dimmer_gen2_2rgbw-v0_1.yaml
+  update: !include ../update.yaml
+  api_key: !include ../api_key.yaml
+  dimmer_mode: !include ../dimmer_variant.yaml
+
+esphome:
+  project:
+    version: "0.1-2rgbw-${firmware_version}"
