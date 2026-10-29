@@ -302,11 +302,17 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - cover.open: cover_01
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.open: cover_01
     on_release:
-      then:
-        - cover.stop: cover_01
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.stop: cover_01
 
   - platform: gpio
     name: 'IN_02'
@@ -318,11 +324,17 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - cover.close: cover_01
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.close: cover_01
     on_release:
-      then:
-        - cover.stop: cover_01
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.stop: cover_01
 
   - platform: gpio
     name: 'IN_03'
@@ -334,11 +346,17 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - cover.open: cover_02
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.open: cover_02
     on_release:
-      then:
-        - cover.stop: cover_02
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.stop: cover_02
 
   - platform: gpio
     name: 'IN_04'
@@ -350,11 +368,17 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - cover.close: cover_02
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.close: cover_02
     on_release:
-      then:
-        - cover.stop: cover_02
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.stop: cover_02
 
   - platform: gpio
     name: 'IN_05'
@@ -366,11 +390,17 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - cover.open: cover_03
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.open: cover_03
     on_release:
-      then:
-        - cover.stop: cover_03
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.stop: cover_03
 
   - platform: gpio
     name: 'IN_06'
@@ -382,11 +412,17 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - cover.close: cover_03
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.close: cover_03
     on_release:
-      then:
-        - cover.stop: cover_03
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.stop: cover_03
 
   - platform: gpio
     name: 'IN_07'
@@ -398,11 +434,17 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - cover.open: cover_04
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.open: cover_04
     on_release:
-      then:
-        - cover.stop: cover_04
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.stop: cover_04
 
   - platform: gpio
     name: 'IN_08'
@@ -414,11 +456,17 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - cover.close: cover_04
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.close: cover_04
     on_release:
-      then:
-        - cover.stop: cover_04
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.stop: cover_04
 
   - platform: gpio
     name: 'IN_09'
@@ -430,11 +478,17 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - cover.open: cover_05
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.open: cover_05
     on_release:
-      then:
-        - cover.stop: cover_05
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.stop: cover_05
 
   - platform: gpio
     name: 'IN_10'
@@ -446,11 +500,17 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - cover.close: cover_05
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.close: cover_05
     on_release:
-      then:
-        - cover.stop: cover_05
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.stop: cover_05
 
   - platform: gpio
     name: 'IN_11'
@@ -462,11 +522,17 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - cover.open: cover_06
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.open: cover_06
     on_release:
-      then:
-        - cover.stop: cover_06
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.stop: cover_06
 
   - platform: gpio
     name: 'IN_12'
@@ -478,11 +544,17 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - cover.close: cover_06
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.close: cover_06
     on_release:
-      then:
-        - cover.stop: cover_06
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.stop: cover_06
 
   - platform: gpio
     name: 'IN_13'
@@ -494,11 +566,17 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - cover.open: cover_07
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.open: cover_07
     on_release:
-      then:
-        - cover.stop: cover_07
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.stop: cover_07
 
   - platform: gpio
     name: 'IN_14'
@@ -510,11 +588,17 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - cover.close: cover_07
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.close: cover_07
     on_release:
-      then:
-        - cover.stop: cover_07
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.stop: cover_07
 
   - platform: gpio
     name: 'IN_15'
@@ -526,11 +610,17 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - cover.open: cover_08
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.open: cover_08
     on_release:
-      then:
-        - cover.stop: cover_08
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.stop: cover_08
 
   - platform: gpio
     name: 'IN_16'
@@ -542,11 +632,17 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - cover.close: cover_08
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.close: cover_08
     on_release:
-      then:
-        - cover.stop: cover_08
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.stop: cover_08
 
   - platform: gpio
     name: 'IN_17'
@@ -558,11 +654,17 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - cover.open: cover_09
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.open: cover_09
     on_release:
-      then:
-        - cover.stop: cover_09
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.stop: cover_09
 
   - platform: gpio
     name: 'IN_18'
@@ -574,11 +676,17 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - cover.close: cover_09
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.close: cover_09
     on_release:
-      then:
-        - cover.stop: cover_09
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.stop: cover_09
 
   - platform: gpio
     name: 'IN_19'
@@ -590,11 +698,17 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - cover.open: cover_10
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.open: cover_10
     on_release:
-      then:
-        - cover.stop: cover_10
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.stop: cover_10
 
   - platform: gpio
     name: 'IN_20'
@@ -606,11 +720,17 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - cover.close: cover_10
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.close: cover_10
     on_release:
-      then:
-        - cover.stop: cover_10
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.stop: cover_10
 
   - platform: gpio
     name: 'IN_21'
@@ -622,11 +742,17 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - cover.open: cover_11
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.open: cover_11
     on_release:
-      then:
-        - cover.stop: cover_11
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.stop: cover_11
 
   - platform: gpio
     name: 'IN_22'
@@ -638,11 +764,17 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - cover.close: cover_11
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.close: cover_11
     on_release:
-      then:
-        - cover.stop: cover_11
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.stop: cover_11
 
   - platform: gpio
     name: 'IN_23'
@@ -654,11 +786,17 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - cover.open: cover_12
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.open: cover_12
     on_release:
-      then:
-        - cover.stop: cover_12
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.stop: cover_12
 
   - platform: gpio
     name: 'IN_24'
@@ -670,11 +808,17 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - cover.close: cover_12
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.close: cover_12
     on_release:
-      then:
-        - cover.stop: cover_12
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.stop: cover_12
 
   - platform: gpio
     name: 'IN_25'
@@ -686,11 +830,17 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - cover.open: cover_13
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.open: cover_13
     on_release:
-      then:
-        - cover.stop: cover_13
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.stop: cover_13
 
   - platform: gpio
     name: 'IN_26'
@@ -702,11 +852,17 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - cover.close: cover_13
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.close: cover_13
     on_release:
-      then:
-        - cover.stop: cover_13
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.stop: cover_13
 
   - platform: gpio
     name: 'IN_27'
@@ -718,11 +874,17 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - cover.open: cover_14
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.open: cover_14
     on_release:
-      then:
-        - cover.stop: cover_14
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.stop: cover_14
 
   - platform: gpio
     name: 'IN_28'
@@ -734,11 +896,17 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - cover.close: cover_14
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.close: cover_14
     on_release:
-      then:
-        - cover.stop: cover_14
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.stop: cover_14
 
   - platform: gpio
     name: 'IN_29'
@@ -750,11 +918,17 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - cover.open: cover_15
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.open: cover_15
     on_release:
-      then:
-        - cover.stop: cover_15
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.stop: cover_15
 
   - platform: gpio
     name: 'IN_30'
@@ -766,11 +940,17 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - cover.close: cover_15
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.close: cover_15
     on_release:
-      then:
-        - cover.stop: cover_15
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.stop: cover_15
 
   - platform: gpio
     name: 'IN_31'
@@ -782,11 +962,17 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - cover.open: cover_16
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.open: cover_16
     on_release:
-      then:
-        - cover.stop: cover_16
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.stop: cover_16
 
   - platform: gpio
     name: 'IN_32'
@@ -798,11 +984,17 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - cover.close: cover_16
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.close: cover_16
     on_release:
-      then:
-        - cover.stop: cover_16
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - cover.stop: cover_16
 
   - platform: gpio
     name: 'IN_33'
@@ -856,3 +1048,14 @@ binary_sensor:
 #     modbus_id: mod_bus
 #     setup_priority: -10
 #     update_interval: 60s
+
+switch:
+  # Inputs switch their outputs on the controller itself while this is on;
+  # off, they only report their state to Home Assistant.
+  - platform: template
+    id: local_control
+    name: Local control
+    icon: mdi:gesture-tap-button
+    entity_category: config
+    optimistic: true
+    restore_mode: RESTORE_DEFAULT_ON

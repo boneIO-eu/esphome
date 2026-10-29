@@ -224,8 +224,11 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - light.toggle: light_01
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: light_01
 
   - platform: gpio
     name: 'IN_02'
@@ -237,8 +240,11 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - light.toggle: light_02
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: light_02
 
   - platform: gpio
     name: 'IN_03'
@@ -250,8 +256,11 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - light.toggle: light_03
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: light_03
 
   - platform: gpio
     name: 'IN_04'
@@ -263,8 +272,11 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - light.toggle: light_04
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: light_04
 
   - platform: gpio
     name: 'IN_05'
@@ -276,8 +288,11 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - light.toggle: light_05
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: light_05
 
   - platform: gpio
     name: 'IN_06'
@@ -289,8 +304,11 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - light.toggle: light_06
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: light_06
 
   - platform: gpio
     name: 'IN_07'
@@ -302,8 +320,11 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - light.toggle: light_07
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: light_07
 
   - platform: gpio
     name: 'IN_08'
@@ -315,8 +336,11 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - light.toggle: light_08
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: light_08
 
   - platform: gpio
     name: 'IN_09'
@@ -328,8 +352,11 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - light.toggle: light_09
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: light_09
 
   - platform: gpio
     name: 'IN_10'
@@ -341,8 +368,11 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - light.toggle: light_10
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: light_10
 
   - platform: gpio
     name: 'IN_11'
@@ -354,8 +384,11 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - light.toggle: light_11
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: light_11
 
   - platform: gpio
     name: 'IN_12'
@@ -367,8 +400,11 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - light.toggle: light_12
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: light_12
 
   - platform: gpio
     name: 'IN_13'
@@ -380,8 +416,11 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - light.toggle: light_13
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: light_13
 
   - platform: gpio
     name: 'IN_14'
@@ -393,8 +432,11 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - light.toggle: light_14
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: light_14
 
   - platform: gpio
     name: 'IN_15'
@@ -406,8 +448,11 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - light.toggle: light_15
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: light_15
 
   - platform: gpio
     name: 'IN_16'
@@ -419,8 +464,11 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - light.toggle: light_16
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: light_16
 
   - platform: gpio
     name: 'IN_17'
@@ -432,8 +480,11 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - light.toggle: light_17
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: light_17
 
   - platform: gpio
     name: 'IN_18'
@@ -445,8 +496,11 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - light.toggle: light_18
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: light_18
 
   - platform: gpio
     name: 'IN_19'
@@ -458,8 +512,11 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - light.toggle: light_19
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: light_19
 
   - platform: gpio
     name: 'IN_20'
@@ -471,8 +528,11 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - light.toggle: light_20
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: light_20
 
   - platform: gpio
     name: 'IN_21'
@@ -484,8 +544,11 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - light.toggle: light_21
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: light_21
 
   - platform: gpio
     name: 'IN_22'
@@ -497,8 +560,11 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - light.toggle: light_22
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: light_22
 
   - platform: gpio
     name: 'IN_23'
@@ -510,8 +576,11 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - light.toggle: light_23
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: light_23
 
   - platform: gpio
     name: 'IN_24'
@@ -523,8 +592,11 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - light.toggle: light_24
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: light_24
 
   - platform: gpio
     name: 'IN_25'
@@ -536,8 +608,11 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - light.toggle: light_25
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: light_25
 
   - platform: gpio
     name: 'IN_26'
@@ -549,8 +624,11 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - light.toggle: light_26
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: light_26
 
   - platform: gpio
     name: 'IN_27'
@@ -562,8 +640,11 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - light.toggle: light_27
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: light_27
 
   - platform: gpio
     name: 'IN_28'
@@ -575,8 +656,11 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - light.toggle: light_28
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: light_28
 
   - platform: gpio
     name: 'IN_29'
@@ -588,8 +672,11 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - light.toggle: light_29
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: light_29
 
   - platform: gpio
     name: 'IN_30'
@@ -601,8 +688,11 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - light.toggle: light_30
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: light_30
 
   - platform: gpio
     name: 'IN_31'
@@ -614,8 +704,11 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - light.toggle: light_31
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: light_31
 
   - platform: gpio
     name: 'IN_32'
@@ -627,8 +720,11 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - light.toggle: light_32
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: light_32
 
   - platform: gpio
     name: 'IN_33'
@@ -682,3 +778,14 @@ binary_sensor:
 #     modbus_id: mod_bus
 #     setup_priority: -10
 #     update_interval: 60s
+
+switch:
+  # Inputs switch their outputs on the controller itself while this is on;
+  # off, they only report their state to Home Assistant.
+  - platform: template
+    id: local_control
+    name: Local control
+    icon: mdi:gesture-tap-button
+    entity_category: config
+    optimistic: true
+    restore_mode: RESTORE_DEFAULT_ON
