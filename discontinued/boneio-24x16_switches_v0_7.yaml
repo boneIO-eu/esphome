@@ -1,5 +1,5 @@
 substitutions:
-  name: boneio-24-sw-06
+  name: boneio-24-sw-07
   friendly_name: 'BoneIO ESP 24x16 Switches'
   serial_prefix: 'esp' #Don't change it.
 
@@ -8,14 +8,9 @@ esphome:
   friendly_name: '${friendly_name}'
   name_add_mac_suffix: true
   project:
-    name: boneio.24x16-switches-v0_5-v0_6
-    version: '0.6'
-  on_boot:
-    - priority: 1001
-      then:
-        - lambda: |-
-            gpio_reset_pin((gpio_num_t)3);
-            gpio_reset_pin((gpio_num_t)1);
+    name: boneio.24x16-switches
+    version: '0.7'
+
 esp32:
   board: nodemcu-32s
   framework:
@@ -33,7 +28,7 @@ ethernet:
   power_pin: GPIO16
 
 dashboard_import:
-  package_import_url: github://boneIO-eu/esphome/boneio-24x16_switches_v0_5-v0_6.yaml@latest
+  package_import_url: github://boneIO-eu/esphome/discontinued/boneio-24x16_switches_v0_7.yaml@latest
   import_full_config: true
 
 packages:
@@ -43,14 +38,13 @@ packages:
     files:
       - packages/devices/buzzer.yaml
       - packages/devices/serial_no.yaml
-      - packages/devices_v0_5-v0_6/display.yaml
-      - packages/devices_v0_5-v0_6/time.yaml
-      - packages/devices_v0_5-v0_6/i2c.yaml
-      - packages/devices_v0_5-v0_6/ina219.yaml
-      - packages/devices_v0_5-v0_6/lm75b.yaml
-      - packages/devices_v0_5-v0_6/pcf_with_mcp.yaml
+      - packages/devices_v0_7/display.yaml
+      - packages/devices_v0_7/i2c.yaml
+      - packages/devices_v0_7-v0_9/ina219.yaml
+      - packages/devices_v0_7-v0_9/lm75b.yaml
+      - packages/devices_v0_7-v0_9/pcf_with_mcp.yaml
       - packages/boards/24x16_output.yaml
-      # - packages/devices_v0_5-v0_6/one_wire.yaml
+      # - packages/devices_v0_7-v0_9/one_wire.yaml
 
 logger:
 
@@ -69,9 +63,6 @@ time:
   - platform: homeassistant
     timezone: Europe/Warsaw
     id: homeassistant_time
-    on_time_sync:
-      then:
-        ds1307.write_time:
 
 switch:
   - platform: output
@@ -599,13 +590,9 @@ binary_sensor:
 ######################
 # UNCOMMENT BELOW TO USE MODBUS
 # uart:
-#   id: uart_pin3_1
-#   rx_pin:
-#      number: GPIO3
-#      mode:
-#        input: true
-#        pullup: true
-#   tx_pin: GPIO1
+#   id: uart_pin14_15
+#   rx_pin: GPIO14
+#   tx_pin: GPIO15
 #   baud_rate: 9600
 #   stop_bits: 1
 

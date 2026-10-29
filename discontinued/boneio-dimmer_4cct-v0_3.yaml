@@ -1,5 +1,5 @@
 substitutions:
-  name: boneio-dr-rgbw-03
+  name: boneio-dr-4cct-03
   friendly_name: 'BoneIO Dimmer LED'
   serial_prefix: 'dim' #Don't change it.
 
@@ -44,7 +44,7 @@ ethernet:
   power_pin: GPIO16
 
 dashboard_import:
-  package_import_url: github://boneIO-eu/esphome/boneio-dimmer_2rgbw-v0_3.yaml@latest
+  package_import_url: github://boneIO-eu/esphome/discontinued/boneio-dimmer_4cct-v0_3.yaml@latest
   import_full_config: true
 
 pcf8574:
@@ -88,26 +88,6 @@ binary_sensor:
       mode:
         input: true
       inverted: true
-    on_multi_click:
-      - timing: # double click
-          - ON for at most 1s
-          - OFF for at most 0.5s
-          - ON for at most 1s
-          - OFF for at least 0.2s
-        then:
-          - light.toggle: rgbw_l
-          - logger.log: 'Double Click'
-      - timing: # single click
-          - ON for at most 1s
-          - OFF for at least 0.5s
-        then:
-          - light.toggle: rgbw_l
-          - logger.log: 'Single Click'
-      - timing: # long click
-          - ON for at least 1.4s
-        then:
-          - light.toggle: rgbw_r
-          - logger.log: 'Long Click'
   - platform: gpio
     name: 'IN_02'
     pin:
@@ -162,24 +142,32 @@ binary_sensor:
       inverted: true
 
 light:
-  - platform: rgbw
-    id: rgbw_l
-    name: 'RGBW L'
-    red: chl01
-    green: chl02
-    blue: chl03
-    white: chl04
-    default_transition_length: 2s
-    gamma_correct: 0
-  - platform: rgbw
-    id: rgbw_r
-    name: 'RGBW R'
-    red: chr01
-    green: chr02
-    blue: chr03
-    white: chr04
-    default_transition_length: 2s
-    gamma_correct: 0
+  - platform: cwww
+    name: 'CHL_01_02'
+    cold_white: chl01
+    warm_white: chl02
+    cold_white_color_temperature: 6536 K
+    warm_white_color_temperature: 2000 K
+  - platform: cwww
+    name: 'CHL_03_04'
+    cold_white: chl03
+    warm_white: chl04
+    cold_white_color_temperature: 6536 K
+    warm_white_color_temperature: 2000 K
+
+  - platform: cwww
+    name: 'CHR_01_02'
+    cold_white: chr01
+    warm_white: chr02
+    cold_white_color_temperature: 6536 K
+    warm_white_color_temperature: 2000 K
+
+  - platform: cwww
+    name: 'CHR_03_04'
+    cold_white: chr03
+    warm_white: chr04
+    cold_white_color_temperature: 6536 K
+    warm_white_color_temperature: 2000 K
 
 sensor:
   - platform: lm75

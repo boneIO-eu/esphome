@@ -57,21 +57,21 @@ jobs:
       matrix:
         include:
           # Dimmer LED v0.3
-          - yaml_file: boneio-dimmer_8ch-v0_3.yaml
+          - yaml_file: discontinued/boneio-dimmer_8ch-v0_3.yaml
             board_name: "Dimmer LED"
             board_value: "dimmer"
             version: "v0.3"
             version_key: "v0.3"
             output_option: "8 Channels"
             chip_family: "ESP32"
-          - yaml_file: boneio-dimmer_2rgbw-v0_3.yaml
+          - yaml_file: discontinued/boneio-dimmer_2rgbw-v0_3.yaml
             board_name: "Dimmer LED"
             board_value: "dimmer"
             version: "v0.3"
             version_key: "v0.3"
             output_option: "2xRGBW"
             chip_family: "ESP32"
-          - yaml_file: boneio-dimmer_4cct-v0_3.yaml
+          - yaml_file: discontinued/boneio-dimmer_4cct-v0_3.yaml
             board_name: "Dimmer LED"
             board_value: "dimmer"
             version: "v0.3"
@@ -160,14 +160,14 @@ jobs:
             chip_family: "ESP32"
 
           # 24x16
-          - yaml_file: boneio-24x16_switches_v0_7.yaml
+          - yaml_file: discontinued/boneio-24x16_switches_v0_7.yaml
             board_name: "boneIO ESP 24x16"
             board_value: "24x16"
             version: "v0.7 MP"
             version_key: "v0.7"
             output_option: "Switches"
             chip_family: "ESP32"
-          - yaml_file: boneio-24x16_switches_v0_5-v0_6.yaml
+          - yaml_file: discontinued/boneio-24x16_switches_v0_5-v0_6.yaml
             board_name: "boneIO ESP 24x16"
             board_value: "24x16"
             version: "v0.5/v0.6 MP"
