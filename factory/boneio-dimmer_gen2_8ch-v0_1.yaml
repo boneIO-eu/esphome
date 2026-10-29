@@ -7,6 +7,7 @@ substitutions:
 packages:
   device: !include ../boneio-dimmer_gen2_8ch-v0_1.yaml
   update: !include update.yaml
+  api_key: !include api_key.yaml
   dimmer_mode: !include dimmer_variant.yaml
 
 esphome:

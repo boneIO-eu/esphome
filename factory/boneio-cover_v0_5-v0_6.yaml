@@ -6,6 +6,7 @@ substitutions:
 packages:
   device: !include ../boneio-cover_v0_5-v0_6.yaml
   update: !include update.yaml
+  api_key: !include api_key.yaml
 
 esphome:
   project:

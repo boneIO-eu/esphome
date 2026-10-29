@@ -6,6 +6,7 @@ substitutions:
 packages:
   device: !include ../boneio-32x10_lights_v0_7.yaml
   update: !include update.yaml
+  api_key: !include api_key.yaml
 
 esphome:
   project:

@@ -389,6 +389,9 @@ jobs:
                   # Must equal project.version in the binary, or the update
                   # entity offers this release forever
                   "version": build.get("project_version") or version,
+                  # The API key Home Assistant provisions lives in NVS and
+                  # survives a plain reflash; offer a full erase on install
+                  "new_install_prompt_erase": True,
                   "builds": [
                       {
                           "chipFamily": chip,
