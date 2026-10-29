@@ -218,6 +218,15 @@ sensor:
           - switch.turn_off: buzzer
 
 switch:
+  # Inputs switch their outputs on the controller itself while this is on;
+  # off, they only report their state to Home Assistant.
+  - platform: template
+    id: local_control
+    name: Local control
+    icon: mdi:gesture-tap-button
+    entity_category: config
+    optimistic: true
+    restore_mode: RESTORE_DEFAULT_ON
   - platform: gpio
     id: buzzer
     name: "Buzzer"
@@ -247,8 +256,11 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - light.toggle: light_01
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: light_01
 
   - platform: gpio
     name: None
@@ -261,8 +273,11 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - light.toggle: light_02a
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: light_02a
 
   - platform: gpio
     name: None
@@ -275,8 +290,11 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - light.toggle: light_03
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: light_03
 
   - platform: gpio
     name: None
@@ -289,8 +307,11 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - light.toggle: light_04
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: light_04
 
   - platform: gpio
     name: None
@@ -303,8 +324,11 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - light.toggle: light_05
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: light_05
 
   - platform: gpio
     name: None
@@ -317,8 +341,11 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - light.toggle: light_06
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: light_06
 
   - platform: gpio
     name: None
@@ -331,8 +358,11 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - light.toggle: light_07
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: light_07
 
   - platform: gpio
     name: None
@@ -345,5 +375,8 @@ binary_sensor:
         input: true
       inverted: true
     on_press:
-      then:
-        - light.toggle: light_08
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: light_08
