@@ -10,10 +10,15 @@ esphome:
   project:
     name: boneio.24x16-switches-v0_5-v0_6
     version: '0.6'
-
+  on_boot:
+    - priority: 1001
+      then:
+        - lambda: |-
+            gpio_reset_pin((gpio_num_t)3);
+            gpio_reset_pin((gpio_num_t)1);
 esp32:
   board: nodemcu-32s
-  framework:                                                                            
+  framework:
     type: esp-idf
 
 ethernet:
@@ -28,32 +33,33 @@ ethernet:
   power_pin: GPIO16
 
 dashboard_import:
-  package_import_url: github://boneIO-eu/esphome/boneio-24x16_switches_v0_5-v0_6.yaml@latest
+  package_import_url: github://boneIO-eu/esphome/discontinued/boneio-24x16_switches_v0_5-v0_6.yaml@latest
   import_full_config: true
 
 packages:
   internals_packages:
     url: https://github.com/boneIO-eu/esphome
-    ref: packages-v2.0.0
-    files: [
-        'packages/devices/buzzer.yaml',
-        'packages/devices/serial_no.yaml',
-        'packages/devices_v0_5-v0_6/display.yaml',
-        'packages/devices_v0_5-v0_6/time.yaml',
-        'packages/devices_v0_5-v0_6/i2c.yaml',
-        'packages/devices_v0_5-v0_6/ina219.yaml',
-        'packages/devices_v0_5-v0_6/lm75b.yaml',
-        'packages/devices_v0_5-v0_6/pcf_with_mcp.yaml',
-        'packages/boards/24x16_output.yaml',
-        # 'packages/devices_v0_5-v0_6/one_wire.yaml',
-      ]
+    ref: packages-v2.1.0
+    files:
+      - packages/devices/buzzer.yaml
+      - packages/devices/serial_no.yaml
+      - packages/devices_v0_5-v0_6/display.yaml
+      - packages/devices_v0_5-v0_6/time.yaml
+      - packages/devices_v0_5-v0_6/i2c.yaml
+      - packages/devices_v0_5-v0_6/ina219.yaml
+      - packages/devices_v0_5-v0_6/lm75b.yaml
+      - packages/devices_v0_5-v0_6/pcf_with_mcp.yaml
+      - packages/boards/24x16_output.yaml
+      # - packages/devices_v0_5-v0_6/one_wire.yaml
 
 logger:
+
 api:
   reboot_timeout: 0s
+
 ota:
+  # No web_server OTA: its page has no per-device password, so anyone on the LAN could flash.
   - platform: esphome
-  - platform: web_server
 
 web_server:
   port: 80
@@ -560,6 +566,7 @@ binary_sensor:
 
   - platform: gpio
     name: 'IN_33'
+    id: in_33
     pin:
       pcf8574: pcf_inputs_28to35_menu
       number: 4
@@ -569,6 +576,7 @@ binary_sensor:
 
   - platform: gpio
     name: 'IN_34'
+    id: in_34
     pin:
       pcf8574: pcf_inputs_28to35_menu
       number: 5
@@ -578,19 +586,25 @@ binary_sensor:
 
   - platform: gpio
     name: 'IN_35'
+    id: in_35
     pin:
       pcf8574: pcf_inputs_28to35_menu
       number: 6
       mode:
         input: true
       inverted: true
+
 ######################
 ### MODBUS SECTION ###
 ######################
 # UNCOMMENT BELOW TO USE MODBUS
 # uart:
 #   id: uart_pin3_1
-#   rx_pin: GPIO3
+#   rx_pin:
+#      number: GPIO3
+#      mode:
+#        input: true
+#        pullup: true
 #   tx_pin: GPIO1
 #   baud_rate: 9600
 #   stop_bits: 1

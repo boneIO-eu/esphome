@@ -129,7 +129,7 @@ modbus:
 packages:
   internals_packages:
     url: https://github.com/boneIO-eu/esphome
-    ref: packages-v2.0.0
+    ref: packages-v2.1.0
     files: ["packages/devices/serial_no.yaml"]
   # boneiopackages:
   #   url: https://github.com/boneIO-eu/esphome_packages
@@ -152,7 +152,6 @@ api:
   reboot_timeout: 0s
 ota:
   - platform: esphome
-  - platform: web_server
 
 web_server:
   port: 80

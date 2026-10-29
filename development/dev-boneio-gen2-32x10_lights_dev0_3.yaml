@@ -1,32 +1,27 @@
 substitutions:
   name: boneio-gen2-32-l-01
-  friendly_name: 'BoneIO ESP Gen2 32x10 Lights'
-  serial_prefix: 'esp2' #Don't change it.
-  firmware_manifest: 'https://boneio.eu/fwesp/boneio-gen2-32x10_lights.json'
+  friendly_name: "boneIO ESP gen2 32x10 Lights"
+  serial_prefix: "esp2" # Don't change it.
+  firmware_manifest: "https://boneio.eu/fwesp/boneio-gen2-32x10_lights.json"
 
 esphome:
-  name: '${name}'
-  friendly_name: '${friendly_name}'
+  name: "${name}"
+  friendly_name: "${friendly_name}"
   name_add_mac_suffix: true
   project:
     name: boneio.32x10-lights-gen2
-    version: '0.1'
+    version: "dev0.3"
   on_boot:
     priority: -100
     then:
       - delay: 5s
-      - if:
-          condition:
-            lambda: 'return id(serial_no) != nullptr;'
-          then:
-            - component.update: serial_no
-            - logger.log: "Serial No updated on boot"
-          else:
-            - logger.log: "Serial No component not found"
+      - component.update: serial_no
+      - logger.log: "Serial No updated on boot"
 
 esp32:
   board: esp32-s3-devkitc-1
-  framework:                                                                            
+  cpu_frequency: 240MHz
+  framework:
     type: esp-idf
 
 ethernet:
@@ -39,33 +34,27 @@ ethernet:
   interrupt_pin: GPIO2
   reset_pin: GPIO1
   clock_speed: 25MHz
-  use_address: 192.168.50.215
 
 i2c:
   sda: GPIO10
   scl: GPIO11
   id: i2c_bus
-  scan: True
+  scan: true
   frequency: 400kHz
 
 mcp23017:
-  - id: 'mcp_inputs_1to16' #do 1-16
+  - id: mcp_inputs_1to16
     i2c_id: i2c_bus
     address: 0x20
-  - id: 'mcp_inputs_17to32' #do 17-32
+  - id: mcp_inputs_17to32
     i2c_id: i2c_bus
     address: 0x21
-  - id: 'mcp_left'
+  - id: mcp_left
+    i2c_id: i2c_bus
     address: 0x23
+  - id: mcp_right
     i2c_id: i2c_bus
-  - id: 'mcp_right'
     address: 0x24
-    i2c_id: i2c_bus
-
-one_wire:
-  - platform: ds2484
-    i2c_id: i2c_bus
-    address: 0x18
 
 gp8403:
   id: gp8403_dac
@@ -73,35 +62,27 @@ gp8403:
   address: 0x58
   voltage: 10V
 
+one_wire:
+  - platform: ds2484
+    id: ds2484_hub
+    i2c_id: i2c_bus
+    address: 0x18
+    active_pullup: true
+
 packages:
   internals_packages:
     url: https://github.com/boneIO-eu/esphome
-    ref: packages-v1.7.2
-    files: [
-        'devices/serial_no.yaml'
-      ]
-
-# [14:08:47.835][C][i2c.idf:117]: Found device at address 0x18 - ds2484
-#----[14:08:47.841][C][i2c.idf:117]: Found device at address 0x20 - mcp_inputs_1to16
-#---14:08:47.846][C][i2c.idf:117]: Found device at address 0x21 - mcp_inputs_15to28
-# [14:08:47.852][C][i2c.idf:117]: Found device at address 0x23 - output left
-# [14:08:47.855][C][i2c.idf:117]: Found device at address 0x24 - output right
-#---- [14:08:47.860][C][i2c.idf:117]: Found device at address 0x40 - ina226
-#---- [14:08:47.866][C][i2c.idf:117]: Found device at address 0x48 - lm75b
-# [14:08:47.871][C][i2c.idf:117]: Found device at address 0x58 - gp8403 - wyjscia analogowe
-# GPIO8 WS2812
-
+    ref: packages-v2.1.0
+    files: ["packages/devices/serial_no.yaml"]
 
 dashboard_import:
-  package_import_url: github://boneIO-eu/esphome/dev-boneio-gen2-32x10_lights_v0_1.yaml@main
+  package_import_url: github://boneIO-eu/esphome/development/dev-boneio-gen2-32x10_lights_v0_3.yaml@main
   import_full_config: true
 
 logger:
   hardware_uart: UART0
-
 api:
   reboot_timeout: 0s
-
 ota:
   - platform: esphome
   - platform: web_server
@@ -112,35 +93,71 @@ web_server:
   version: 3
 
 time:
+  # DS3231MZ+ hardware RTC — keeps time during HA outages
+  - platform: ds1307
+    id: rtc_time
+    i2c_id: i2c_bus
+    address: 0x68
+    update_interval: never
+  # HA time syncs the RTC on connect
   - platform: homeassistant
     timezone: Europe/Warsaw
     id: homeassistant_time
+    on_time_sync:
+      then:
+        - ds1307.write_time:
+            id: rtc_time
 
 debug:
   update_interval: 15s
 
 sensor:
-  - platform: debug
-    free:
-      name: "Heap Free"
-    block:
-      name: "Heap Max Block"
-    loop_time:
-      name: "Loop Time"
+  # Shutter count resistor ladder — reads the shutter selector dial via ADC
+  - platform: adc
+    pin: GPIO4
+    id: raw_sig
+    attenuation: 12db
+    update_interval: 50ms
+    samples: 4
+    on_value:
+      then:
+        - lambda: |-
+            static int last_raw_n = -1, stable = 0;
+            const float v_in = id(ina_vin).state;
+            if (!(v_in > 5.0f)) return;
+            const int n = std::clamp((int) lroundf(x * 249.6f / v_in), 0, 31);
+            if (n == last_raw_n) { if (stable < 10) ++stable; }
+            else { last_raw_n = n; stable = 0; }
+            const bool changed = !id(shutter_count_num).has_state() || n != (int) id(shutter_count_num).state;
+            if (stable == 10 && changed) {
+              id(shutter_count_num).publish_state(n);
+              char buf[6];
+              for (int i = 0; i < 5; ++i) buf[4 - i] = ((n >> i) & 1) ? '1' : '0';
+              buf[5] = '\0';
+              id(binary_address).publish_state(buf);
+            }
+  - platform: template
+    name: "Shutter Count"
+    id: shutter_count_num
+    unit_of_measurement: ""
+    icon: "mdi:window-shutter-cog"
+    accuracy_decimals: 0
+    update_interval: never
   - platform: lm75b
     id: boneIO_temp
-    name: 'Temperature'
+    name: "Temperature"
     update_interval: 30s
     entity_category: diagnostic
     on_value_range:
       - above: 70.0
         then:
           - switch.turn_on: buzzer
-      - below: 70.0
+      - below: 65.0
         then:
           - switch.turn_off: buzzer
   - platform: ina226
     address: 0x40
+    update_interval: 10s
     adc_time:
       voltage: 140us
       current: 332us
@@ -150,13 +167,37 @@ sensor:
       name: "INA226 Power"
     bus_voltage:
       name: "INA226 Bus Voltage"
+      id: ina_vin
     shunt_voltage:
       name: "INA226 Shunt Voltage"
+  - platform: adc
+    pin: GPIO5
+    name: "Analog Input 0-10V 1"
+    id: analog_input_1
+    update_interval: 1s
+    attenuation: 0db
+    filters:
+      - multiply: 11.0
+  - platform: adc
+    pin: GPIO6
+    name: "Analog Input 0-10V 2"
+    id: analog_input_2
+    update_interval: 1s
+    attenuation: 0db
+    filters:
+      - multiply: 11.0
+  - platform: debug
+    free:
+      name: "Heap Free"
+    block:
+      name: "Heap Max Block"
+    loop_time:
+      name: "Loop Time"
 
 switch:
   - platform: gpio
     id: buzzer
-    name: 'Buzzer'
+    name: "Buzzer"
     pin:
       number: GPIO9
       mode:
@@ -164,7 +205,7 @@ switch:
       inverted: false
   - platform: gpio
     id: can_bus_switch
-    name: 'CAN Bus Switch'
+    name: "CAN Bus Switch"
     pin:
       number: GPIO35
       mode:
@@ -176,194 +217,194 @@ output:
     id: out_01
     pin:
       mcp23xxx: mcp_left
-      number: 0
+      number: 7
       mode:
         output: true
-      inverted: true
+      inverted: false
   - platform: gpio
     id: out_02
-    pin:
-      mcp23xxx: mcp_left
-      number: 1
-      mode:
-        output: true
-      inverted: true
-  - platform: gpio
-    id: out_03
-    pin:
-      mcp23xxx: mcp_left
-      number: 2
-      mode:
-        output: true
-      inverted: true
-  - platform: gpio
-    id: out_04
-    pin:
-      mcp23xxx: mcp_left
-      number: 3
-      mode:
-        output: true
-      inverted: true
-  - platform: gpio
-    id: out_05
-    pin:
-      mcp23xxx: mcp_left
-      number: 4
-      mode:
-        output: true
-      inverted: true
-  - platform: gpio
-    id: out_06
-    pin:
-      mcp23xxx: mcp_left
-      number: 5
-      mode:
-        output: true
-      inverted: true
-  - platform: gpio
-    id: out_07
     pin:
       mcp23xxx: mcp_left
       number: 6
       mode:
         output: true
-      inverted: true
+      inverted: false
+  - platform: gpio
+    id: out_03
+    pin:
+      mcp23xxx: mcp_left
+      number: 5
+      mode:
+        output: true
+      inverted: false
+  - platform: gpio
+    id: out_04
+    pin:
+      mcp23xxx: mcp_left
+      number: 4
+      mode:
+        output: true
+      inverted: false
+  - platform: gpio
+    id: out_05
+    pin:
+      mcp23xxx: mcp_left
+      number: 3
+      mode:
+        output: true
+      inverted: false
+  - platform: gpio
+    id: out_06
+    pin:
+      mcp23xxx: mcp_left
+      number: 2
+      mode:
+        output: true
+      inverted: false
+  - platform: gpio
+    id: out_07
+    pin:
+      mcp23xxx: mcp_left
+      number: 1
+      mode:
+        output: true
+      inverted: false
   - platform: gpio
     id: out_08
     pin:
       mcp23xxx: mcp_left
+      number: 0
+      mode:
+        output: true
+      inverted: false
+  - platform: gpio
+    id: out_09
+    pin:
+      mcp23xxx: mcp_right
       number: 7
       mode:
         output: true
-      inverted: true
+      inverted: false
   - platform: gpio
-    id: out_09
+    id: out_10
+    pin:
+      mcp23xxx: mcp_right
+      number: 6
+      mode:
+        output: true
+      inverted: false
+  - platform: gpio
+    id: out_11
+    pin:
+      mcp23xxx: mcp_right
+      number: 5
+      mode:
+        output: true
+      inverted: false
+  - platform: gpio
+    id: out_12
+    pin:
+      mcp23xxx: mcp_right
+      number: 4
+      mode:
+        output: true
+      inverted: false
+  - platform: gpio
+    id: out_13
+    pin:
+      mcp23xxx: mcp_right
+      number: 3
+      mode:
+        output: true
+      inverted: false
+  - platform: gpio
+    id: out_14
+    pin:
+      mcp23xxx: mcp_right
+      number: 2
+      mode:
+        output: true
+      inverted: false
+  - platform: gpio
+    id: out_15
+    pin:
+      mcp23xxx: mcp_right
+      number: 1
+      mode:
+        output: true
+      inverted: false
+  - platform: gpio
+    id: out_16
+    pin:
+      mcp23xxx: mcp_right
+      number: 0
+      mode:
+        output: true
+      inverted: false
+  - platform: gpio
+    id: out_17
     pin:
       mcp23xxx: mcp_left
       number: 8
       mode:
         output: true
-      inverted: true
+      inverted: false
   - platform: gpio
-    id: out_10
+    id: out_18
     pin:
       mcp23xxx: mcp_left
       number: 9
       mode:
         output: true
-      inverted: true
+      inverted: false
   - platform: gpio
-    id: out_11
+    id: out_19
     pin:
       mcp23xxx: mcp_left
       number: 10
       mode:
         output: true
-      inverted: true
+      inverted: false
   - platform: gpio
-    id: out_12
+    id: out_20
     pin:
       mcp23xxx: mcp_left
       number: 11
       mode:
         output: true
-      inverted: true
+      inverted: false
   - platform: gpio
-    id: out_13
+    id: out_21
     pin:
       mcp23xxx: mcp_left
       number: 12
       mode:
         output: true
-      inverted: true
+      inverted: false
   - platform: gpio
-    id: out_14
+    id: out_22
     pin:
       mcp23xxx: mcp_left
       number: 13
       mode:
         output: true
-      inverted: true
+      inverted: false
   - platform: gpio
-    id: out_15
+    id: out_23
     pin:
       mcp23xxx: mcp_left
       number: 14
       mode:
         output: true
-      inverted: true
+      inverted: false
   - platform: gpio
-    id: out_16
+    id: out_24
     pin:
       mcp23xxx: mcp_left
       number: 15
       mode:
         output: true
-      inverted: true
-  - platform: gpio
-    id: out_17
-    pin:
-      mcp23xxx: mcp_right
-      number: 0
-      mode:
-        output: true
-      inverted: true
-  - platform: gpio
-    id: out_18
-    pin:
-      mcp23xxx: mcp_right
-      number: 1
-      mode:
-        output: true
-      inverted: true
-  - platform: gpio
-    id: out_19
-    pin:
-      mcp23xxx: mcp_right
-      number: 2
-      mode:
-        output: true
-      inverted: true
-  - platform: gpio
-    id: out_20
-    pin:
-      mcp23xxx: mcp_right
-      number: 3
-      mode:
-        output: true
-      inverted: true
-  - platform: gpio
-    id: out_21
-    pin:
-      mcp23xxx: mcp_right
-      number: 4
-      mode:
-        output: true
-      inverted: true
-  - platform: gpio
-    id: out_22
-    pin:
-      mcp23xxx: mcp_right
-      number: 5
-      mode:
-        output: true
-      inverted: true
-  - platform: gpio
-    id: out_23
-    pin:
-      mcp23xxx: mcp_right
-      number: 6
-      mode:
-        output: true
-      inverted: true
-  - platform: gpio
-    id: out_24
-    pin:
-      mcp23xxx: mcp_right
-      number: 7
-      mode:
-        output: true
-      inverted: true
+      inverted: false
   - platform: gpio
     id: out_25
     pin:
@@ -371,7 +412,7 @@ output:
       number: 8
       mode:
         output: true
-      inverted: true
+      inverted: false
   - platform: gpio
     id: out_26
     pin:
@@ -379,7 +420,7 @@ output:
       number: 9
       mode:
         output: true
-      inverted: true
+      inverted: false
   - platform: gpio
     id: out_27
     pin:
@@ -387,7 +428,7 @@ output:
       number: 10
       mode:
         output: true
-      inverted: true
+      inverted: false
   - platform: gpio
     id: out_28
     pin:
@@ -395,7 +436,7 @@ output:
       number: 11
       mode:
         output: true
-      inverted: true
+      inverted: false
   - platform: gpio
     id: out_29
     pin:
@@ -403,7 +444,7 @@ output:
       number: 12
       mode:
         output: true
-      inverted: true
+      inverted: false
   - platform: gpio
     id: out_30
     pin:
@@ -411,7 +452,7 @@ output:
       number: 13
       mode:
         output: true
-      inverted: true
+      inverted: false
   - platform: gpio
     id: out_31
     pin:
@@ -419,7 +460,7 @@ output:
       number: 14
       mode:
         output: true
-      inverted: true
+      inverted: false
   - platform: gpio
     id: out_32
     pin:
@@ -427,7 +468,7 @@ output:
       number: 15
       mode:
         output: true
-      inverted: true
+      inverted: false
   - platform: gp8403
     gp8403_id: gp8403_dac
     id: dac_output_1
@@ -437,146 +478,189 @@ output:
     id: dac_output_2
     channel: 1
 
+number:
+  - platform: template
+    name: "Analog Output 0-10V 1"
+    id: vout_control_1
+    icon: "mdi:sine-wave"
+    unit_of_measurement: "V"
+    min_value: 0
+    max_value: 10
+    step: 0.1
+    mode: slider
+    set_action:
+      - output.set_level:
+          id: dac_output_1
+          level: !lambda "return x / 10.0;"
+    optimistic: true
+  - platform: template
+    name: "Analog Output 0-10V 2"
+    id: vout_control_2
+    icon: "mdi:sine-wave"
+    unit_of_measurement: "V"
+    min_value: 0
+    max_value: 10
+    step: 0.1
+    mode: slider
+    set_action:
+      - output.set_level:
+          id: dac_output_2
+          level: !lambda "return x / 10.0;"
+    optimistic: true
+
 light:
   - platform: esp32_rmt_led_strip
     id: status_led
     name: "Status LED"
-    rgb_order: GRB
     pin: GPIO8
     num_leds: 1
     chipset: WS2812
+    channel_colors: GRB
+    default_transition_length: 0s
   - platform: binary
-    name: 'Light 01'
+    name: "Light 01"
     output: out_01
     id: light_01
   - platform: binary
-    name: 'Light 02'
+    name: "Light 02"
     output: out_02
     id: light_02
   - platform: binary
-    name: 'Light 03'
+    name: "Light 03"
     output: out_03
     id: light_03
   - platform: binary
-    name: 'Light 04'
+    name: "Light 04"
     output: out_04
     id: light_04
   - platform: binary
-    name: 'Light 05'
+    name: "Light 05"
     output: out_05
     id: light_05
   - platform: binary
-    name: 'Light 06'
+    name: "Light 06"
     output: out_06
     id: light_06
   - platform: binary
-    name: 'Light 07'
+    name: "Light 07"
     output: out_07
     id: light_07
   - platform: binary
-    name: 'Light 08'
+    name: "Light 08"
     output: out_08
     id: light_08
   - platform: binary
-    name: 'Light 09'
+    name: "Light 09"
     output: out_09
     id: light_09
   - platform: binary
-    name: 'Light 10'
+    name: "Light 10"
     output: out_10
     id: light_10
   - platform: binary
-    name: 'Light 11'
+    name: "Light 11"
     output: out_11
     id: light_11
   - platform: binary
-    name: 'Light 12'
+    name: "Light 12"
     output: out_12
     id: light_12
   - platform: binary
-    name: 'Light 13'
+    name: "Light 13"
     output: out_13
     id: light_13
   - platform: binary
-    name: 'Light 14'
+    name: "Light 14"
     output: out_14
     id: light_14
   - platform: binary
-    name: 'Light 15'
+    name: "Light 15"
     output: out_15
     id: light_15
   - platform: binary
-    name: 'Light 16'
+    name: "Light 16"
     output: out_16
     id: light_16
   - platform: binary
-    name: 'Light 17'
+    name: "Light 17"
     output: out_17
     id: light_17
   - platform: binary
-    name: 'Light 18'
+    name: "Light 18"
     output: out_18
     id: light_18
   - platform: binary
-    name: 'Light 19'
+    name: "Light 19"
     output: out_19
     id: light_19
   - platform: binary
-    name: 'Light 20'
+    name: "Light 20"
     output: out_20
     id: light_20
   - platform: binary
-    name: 'Light 21'
+    name: "Light 21"
     output: out_21
     id: light_21
   - platform: binary
-    name: 'Light 22'
+    name: "Light 22"
     output: out_22
     id: light_22
   - platform: binary
-    name: 'Light 23'
+    name: "Light 23"
     output: out_23
     id: light_23
   - platform: binary
-    name: 'Light 24'
+    name: "Light 24"
     output: out_24
     id: light_24
   - platform: binary
-    name: 'Light 25'
+    name: "Light 25"
     output: out_25
     id: light_25
   - platform: binary
-    name: 'Light 26'
+    name: "Light 26"
     output: out_26
     id: light_26
   - platform: binary
-    name: 'Light 27'
+    name: "Light 27"
     output: out_27
     id: light_27
   - platform: binary
-    name: 'Light 28'
+    name: "Light 28"
     output: out_28
     id: light_28
   - platform: binary
-    name: 'Light 29'
+    name: "Light 29"
     output: out_29
     id: light_29
   - platform: binary
-    name: 'Light 30'
+    name: "Light 30"
     output: out_30
     id: light_30
   - platform: binary
-    name: 'Light 31'
+    name: "Light 31"
     output: out_31
     id: light_31
   - platform: binary
-    name: 'Light 32'
+    name: "Light 32"
     output: out_32
     id: light_32
 
 binary_sensor:
   - platform: gpio
-    name: 'IN_01'
+    name: "5V Protection Fault"
+    device_class: problem
+    pin:
+      number: GPIO7
+      mode:
+        input: true
+        pullup: true
+      inverted: true
+    filters:
+      - delayed_on: 10ms
+
+  - platform: gpio
+    name: "IN_01"
     id: in_01
     pin:
       mcp23xxx: mcp_inputs_1to16
@@ -589,7 +673,7 @@ binary_sensor:
         - light.toggle: light_01
 
   - platform: gpio
-    name: 'IN_02'
+    name: "IN_02"
     id: in_02
     pin:
       mcp23xxx: mcp_inputs_1to16
@@ -602,7 +686,7 @@ binary_sensor:
         - light.toggle: light_02
 
   - platform: gpio
-    name: 'IN_03'
+    name: "IN_03"
     id: in_03
     pin:
       mcp23xxx: mcp_inputs_1to16
@@ -615,7 +699,7 @@ binary_sensor:
         - light.toggle: light_03
 
   - platform: gpio
-    name: 'IN_04'
+    name: "IN_04"
     id: in_04
     pin:
       mcp23xxx: mcp_inputs_1to16
@@ -628,7 +712,7 @@ binary_sensor:
         - light.toggle: light_04
 
   - platform: gpio
-    name: 'IN_05'
+    name: "IN_05"
     id: in_05
     pin:
       mcp23xxx: mcp_inputs_1to16
@@ -641,7 +725,7 @@ binary_sensor:
         - light.toggle: light_05
 
   - platform: gpio
-    name: 'IN_06'
+    name: "IN_06"
     id: in_06
     pin:
       mcp23xxx: mcp_inputs_1to16
@@ -654,7 +738,7 @@ binary_sensor:
         - light.toggle: light_06
 
   - platform: gpio
-    name: 'IN_07'
+    name: "IN_07"
     id: in_07
     pin:
       mcp23xxx: mcp_inputs_1to16
@@ -667,7 +751,7 @@ binary_sensor:
         - light.toggle: light_07
 
   - platform: gpio
-    name: 'IN_08'
+    name: "IN_08"
     id: in_08
     pin:
       mcp23xxx: mcp_inputs_1to16
@@ -680,7 +764,7 @@ binary_sensor:
         - light.toggle: light_08
 
   - platform: gpio
-    name: 'IN_09'
+    name: "IN_09"
     id: in_09
     pin:
       mcp23xxx: mcp_inputs_1to16
@@ -693,7 +777,7 @@ binary_sensor:
         - light.toggle: light_09
 
   - platform: gpio
-    name: 'IN_10'
+    name: "IN_10"
     id: in_10
     pin:
       mcp23xxx: mcp_inputs_1to16
@@ -706,7 +790,7 @@ binary_sensor:
         - light.toggle: light_10
 
   - platform: gpio
-    name: 'IN_11'
+    name: "IN_11"
     id: in_11
     pin:
       mcp23xxx: mcp_inputs_1to16
@@ -719,7 +803,7 @@ binary_sensor:
         - light.toggle: light_11
 
   - platform: gpio
-    name: 'IN_12'
+    name: "IN_12"
     id: in_12
     pin:
       mcp23xxx: mcp_inputs_1to16
@@ -732,7 +816,7 @@ binary_sensor:
         - light.toggle: light_12
 
   - platform: gpio
-    name: 'IN_13'
+    name: "IN_13"
     id: in_13
     pin:
       mcp23xxx: mcp_inputs_1to16
@@ -745,7 +829,7 @@ binary_sensor:
         - light.toggle: light_13
 
   - platform: gpio
-    name: 'IN_14'
+    name: "IN_14"
     id: in_14
     pin:
       mcp23xxx: mcp_inputs_1to16
@@ -758,7 +842,7 @@ binary_sensor:
         - light.toggle: light_14
 
   - platform: gpio
-    name: 'IN_15'
+    name: "IN_15"
     id: in_15
     pin:
       mcp23xxx: mcp_inputs_1to16
@@ -771,7 +855,7 @@ binary_sensor:
         - light.toggle: light_15
 
   - platform: gpio
-    name: 'IN_16'
+    name: "IN_16"
     id: in_16
     pin:
       mcp23xxx: mcp_inputs_1to16
@@ -784,7 +868,7 @@ binary_sensor:
         - light.toggle: light_16
 
   - platform: gpio
-    name: 'IN_17'
+    name: "IN_17"
     id: in_17
     pin:
       mcp23xxx: mcp_inputs_17to32
@@ -797,7 +881,7 @@ binary_sensor:
         - light.toggle: light_17
 
   - platform: gpio
-    name: 'IN_18'
+    name: "IN_18"
     id: in_18
     pin:
       mcp23xxx: mcp_inputs_17to32
@@ -810,7 +894,7 @@ binary_sensor:
         - light.toggle: light_18
 
   - platform: gpio
-    name: 'IN_19'
+    name: "IN_19"
     id: in_19
     pin:
       mcp23xxx: mcp_inputs_17to32
@@ -823,7 +907,7 @@ binary_sensor:
         - light.toggle: light_19
 
   - platform: gpio
-    name: 'IN_20'
+    name: "IN_20"
     id: in_20
     pin:
       mcp23xxx: mcp_inputs_17to32
@@ -836,7 +920,7 @@ binary_sensor:
         - light.toggle: light_20
 
   - platform: gpio
-    name: 'IN_21'
+    name: "IN_21"
     id: in_21
     pin:
       mcp23xxx: mcp_inputs_17to32
@@ -849,7 +933,7 @@ binary_sensor:
         - light.toggle: light_21
 
   - platform: gpio
-    name: 'IN_22'
+    name: "IN_22"
     id: in_22
     pin:
       mcp23xxx: mcp_inputs_17to32
@@ -862,7 +946,7 @@ binary_sensor:
         - light.toggle: light_22
 
   - platform: gpio
-    name: 'IN_23'
+    name: "IN_23"
     id: in_23
     pin:
       mcp23xxx: mcp_inputs_17to32
@@ -875,7 +959,7 @@ binary_sensor:
         - light.toggle: light_23
 
   - platform: gpio
-    name: 'IN_24'
+    name: "IN_24"
     id: in_24
     pin:
       mcp23xxx: mcp_inputs_17to32
@@ -888,7 +972,7 @@ binary_sensor:
         - light.toggle: light_24
 
   - platform: gpio
-    name: 'IN_25'
+    name: "IN_25"
     id: in_25
     pin:
       mcp23xxx: mcp_inputs_17to32
@@ -901,7 +985,7 @@ binary_sensor:
         - light.toggle: light_25
 
   - platform: gpio
-    name: 'IN_26'
+    name: "IN_26"
     id: in_26
     pin:
       mcp23xxx: mcp_inputs_17to32
@@ -914,7 +998,7 @@ binary_sensor:
         - light.toggle: light_26
 
   - platform: gpio
-    name: 'IN_27'
+    name: "IN_27"
     id: in_27
     pin:
       mcp23xxx: mcp_inputs_17to32
@@ -927,7 +1011,7 @@ binary_sensor:
         - light.toggle: light_27
 
   - platform: gpio
-    name: 'IN_28'
+    name: "IN_28"
     id: in_28
     pin:
       mcp23xxx: mcp_inputs_17to32
@@ -940,7 +1024,7 @@ binary_sensor:
         - light.toggle: light_28
 
   - platform: gpio
-    name: 'IN_29'
+    name: "IN_29"
     id: in_29
     pin:
       mcp23xxx: mcp_inputs_17to32
@@ -953,7 +1037,7 @@ binary_sensor:
         - light.toggle: light_29
 
   - platform: gpio
-    name: 'IN_30'
+    name: "IN_30"
     id: in_30
     pin:
       mcp23xxx: mcp_inputs_17to32
@@ -966,7 +1050,7 @@ binary_sensor:
         - light.toggle: light_30
 
   - platform: gpio
-    name: 'IN_31'
+    name: "IN_31"
     id: in_31
     pin:
       mcp23xxx: mcp_inputs_17to32
@@ -979,7 +1063,7 @@ binary_sensor:
         - light.toggle: light_31
 
   - platform: gpio
-    name: 'IN_32'
+    name: "IN_32"
     id: in_32
     pin:
       mcp23xxx: mcp_inputs_17to32
@@ -996,20 +1080,38 @@ binary_sensor:
 ######################
 # UNCOMMENT BELOW TO USE MODBUS
 # uart:
-#   id: uart_pin14_15
-#   rx_pin: GPIO14
-#   tx_pin: GPIO15
+#   id: boneio_uart
+#   tx_pin: GPIO14
+#   rx_pin: GPIO21
 #   baud_rate: 9600
 #   stop_bits: 1
 
 # modbus:
 #   send_wait_time: 200ms
-#   uart_id: uart_pin14_15
+#   uart_id: boneio_uart
 #   id: boneio_modbus
 
 # modbus_controller:
-#   - id: YOURDEVICE ID
-#     address: 0x09
-#     modbus_id: mod_bus
+#   - id: modbus_device_01
+#     address: 0x01
+#     modbus_id: boneio_modbus
 #     setup_priority: -10
 #     update_interval: 60s
+
+#####################
+### CAN SECTION   ###
+#####################
+# UNCOMMENT BELOW TO USE CAN BUS
+# canbus:
+#   - platform: esp32_can
+#     tx_pin: GPIO48
+#     rx_pin: GPIO47
+#     can_id: 0x001
+#     bit_rate: 500kbps
+
+text_sensor:
+  # Binary representation of the shutter selector address (5-bit)
+  - platform: template
+    name: "Shutter Address Binary"
+    id: binary_address
+    update_interval: never

@@ -1,0 +1,20 @@
+# boneIO firmware updates, shown in Home Assistant as the "Firmware" entity.
+# Only factory builds include this file: a controller adopted in ESPHome
+# Builder imports the public configuration without it, so an update can never
+# replace the owner's configuration with the factory one.
+substitutions:
+  update_manifest_dir: "https://boneio-eu.github.io/esphome/manifests"
+  update_manifest: "${update_manifest_dir}/${name}${manifest_suffix}.json"
+  # "-web" in factory/web/: keeps the panel build on its own manifest
+  manifest_suffix: ""
+
+ota:
+  - platform: http_request
+
+http_request:
+
+update:
+  - platform: http_request
+    id: firmware_update
+    name: Firmware
+    source: ${update_manifest}

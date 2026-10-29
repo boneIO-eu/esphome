@@ -1,7 +1,7 @@
 name: Build ESPHome Firmware
 
 env:
-  DEFAULT_ESPHOME_VERSION: "2026.4.0"
+  DEFAULT_ESPHOME_VERSION: "2026.10.1"
 
 on:
   push:
@@ -12,7 +12,7 @@ on:
       esphome_version:
         description: "ESPHome version (e.g., 2026.4.0)"
         required: true
-        default: "2026.4.0"
+        default: "2026.10.1"
       build:
         description: "Build number (e.g., b1)"
         required: true
@@ -57,21 +57,21 @@ jobs:
       matrix:
         include:
           # Dimmer LED v0.3
-          - yaml_file: boneio-dimmer_8ch-v0_3.yaml
+          - yaml_file: discontinued/boneio-dimmer_8ch-v0_3.yaml
             board_name: "Dimmer LED"
             board_value: "dimmer"
             version: "v0.3"
             version_key: "v0.3"
             output_option: "8 Channels"
             chip_family: "ESP32"
-          - yaml_file: boneio-dimmer_2rgbw-v0_3.yaml
+          - yaml_file: discontinued/boneio-dimmer_2rgbw-v0_3.yaml
             board_name: "Dimmer LED"
             board_value: "dimmer"
             version: "v0.3"
             version_key: "v0.3"
             output_option: "2xRGBW"
             chip_family: "ESP32"
-          - yaml_file: boneio-dimmer_4cct-v0_3.yaml
+          - yaml_file: discontinued/boneio-dimmer_4cct-v0_3.yaml
             board_name: "Dimmer LED"
             board_value: "dimmer"
             version: "v0.3"
@@ -80,21 +80,21 @@ jobs:
             chip_family: "ESP32"
 
           # Dimmer LED gen2 v0.1
-          - yaml_file: boneio-dimmer_gen2_8ch-v0_1.yaml
+          - yaml_file: factory/boneio-dimmer_gen2_8ch-v0_1.yaml
             board_name: "Dimmer LED gen2"
             board_value: "dimmer_g2"
             version: "v0.1"
             version_key: "v0.1"
             output_option: "8 Channels"
             chip_family: "ESP32-S3"
-          - yaml_file: boneio-dimmer_gen2_2rgbw-v0_1.yaml
+          - yaml_file: factory/boneio-dimmer_gen2_2rgbw-v0_1.yaml
             board_name: "Dimmer LED gen2"
             board_value: "dimmer_g2"
             version: "v0.1"
             version_key: "v0.1"
             output_option: "2xRGBW"
             chip_family: "ESP32-S3"
-          - yaml_file: boneio-dimmer_gen2_4cct-v0_1.yaml
+          - yaml_file: factory/boneio-dimmer_gen2_4cct-v0_1.yaml
             board_name: "Dimmer LED gen2"
             board_value: "dimmer_g2"
             version: "v0.1"
@@ -103,7 +103,7 @@ jobs:
             chip_family: "ESP32-S3"
 
           # Input24 gen2
-          - yaml_file: boneio-input24_gen2-v0_1.yaml
+          - yaml_file: factory/boneio-input24_gen2-v0_1.yaml
             board_name: "boneIO ESP Input24 gen2"
             board_value: "input24"
             version: "v0.1"
@@ -112,14 +112,14 @@ jobs:
             chip_family: "ESP32-S3"
 
           # 8x10A gen2
-          - yaml_file: boneio-8x10A_gen2_lights-v0_1.yaml
+          - yaml_file: factory/boneio-8x10A_gen2_lights-v0_1.yaml
             board_name: "boneIO ESP 8x10A gen2"
             board_value: "8x10A"
             version: "v0.1"
             version_key: "v0.1"
             output_option: "Lights"
             chip_family: "ESP32-S3"
-          - yaml_file: boneio-8x10A_gen2_switches-v0_1.yaml
+          - yaml_file: factory/boneio-8x10A_gen2_switches-v0_1.yaml
             board_name: "boneIO ESP 8x10A gen2"
             board_value: "8x10A"
             version: "v0.1"
@@ -128,14 +128,14 @@ jobs:
             chip_family: "ESP32-S3"
 
           # 32x10 v0.7
-          - yaml_file: boneio-32x10_lights_v0_7.yaml
+          - yaml_file: factory/boneio-32x10_lights_v0_7.yaml
             board_name: "boneIO ESP 32x10"
             board_value: "32x10"
             version: "v0.7 PP"
             version_key: "v0.7"
             output_option: "Lights"
             chip_family: "ESP32"
-          - yaml_file: boneio-32x10_switches_v0_7.yaml
+          - yaml_file: factory/boneio-32x10_switches_v0_7.yaml
             board_name: "boneIO ESP 32x10"
             board_value: "32x10"
             version: "v0.7 PP"
@@ -144,14 +144,14 @@ jobs:
             chip_family: "ESP32"
 
           # 32x10 v0.6
-          - yaml_file: boneio-32x10_lights_v0_5-v0_6.yaml
+          - yaml_file: factory/boneio-32x10_lights_v0_5-v0_6.yaml
             board_name: "boneIO ESP 32x10"
             board_value: "32x10"
             version: "v0.5/v0.6 PP"
             version_key: "v0.6"
             output_option: "Lights"
             chip_family: "ESP32"
-          - yaml_file: boneio-32x10_switches_v0_5-v0_6.yaml
+          - yaml_file: factory/boneio-32x10_switches_v0_5-v0_6.yaml
             board_name: "boneIO ESP 32x10"
             board_value: "32x10"
             version: "v0.5/v0.6 PP"
@@ -160,14 +160,14 @@ jobs:
             chip_family: "ESP32"
 
           # 24x16
-          - yaml_file: boneio-24x16_switches_v0_7.yaml
+          - yaml_file: discontinued/boneio-24x16_switches_v0_7.yaml
             board_name: "boneIO ESP 24x16"
             board_value: "24x16"
             version: "v0.7 MP"
             version_key: "v0.7"
             output_option: "Switches"
             chip_family: "ESP32"
-          - yaml_file: boneio-24x16_switches_v0_5-v0_6.yaml
+          - yaml_file: discontinued/boneio-24x16_switches_v0_5-v0_6.yaml
             board_name: "boneIO ESP 24x16"
             board_value: "24x16"
             version: "v0.5/v0.6 MP"
@@ -176,14 +176,14 @@ jobs:
             chip_family: "ESP32"
 
           # Cover
-          - yaml_file: boneio-cover_v0_7.yaml
+          - yaml_file: factory/boneio-cover_v0_7.yaml
             board_name: "boneIO ESP Cover"
             board_value: "cover"
             version: "v0.7 PP"
             version_key: "v0.7"
             output_option: ""
             chip_family: "ESP32"
-          - yaml_file: boneio-cover_v0_5-v0_6.yaml
+          - yaml_file: factory/boneio-cover_v0_5-v0_6.yaml
             board_name: "boneIO ESP Cover"
             board_value: "cover"
             version: "v0.5/v0.6 PP"
@@ -192,28 +192,28 @@ jobs:
             chip_family: "ESP32"
 
           # Cover Mix
-          - yaml_file: boneio-cover_mix_lights_v0_7.yaml
+          - yaml_file: factory/boneio-cover_mix_lights_v0_7.yaml
             board_name: "boneIO ESP Cover Mix"
             board_value: "mix"
             version: "v0.7 PP"
             version_key: "v0.7"
             output_option: "Lights"
             chip_family: "ESP32"
-          - yaml_file: boneio-cover_mix_switches_v0_7.yaml
+          - yaml_file: factory/boneio-cover_mix_switches_v0_7.yaml
             board_name: "boneIO ESP Cover Mix"
             board_value: "mix"
             version: "v0.7 PP"
             version_key: "v0.7"
             output_option: "Switches"
             chip_family: "ESP32"
-          - yaml_file: boneio-cover_mix_lights_v0_5-v0_6.yaml
+          - yaml_file: factory/boneio-cover_mix_lights_v0_5-v0_6.yaml
             board_name: "boneIO ESP Cover Mix"
             board_value: "mix"
             version: "v0.5/v0.6 PP"
             version_key: "v0.6"
             output_option: "Lights"
             chip_family: "ESP32"
-          - yaml_file: boneio-cover_mix_switches_v0_5-v0_6.yaml
+          - yaml_file: factory/boneio-cover_mix_switches_v0_5-v0_6.yaml
             board_name: "boneIO ESP Cover Mix"
             board_value: "mix"
             version: "v0.5/v0.6 PP"
@@ -221,9 +221,151 @@ jobs:
             output_option: "Switches"
             chip_family: "ESP32"
 
+          # Same configs with the device web page (installer option "+ web panel")
+          - yaml_file: factory/web/boneio-dimmer_gen2_8ch-v0_1.yaml
+            board_name: "Dimmer LED gen2"
+            board_value: "dimmer_g2"
+            version: "v0.1"
+            version_key: "v0.1"
+            output_option: "8 Channels + web panel"
+            chip_family: "ESP32-S3"
+            variant_suffix: "-web"
+          - yaml_file: factory/web/boneio-dimmer_gen2_2rgbw-v0_1.yaml
+            board_name: "Dimmer LED gen2"
+            board_value: "dimmer_g2"
+            version: "v0.1"
+            version_key: "v0.1"
+            output_option: "2xRGBW + web panel"
+            chip_family: "ESP32-S3"
+            variant_suffix: "-web"
+          - yaml_file: factory/web/boneio-dimmer_gen2_4cct-v0_1.yaml
+            board_name: "Dimmer LED gen2"
+            board_value: "dimmer_g2"
+            version: "v0.1"
+            version_key: "v0.1"
+            output_option: "4 CCT + web panel"
+            chip_family: "ESP32-S3"
+            variant_suffix: "-web"
+          - yaml_file: factory/web/boneio-input24_gen2-v0_1.yaml
+            board_name: "boneIO ESP Input24 gen2"
+            board_value: "input24"
+            version: "v0.1"
+            version_key: "v0.1"
+            output_option: "Web panel"
+            chip_family: "ESP32-S3"
+            variant_suffix: "-web"
+          - yaml_file: factory/web/boneio-8x10A_gen2_lights-v0_1.yaml
+            board_name: "boneIO ESP 8x10A gen2"
+            board_value: "8x10A"
+            version: "v0.1"
+            version_key: "v0.1"
+            output_option: "Lights + web panel"
+            chip_family: "ESP32-S3"
+            variant_suffix: "-web"
+          - yaml_file: factory/web/boneio-8x10A_gen2_switches-v0_1.yaml
+            board_name: "boneIO ESP 8x10A gen2"
+            board_value: "8x10A"
+            version: "v0.1"
+            version_key: "v0.1"
+            output_option: "Switches + web panel"
+            chip_family: "ESP32-S3"
+            variant_suffix: "-web"
+          - yaml_file: factory/web/boneio-32x10_lights_v0_7.yaml
+            board_name: "boneIO ESP 32x10"
+            board_value: "32x10"
+            version: "v0.7 PP"
+            version_key: "v0.7"
+            output_option: "Lights + web panel"
+            chip_family: "ESP32"
+            variant_suffix: "-web"
+          - yaml_file: factory/web/boneio-32x10_switches_v0_7.yaml
+            board_name: "boneIO ESP 32x10"
+            board_value: "32x10"
+            version: "v0.7 PP"
+            version_key: "v0.7"
+            output_option: "Switches + web panel"
+            chip_family: "ESP32"
+            variant_suffix: "-web"
+          - yaml_file: factory/web/boneio-32x10_lights_v0_5-v0_6.yaml
+            board_name: "boneIO ESP 32x10"
+            board_value: "32x10"
+            version: "v0.5/v0.6 PP"
+            version_key: "v0.6"
+            output_option: "Lights + web panel"
+            chip_family: "ESP32"
+            variant_suffix: "-web"
+          - yaml_file: factory/web/boneio-32x10_switches_v0_5-v0_6.yaml
+            board_name: "boneIO ESP 32x10"
+            board_value: "32x10"
+            version: "v0.5/v0.6 PP"
+            version_key: "v0.6"
+            output_option: "Switches + web panel"
+            chip_family: "ESP32"
+            variant_suffix: "-web"
+          - yaml_file: factory/web/boneio-cover_v0_7.yaml
+            board_name: "boneIO ESP Cover"
+            board_value: "cover"
+            version: "v0.7 PP"
+            version_key: "v0.7"
+            output_option: "Web panel"
+            chip_family: "ESP32"
+            variant_suffix: "-web"
+          - yaml_file: factory/web/boneio-cover_v0_5-v0_6.yaml
+            board_name: "boneIO ESP Cover"
+            board_value: "cover"
+            version: "v0.5/v0.6 PP"
+            version_key: "v0.6"
+            output_option: "Web panel"
+            chip_family: "ESP32"
+            variant_suffix: "-web"
+          - yaml_file: factory/web/boneio-cover_mix_lights_v0_7.yaml
+            board_name: "boneIO ESP Cover Mix"
+            board_value: "mix"
+            version: "v0.7 PP"
+            version_key: "v0.7"
+            output_option: "Lights + web panel"
+            chip_family: "ESP32"
+            variant_suffix: "-web"
+          - yaml_file: factory/web/boneio-cover_mix_switches_v0_7.yaml
+            board_name: "boneIO ESP Cover Mix"
+            board_value: "mix"
+            version: "v0.7 PP"
+            version_key: "v0.7"
+            output_option: "Switches + web panel"
+            chip_family: "ESP32"
+            variant_suffix: "-web"
+          - yaml_file: factory/web/boneio-cover_mix_lights_v0_5-v0_6.yaml
+            board_name: "boneIO ESP Cover Mix"
+            board_value: "mix"
+            version: "v0.5/v0.6 PP"
+            version_key: "v0.6"
+            output_option: "Lights + web panel"
+            chip_family: "ESP32"
+            variant_suffix: "-web"
+          - yaml_file: factory/web/boneio-cover_mix_switches_v0_5-v0_6.yaml
+            board_name: "boneIO ESP Cover Mix"
+            board_value: "mix"
+            version: "v0.5/v0.6 PP"
+            version_key: "v0.6"
+            output_option: "Switches + web panel"
+            chip_family: "ESP32"
+            variant_suffix: "-web"
+
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
+
+      # The update entity compares project.version with the manifest's version,
+      # so the release has to be in the binary. Only factory/ files carry
+      # firmware_version; discontinued configs are built as they are.
+      - name: Stamp firmware version
+        run: |
+          FILE="${{ matrix.yaml_file }}"
+          sed -i 's/firmware_version: "dev"/firmware_version: "${{ needs.resolve-version.outputs.full_version }}"/' "$FILE"
+          if grep -q 'firmware_version: "dev"' "$FILE"; then
+            echo "::error file=$FILE::firmware_version was not stamped"
+            exit 1
+          fi
 
       - name: Build firmware
         uses: esphome/build-action@v7
@@ -233,12 +375,28 @@ jobs:
           version: ${{ needs.resolve-version.outputs.esphome_version }}
           complete-manifest: true
 
+      # Variants of one config share the device name, so their files are
+      # renamed with the matrix suffix ("-web") before they meet in deploy.
+      - name: Collect firmware files
+        id: collect
+        run: |
+          SRC="${{ steps.esphome-build.outputs.name }}"
+          BASE="${{ steps.esphome-build.outputs.original-name }}"
+          NAME="${BASE}${{ matrix.variant_suffix }}"
+          DST="out/${NAME}${SRC#"$BASE"}"
+          mkdir -p "$DST"
+          for f in "$SRC"/*; do
+            cp "$f" "$DST/$(basename "$f" | sed "s/^$BASE/$NAME/")"
+          done
+          echo "name=$NAME" >> "$GITHUB_OUTPUT"
+          echo "dir=$DST" >> "$GITHUB_OUTPUT"
+
       - name: Save build metadata
         run: |
           mkdir -p metadata
-          cat > metadata/${{ steps.esphome-build.outputs.original-name }}.json << 'METADATA_EOF'
+          cat > metadata/${{ steps.collect.outputs.name }}.json << 'METADATA_EOF'
           {
-            "firmware_name": "${{ steps.esphome-build.outputs.original-name }}",
+            "firmware_name": "${{ steps.collect.outputs.name }}",
             "yaml_file": "${{ matrix.yaml_file }}",
             "board_name": "${{ matrix.board_name }}",
             "board_value": "${{ matrix.board_value }}",
@@ -246,20 +404,21 @@ jobs:
             "version_key": "${{ matrix.version_key }}",
             "output_option": "${{ matrix.output_option }}",
             "chip_family": "${{ matrix.chip_family }}",
+            "project_version": "${{ steps.esphome-build.outputs.project-version }}",
             "esphome_version": "${{ needs.resolve-version.outputs.esphome_version }}"
           }
           METADATA_EOF
 
       - name: Upload firmware artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
-          name: firmware-${{ steps.esphome-build.outputs.original-name }}
-          path: ${{ steps.esphome-build.outputs.name }}
+          name: firmware-${{ steps.collect.outputs.name }}
+          path: ${{ steps.collect.outputs.dir }}
 
       - name: Upload metadata artifact
         uses: actions/upload-artifact@v4
         with:
-          name: metadata-${{ steps.esphome-build.outputs.original-name }}
+          name: metadata-${{ steps.collect.outputs.name }}
           path: metadata/
 
   deploy:
@@ -274,7 +433,7 @@ jobs:
 
     steps:
       - name: Download firmware artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           path: artifacts
           pattern: firmware-*
@@ -293,6 +452,7 @@ jobs:
           export VERSION="${{ needs.resolve-version.outputs.full_version }}"
           export BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
           export GITHUB_PAGES_URL="https://boneio-eu.github.io/esphome"
+          export RELEASE_TAG="${{ needs.resolve-version.outputs.release_tag }}"
 
           # Debug: show artifact structure
           echo "=== Artifacts structure ==="
@@ -307,6 +467,8 @@ jobs:
             SIMPLE_NAME="${BASENAME/.factory.bin/.bin}"
             cp "$factory_bin" "gh-pages/firmware/${SIMPLE_NAME}"
             echo "  Copied to gh-pages/firmware/${SIMPLE_NAME}"
+            # The OTA image is what the update entity downloads
+            cp "${factory_bin/.factory.bin/.ota.bin}" "gh-pages/firmware/${BASENAME/.factory.bin/.ota.bin}"
           done
 
           # Copy all binaries (factory + ota) to release folder for GitHub Release
@@ -320,11 +482,13 @@ jobs:
           python3 << 'PYTHON_EOF'
           import json
           import glob
+          import hashlib
           import os
 
           version = os.environ.get("VERSION", "unknown")
           build_date = os.environ.get("BUILD_DATE", "unknown")
           github_pages_url = os.environ.get("GITHUB_PAGES_URL", "")
+          release_url = f'https://github.com/boneIO-eu/esphome/releases/tag/{os.environ["RELEASE_TAG"]}'
 
           # Read all metadata files
           builds = []
@@ -335,7 +499,8 @@ jobs:
           # Discover actual firmware files on gh-pages to map metadata -> binary
           fw_files = {}
           for f in glob.glob("gh-pages/firmware/*.bin"):
-              fw_files[os.path.basename(f)] = f
+              if not f.endswith(".ota.bin"):
+                  fw_files[os.path.basename(f)] = f
 
           print(f"Found {len(fw_files)} firmware files: {list(fw_files.keys())}")
 
@@ -360,9 +525,18 @@ jobs:
                   else:
                       continue
 
+              ota_filename = bin_filename[: -len(".bin")] + ".ota.bin"
+              with open(f"gh-pages/firmware/{ota_filename}", "rb") as f:
+                  ota_md5 = hashlib.md5(f.read()).hexdigest()
+
               manifest = {
                   "name": f'{build["board_name"]} {build["output_option"]} {build["version"]}'.strip(),
-                  "version": version,
+                  # Must equal project.version in the binary, or the update
+                  # entity offers this release forever
+                  "version": build.get("project_version") or version,
+                  # The API key Home Assistant provisions lives in NVS and
+                  # survives a plain reflash; offer a full erase on install
+                  "new_install_prompt_erase": True,
                   "builds": [
                       {
                           "chipFamily": chip,
@@ -371,7 +545,12 @@ jobs:
                                   "path": f'{github_pages_url}/firmware/{bin_filename}',
                                   "offset": 0
                               }
-                          ]
+                          ],
+                          "ota": {
+                              "path": f'{github_pages_url}/firmware/{ota_filename}',
+                              "md5": ota_md5,
+                              "release_url": release_url
+                          }
                       }
                   ]
               }
@@ -400,7 +579,8 @@ jobs:
                   }
 
               manifest_url = f'{github_pages_url}/manifests/{build["firmware_name"]}.json'
-              yaml_url = f'https://github.com/boneIO-eu/esphome/blob/main/{build["yaml_file"]}'
+              # The public configuration, not the factory wrapper around it
+              yaml_url = f'https://github.com/boneIO-eu/esphome/blob/main/{build["yaml_file"].removeprefix("factory/")}'
 
               option = {
                   "name": build["output_option"] if build["output_option"] else "Standard",
@@ -503,7 +683,7 @@ jobs:
 
       - name: Create GitHub Release
         if: github.event_name == 'push'
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           name: "Firmware ${{ needs.resolve-version.outputs.esphome_version }} (${{ needs.resolve-version.outputs.build }})"
           body_path: release-notes.md

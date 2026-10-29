@@ -40,7 +40,7 @@ include_files = [
 
 
 GITHUB_PAGES_URL = "https://boneio-eu.github.io/esphome"
-ESPHOME_VERSION = "2026.4.0"
+ESPHOME_VERSION = "2026.5.3"
 ESPHOME_DOCKER_IMAGE = f"ghcr.io/esphome/esphome:{ESPHOME_VERSION}"
 FIRMWARE_VERSION = ESPHOME_VERSION
 

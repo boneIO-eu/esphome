@@ -10,7 +10,12 @@ esphome:
   project:
     name: boneio.32x10-lights_v0_5-v0_6
     version: '0.6'
-
+  on_boot:
+    - priority: 1001
+      then:
+        - lambda: |-
+            gpio_reset_pin((gpio_num_t)3);
+            gpio_reset_pin((gpio_num_t)1);
 esp32:
   board: nodemcu-32s
   framework:                                                                            
@@ -34,7 +39,7 @@ dashboard_import:
 packages:
   internals_packages:
     url: https://github.com/boneIO-eu/esphome
-    ref: packages-v2.0.0
+    ref: packages-v2.1.0
     files: [
         'packages/devices/buzzer.yaml',
         'packages/devices/serial_no.yaml',
@@ -69,7 +74,6 @@ api:
   reboot_timeout: 0s
 ota:
   - platform: esphome
-  - platform: web_server
 
 web_server:
   port: 80
@@ -662,7 +666,11 @@ binary_sensor:
 # UNCOMMENT BELOW TO USE MODBUS
 # uart:
 #   id: uart_pin3_1
-#   rx_pin: GPIO3
+#   rx_pin:
+#      number: GPIO3
+#      mode:
+#        input: true
+#        pullup: true
 #   tx_pin: GPIO1
 #   baud_rate: 9600
 #   stop_bits: 1

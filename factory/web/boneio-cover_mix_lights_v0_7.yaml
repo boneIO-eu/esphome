@@ -1,0 +1,17 @@
+# Factory firmware with the device web page, the installer's "+ web panel"
+# option: boneio-cover_mix_lights_v0_7.yaml
+# plus boneIO updates. Same device name as the default build; the manifest
+# suffix keeps its updates on this variant.
+substitutions:
+  manifest_suffix: "-web"
+  # CI sets the release; the update entity compares it with the manifest.
+  firmware_version: "dev"
+
+packages:
+  device: !include ../../boneio-cover_mix_lights_v0_7.yaml
+  update: !include ../update.yaml
+  api_key: !include ../api_key.yaml
+
+esphome:
+  project:
+    version: "0.7-${firmware_version}"
