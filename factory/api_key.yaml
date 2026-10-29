@@ -1,7 +1,7 @@
 # Factory firmware ships without an API key: Home Assistant sets a unique one
 # on its first connection (sent over an encrypted channel) and keeps it. From
-# then on the API is encrypted and the same key authenticates ESPHome OTA
-# uploads. Home Assistant hands the key to ESPHome Builder, so adoption keeps
-# working. Only a full flash erase removes it.
+# then on the API is encrypted. The key does not cover ESPHome OTA uploads,
+# which stay open for the owner's own builds. Home Assistant hands the key to
+# ESPHome Builder, so adoption keeps working. Only a full flash erase removes it.
 api:
   encryption: {}
