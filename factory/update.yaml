@@ -3,7 +3,8 @@
 # Builder imports the public configuration without it, so an update can never
 # replace the owner's configuration with the factory one.
 substitutions:
-  update_manifest: "https://boneio-eu.github.io/esphome/manifests/${name}.json"
+  update_manifest_dir: "https://boneio-eu.github.io/esphome/manifests"
+  update_manifest: "${update_manifest_dir}/${name}.json"
 
 ota:
   - platform: http_request
@@ -12,5 +13,6 @@ http_request:
 
 update:
   - platform: http_request
+    id: firmware_update
     name: Firmware
     source: ${update_manifest}

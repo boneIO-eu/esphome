@@ -2,11 +2,13 @@
 substitutions:
   # CI sets the release; the update entity compares it with the manifest.
   firmware_version: "dev"
+  dimmer_mode: "4x CCT"
 
 packages:
   device: !include ../boneio-dimmer_gen2_4cct-v0_1.yaml
   update: !include update.yaml
+  dimmer_mode: !include dimmer_variant.yaml
 
 esphome:
   project:
-    version: "0.1-${firmware_version}"
+    version: "0.1-4cct-${firmware_version}"
