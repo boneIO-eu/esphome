@@ -1,0 +1,12 @@
+# Factory firmware (CI, boneio.eu/esp): boneio-8x10A_gen2_lights-v0_1.yaml plus boneIO updates.
+substitutions:
+  # CI sets the release; the update entity compares it with the manifest.
+  firmware_version: "dev"
+
+packages:
+  device: !include ../boneio-8x10A_gen2_lights-v0_1.yaml
+  update: !include update.yaml
+
+esphome:
+  project:
+    version: "0.1-${firmware_version}"

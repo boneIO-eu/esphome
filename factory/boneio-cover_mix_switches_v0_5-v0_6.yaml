@@ -1,0 +1,12 @@
+# Factory firmware (CI, boneio.eu/esp): boneio-cover_mix_switches_v0_5-v0_6.yaml plus boneIO updates.
+substitutions:
+  # CI sets the release; the update entity compares it with the manifest.
+  firmware_version: "dev"
+
+packages:
+  device: !include ../boneio-cover_mix_switches_v0_5-v0_6.yaml
+  update: !include update.yaml
+
+esphome:
+  project:
+    version: "0.6-${firmware_version}"
