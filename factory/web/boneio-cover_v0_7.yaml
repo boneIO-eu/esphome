@@ -4,6 +4,7 @@
 # suffix keeps its updates on this variant.
 substitutions:
   manifest_suffix: "-web"
+  web_panel: "On"
   # CI sets the release; the update entity compares it with the manifest.
   firmware_version: "dev"
 
@@ -14,4 +15,4 @@ packages:
 
 esphome:
   project:
-    version: "0.7-${firmware_version}"
+    version: "0.7-web-${firmware_version}"
