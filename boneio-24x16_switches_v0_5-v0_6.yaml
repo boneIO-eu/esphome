@@ -58,8 +58,8 @@ api:
   reboot_timeout: 0s
 
 ota:
+  # No web_server OTA: its page has no per-device password, so anyone on the LAN could flash.
   - platform: esphome
-  - platform: web_server
 
 web_server:
   port: 80
