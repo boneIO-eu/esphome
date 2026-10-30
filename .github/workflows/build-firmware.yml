@@ -249,7 +249,6 @@ jobs:
             output_option: "Switches + web panel"
             chip_family: "ESP32"
             variant_suffix: "-web"
-            variant_suffix: "-web"
           - yaml_file: factory/web/boneio-32x10_switches_v0_5-v0_6.yaml
             board_name: "boneIO ESP 32x10"
             board_value: "32x10"
@@ -289,7 +288,6 @@ jobs:
             version_key: "v0.7"
             output_option: "Switches + web panel"
             chip_family: "ESP32"
-            variant_suffix: "-web"
             variant_suffix: "-web"
           - yaml_file: factory/web/boneio-cover_mix_switches_v0_5-v0_6.yaml
             board_name: "boneIO ESP Cover Mix"
