@@ -1,8 +1,7 @@
 # Switches the Dimmer between its firmware variants from Home Assistant.
-# Picking a mode points the Firmware entity at that variant's manifest, so the
-# entity offers it as an update; the owner installs it with Update. The
-# variant is part of project.version, so the update entity sees it as a
-# different version.
+# Picking a mode makes the Firmware entity offer that variant as an update
+# (update.yaml); the owner installs it with Update. The variant is part of
+# project.version, so the update entity sees it as a different version.
 select:
   - platform: template
     id: dimmer_mode
@@ -17,9 +16,7 @@ select:
     optimistic: true
     set_action:
       - lambda: |-
-          const char *variant = x == "2x RGBW" ? "boneio-dr-gen2-2rgbw-01"
-                              : x == "4x CCT"  ? "boneio-dr-gen2-4cct-01"
-                                               : "boneio-dr-gen2-8ch-01";
-          std::string url = std::string("${update_manifest_dir}/") + variant + "${manifest_suffix}.json";
-          id(firmware_update).set_source_url(url.c_str(), url.size());
-      - component.update: firmware_update
+          id(firmware_base) = x == "2x RGBW" ? "boneio-dr-gen2-2rgbw-01"
+                            : x == "4x CCT"  ? "boneio-dr-gen2-4cct-01"
+                                             : "boneio-dr-gen2-8ch-01";
+      - script.execute: point_firmware_update
