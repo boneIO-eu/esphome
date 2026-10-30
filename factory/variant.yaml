@@ -1,0 +1,16 @@
+# Switches between the builds with and without the device web page from Home
+# Assistant. The page has no password, so it is off unless the owner picks it.
+select:
+  - platform: template
+    id: firmware_variant
+    name: Firmware variant
+    icon: mdi:tune-variant
+    entity_category: config
+    options:
+      - "${variant_label}"
+      - "${variant_label} + web panel"
+    initial_option: "${variant_label}${web_option}"
+    optimistic: true
+    set_action:
+      - lambda: |-
+          id(point_firmware_update).execute("${name}", str_endswith(x.str(), " + web panel"));

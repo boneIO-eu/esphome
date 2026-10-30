@@ -4,14 +4,16 @@
 # suffix keeps its updates on this variant.
 substitutions:
   manifest_suffix: "-web"
-  web_panel: "On"
+  web_option: " + web panel"
   # CI sets the release; the update entity compares it with the manifest.
   firmware_version: "dev"
+  variant_label: "Switches"
 
 packages:
   device: !include ../../boneio-32x10_switches_v0_7.yaml
   update: !include ../update.yaml
   api_key: !include ../api_key.yaml
+  variant: !include ../variant.yaml
 
 esphome:
   project:

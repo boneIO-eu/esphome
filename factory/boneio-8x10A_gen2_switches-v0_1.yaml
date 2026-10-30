@@ -2,11 +2,13 @@
 substitutions:
   # CI sets the release; the update entity compares it with the manifest.
   firmware_version: "dev"
+  variant_label: "Switches"
 
 packages:
   device: !include ../boneio-8x10A_gen2_switches-v0_1.yaml
   update: !include update.yaml
   api_key: !include api_key.yaml
+  variant: !include variant.yaml
 
 esphome:
   project:
