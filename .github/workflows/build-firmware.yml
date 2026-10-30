@@ -131,31 +131,15 @@ jobs:
           - yaml_file: factory/boneio-32x10_lights_v0_7.yaml
             board_name: "boneIO ESP 32x10"
             board_value: "32x10"
-            version: "v0.7 PP"
+            version: "v0.7+ PP"
             version_key: "v0.7"
             output_option: "Lights"
             chip_family: "ESP32"
           - yaml_file: factory/boneio-32x10_switches_v0_7.yaml
             board_name: "boneIO ESP 32x10"
             board_value: "32x10"
-            version: "v0.7 PP"
+            version: "v0.7+ PP"
             version_key: "v0.7"
-            output_option: "Switches"
-            chip_family: "ESP32"
-
-          # 32x10 v0.6
-          - yaml_file: factory/boneio-32x10_lights_v0_5-v0_6.yaml
-            board_name: "boneIO ESP 32x10"
-            board_value: "32x10"
-            version: "v0.5/v0.6 PP"
-            version_key: "v0.6"
-            output_option: "Lights"
-            chip_family: "ESP32"
-          - yaml_file: factory/boneio-32x10_switches_v0_5-v0_6.yaml
-            board_name: "boneIO ESP 32x10"
-            board_value: "32x10"
-            version: "v0.5/v0.6 PP"
-            version_key: "v0.6"
             output_option: "Switches"
             chip_family: "ESP32"
 
@@ -179,15 +163,8 @@ jobs:
           - yaml_file: factory/boneio-cover_v0_7.yaml
             board_name: "boneIO ESP Cover"
             board_value: "cover"
-            version: "v0.7 PP"
+            version: "v0.7+ PP"
             version_key: "v0.7"
-            output_option: ""
-            chip_family: "ESP32"
-          - yaml_file: factory/boneio-cover_v0_5-v0_6.yaml
-            board_name: "boneIO ESP Cover"
-            board_value: "cover"
-            version: "v0.5/v0.6 PP"
-            version_key: "v0.6"
             output_option: ""
             chip_family: "ESP32"
 
@@ -195,29 +172,15 @@ jobs:
           - yaml_file: factory/boneio-cover_mix_lights_v0_7.yaml
             board_name: "boneIO ESP Cover Mix"
             board_value: "mix"
-            version: "v0.7 PP"
+            version: "v0.7+ PP"
             version_key: "v0.7"
             output_option: "Lights"
             chip_family: "ESP32"
           - yaml_file: factory/boneio-cover_mix_switches_v0_7.yaml
             board_name: "boneIO ESP Cover Mix"
             board_value: "mix"
-            version: "v0.7 PP"
+            version: "v0.7+ PP"
             version_key: "v0.7"
-            output_option: "Switches"
-            chip_family: "ESP32"
-          - yaml_file: factory/boneio-cover_mix_lights_v0_5-v0_6.yaml
-            board_name: "boneIO ESP Cover Mix"
-            board_value: "mix"
-            version: "v0.5/v0.6 PP"
-            version_key: "v0.6"
-            output_option: "Lights"
-            chip_family: "ESP32"
-          - yaml_file: factory/boneio-cover_mix_switches_v0_5-v0_6.yaml
-            board_name: "boneIO ESP Cover Mix"
-            board_value: "mix"
-            version: "v0.5/v0.6 PP"
-            version_key: "v0.6"
             output_option: "Switches"
             chip_family: "ESP32"
 
@@ -273,7 +236,7 @@ jobs:
           - yaml_file: factory/web/boneio-32x10_lights_v0_7.yaml
             board_name: "boneIO ESP 32x10"
             board_value: "32x10"
-            version: "v0.7 PP"
+            version: "v0.7+ PP"
             version_key: "v0.7"
             output_option: "Lights + web panel"
             chip_family: "ESP32"
@@ -281,17 +244,9 @@ jobs:
           - yaml_file: factory/web/boneio-32x10_switches_v0_7.yaml
             board_name: "boneIO ESP 32x10"
             board_value: "32x10"
-            version: "v0.7 PP"
+            version: "v0.7+ PP"
             version_key: "v0.7"
             output_option: "Switches + web panel"
-            chip_family: "ESP32"
-            variant_suffix: "-web"
-          - yaml_file: factory/web/boneio-32x10_lights_v0_5-v0_6.yaml
-            board_name: "boneIO ESP 32x10"
-            board_value: "32x10"
-            version: "v0.5/v0.6 PP"
-            version_key: "v0.6"
-            output_option: "Lights + web panel"
             chip_family: "ESP32"
             variant_suffix: "-web"
           - yaml_file: factory/web/boneio-32x10_switches_v0_5-v0_6.yaml
@@ -305,7 +260,7 @@ jobs:
           - yaml_file: factory/web/boneio-cover_v0_7.yaml
             board_name: "boneIO ESP Cover"
             board_value: "cover"
-            version: "v0.7 PP"
+            version: "v0.7+ PP"
             version_key: "v0.7"
             output_option: "Web panel"
             chip_family: "ESP32"
@@ -321,7 +276,7 @@ jobs:
           - yaml_file: factory/web/boneio-cover_mix_lights_v0_7.yaml
             board_name: "boneIO ESP Cover Mix"
             board_value: "mix"
-            version: "v0.7 PP"
+            version: "v0.7+ PP"
             version_key: "v0.7"
             output_option: "Lights + web panel"
             chip_family: "ESP32"
@@ -329,17 +284,9 @@ jobs:
           - yaml_file: factory/web/boneio-cover_mix_switches_v0_7.yaml
             board_name: "boneIO ESP Cover Mix"
             board_value: "mix"
-            version: "v0.7 PP"
+            version: "v0.7+ PP"
             version_key: "v0.7"
             output_option: "Switches + web panel"
-            chip_family: "ESP32"
-            variant_suffix: "-web"
-          - yaml_file: factory/web/boneio-cover_mix_lights_v0_5-v0_6.yaml
-            board_name: "boneIO ESP Cover Mix"
-            board_value: "mix"
-            version: "v0.5/v0.6 PP"
-            version_key: "v0.6"
-            output_option: "Lights + web panel"
             chip_family: "ESP32"
             variant_suffix: "-web"
           - yaml_file: factory/web/boneio-cover_mix_switches_v0_5-v0_6.yaml
