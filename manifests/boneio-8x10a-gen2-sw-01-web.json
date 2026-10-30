@@ -1,0 +1,21 @@
+{
+  "name": "boneIO ESP 8x10A gen2 Switches + web panel v0.1",
+  "version": "0.1-web-2026.10.1-b5",
+  "new_install_prompt_erase": true,
+  "builds": [
+    {
+      "chipFamily": "ESP32-S3",
+      "parts": [
+        {
+          "path": "https://boneio-eu.github.io/esphome/firmware/boneio-8x10a-gen2-sw-01-web-esp32s3.bin",
+          "offset": 0
+        }
+      ],
+      "ota": {
+        "path": "https://boneio-eu.github.io/esphome/firmware/boneio-8x10a-gen2-sw-01-web-esp32s3.ota.bin",
+        "md5": "73d961910da396a0898e08ffe5670b60",
+        "release_url": "https://github.com/boneIO-eu/esphome/releases/tag/esphome-2026.10.1-b5"
+      }
+    }
+  ]
+}

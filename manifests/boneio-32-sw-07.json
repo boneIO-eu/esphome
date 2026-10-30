@@ -1,0 +1,21 @@
+{
+  "name": "boneIO ESP 32x10 Switches v0.7+ PP",
+  "version": "0.7-2026.10.1-b5",
+  "new_install_prompt_erase": true,
+  "builds": [
+    {
+      "chipFamily": "ESP32",
+      "parts": [
+        {
+          "path": "https://boneio-eu.github.io/esphome/firmware/boneio-32-sw-07-esp32.bin",
+          "offset": 0
+        }
+      ],
+      "ota": {
+        "path": "https://boneio-eu.github.io/esphome/firmware/boneio-32-sw-07-esp32.ota.bin",
+        "md5": "8af0d4372647ee00164543395831a073",
+        "release_url": "https://github.com/boneIO-eu/esphome/releases/tag/esphome-2026.10.1-b5"
+      }
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "Dimmer LED gen2 8 Channels v0.1",
+  "version": "0.1-8ch-2026.10.1-b5",
+  "new_install_prompt_erase": true,
+  "builds": [
+    {
+      "chipFamily": "ESP32-S3",
+      "parts": [
+        {
+          "path": "https://boneio-eu.github.io/esphome/firmware/boneio-dr-gen2-8ch-01-esp32s3.bin",
+          "offset": 0
+        }
+      ],
+      "ota": {
+        "path": "https://boneio-eu.github.io/esphome/firmware/boneio-dr-gen2-8ch-01-esp32s3.ota.bin",
+        "md5": "b0ff484ac7cee0a9713a8c6ffa852b6d",
+        "release_url": "https://github.com/boneIO-eu/esphome/releases/tag/esphome-2026.10.1-b5"
+      }
+    }
+  ]
+}

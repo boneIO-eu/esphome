@@ -1,0 +1,21 @@
+{
+  "name": "boneIO ESP Cover Mix Switches + web panel v0.5/v0.6 PP",
+  "version": "0.6-web-2026.10.1-b5",
+  "new_install_prompt_erase": true,
+  "builds": [
+    {
+      "chipFamily": "ESP32",
+      "parts": [
+        {
+          "path": "https://boneio-eu.github.io/esphome/firmware/boneio-cm-sw-06-web-esp32.bin",
+          "offset": 0
+        }
+      ],
+      "ota": {
+        "path": "https://boneio-eu.github.io/esphome/firmware/boneio-cm-sw-06-web-esp32.ota.bin",
+        "md5": "d0b105efcbc06c2ea7471c5461e918ac",
+        "release_url": "https://github.com/boneIO-eu/esphome/releases/tag/esphome-2026.10.1-b5"
+      }
+    }
+  ]
+}

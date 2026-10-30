@@ -1,0 +1,21 @@
+{
+  "name": "boneIO ESP 24x16 Switches v0.5/v0.6 MP",
+  "version": "0.6",
+  "new_install_prompt_erase": true,
+  "builds": [
+    {
+      "chipFamily": "ESP32",
+      "parts": [
+        {
+          "path": "https://boneio-eu.github.io/esphome/firmware/boneio-24-sw-06-esp32.bin",
+          "offset": 0
+        }
+      ],
+      "ota": {
+        "path": "https://boneio-eu.github.io/esphome/firmware/boneio-24-sw-06-esp32.ota.bin",
+        "md5": "f164aaced69cfdbec3a4b51244270875",
+        "release_url": "https://github.com/boneIO-eu/esphome/releases/tag/esphome-2026.10.1-b5"
+      }
+    }
+  ]
+}

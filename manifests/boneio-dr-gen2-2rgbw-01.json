@@ -1,0 +1,21 @@
+{
+  "name": "Dimmer LED gen2 2xRGBW v0.1",
+  "version": "0.1-2rgbw-2026.10.1-b5",
+  "new_install_prompt_erase": true,
+  "builds": [
+    {
+      "chipFamily": "ESP32-S3",
+      "parts": [
+        {
+          "path": "https://boneio-eu.github.io/esphome/firmware/boneio-dr-gen2-2rgbw-01-esp32s3.bin",
+          "offset": 0
+        }
+      ],
+      "ota": {
+        "path": "https://boneio-eu.github.io/esphome/firmware/boneio-dr-gen2-2rgbw-01-esp32s3.ota.bin",
+        "md5": "a153dad5b5eea662c8a74711db6d114d",
+        "release_url": "https://github.com/boneIO-eu/esphome/releases/tag/esphome-2026.10.1-b5"
+      }
+    }
+  ]
+}

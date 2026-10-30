@@ -1,0 +1,21 @@
+{
+  "name": "Dimmer LED gen2 4 CCT v0.1",
+  "version": "0.1-4cct-2026.10.1-b5",
+  "new_install_prompt_erase": true,
+  "builds": [
+    {
+      "chipFamily": "ESP32-S3",
+      "parts": [
+        {
+          "path": "https://boneio-eu.github.io/esphome/firmware/boneio-dr-gen2-4cct-01-esp32s3.bin",
+          "offset": 0
+        }
+      ],
+      "ota": {
+        "path": "https://boneio-eu.github.io/esphome/firmware/boneio-dr-gen2-4cct-01-esp32s3.ota.bin",
+        "md5": "3300eddd462a24e346e821d05bed5699",
+        "release_url": "https://github.com/boneIO-eu/esphome/releases/tag/esphome-2026.10.1-b5"
+      }
+    }
+  ]
+}
