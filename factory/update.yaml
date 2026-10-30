@@ -7,7 +7,7 @@ substitutions:
   update_manifest: "${update_manifest_dir}/${name}${manifest_suffix}.json"
   # factory/web/ sets both: "-web" keeps the panel build on its own manifest
   manifest_suffix: ""
-  web_panel: "Off"
+  web_option: ""
 
 ota:
   - platform: http_request
@@ -20,35 +20,16 @@ update:
     name: Firmware
     source: ${update_manifest}
 
-globals:
-  # Manifest name of the variant to update to; variant selects change it.
-  - id: firmware_base
-    type: std::string
-    initial_value: '"${name}"'
-
-# Installs the build with or without the device web page from Home Assistant.
-# The page has no password, so it stays off unless the owner turns it on.
-select:
-  - platform: template
-    id: web_panel
-    name: Web panel
-    icon: mdi:web
-    entity_category: config
-    options:
-      - "Off"
-      - "On"
-    initial_option: "${web_panel}"
-    optimistic: true
-    set_action:
-      - script.execute: point_firmware_update
-
-# Points the Firmware entity at the picked variant, so it offers that build as
-# an update; the owner installs it with Update.
+# Points the Firmware entity at another build, so it offers that build as an
+# update; the owner installs it with Update. Called by the Firmware variant
+# select (variant.yaml, dimmer_variant.yaml).
 script:
   - id: point_firmware_update
+    parameters:
+      base: string
+      web: bool
     then:
       - lambda: |-
-          std::string url = "${update_manifest_dir}/" + id(firmware_base) +
-                            (id(web_panel).current_option() == "On" ? "-web" : "") + ".json";
+          std::string url = "${update_manifest_dir}/" + base + (web ? "-web" : "") + ".json";
           id(firmware_update).set_source_url(url.c_str(), url.size());
       - component.update: firmware_update

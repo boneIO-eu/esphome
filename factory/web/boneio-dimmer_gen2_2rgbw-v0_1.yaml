@@ -4,7 +4,7 @@
 # suffix keeps its updates on this variant.
 substitutions:
   manifest_suffix: "-web"
-  web_panel: "On"
+  web_option: " + web panel"
   # CI sets the release; the update entity compares it with the manifest.
   firmware_version: "dev"
   dimmer_mode: "2x RGBW"
