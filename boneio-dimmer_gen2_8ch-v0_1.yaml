@@ -208,6 +208,15 @@ sensor:
           - switch.turn_off: buzzer
 
 switch:
+  # Inputs switch their outputs on the controller itself while this is on;
+  # off, they only report their state to Home Assistant.
+  - platform: template
+    id: local_control
+    name: Local control
+    icon: mdi:gesture-tap-button
+    entity_category: config
+    optimistic: true
+    restore_mode: RESTORE_DEFAULT_ON
   - platform: gpio
     id: buzzer
     name: "Buzzer"
@@ -235,6 +244,12 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: chl_01
 
   - platform: gpio
     name: "IN_02"
@@ -245,6 +260,12 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: chl_02
 
   - platform: gpio
     name: "IN_03"
@@ -255,6 +276,12 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: chl_03
 
   - platform: gpio
     name: "IN_04"
@@ -265,6 +292,12 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: chl_04
 
   - platform: gpio
     name: "IN_05"
@@ -275,6 +308,12 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: chr_01
 
   - platform: gpio
     name: "IN_06"
@@ -285,6 +324,12 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: chr_02
 
   - platform: gpio
     name: "IN_07"
@@ -295,6 +340,12 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: chr_03
 
   - platform: gpio
     name: "IN_08"
@@ -305,3 +356,9 @@ binary_sensor:
       mode:
         input: true
       inverted: true
+    on_press:
+      - if:
+          condition:
+            switch.is_on: local_control
+          then:
+            - light.toggle: chr_04
