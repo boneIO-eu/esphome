@@ -134,6 +134,10 @@ binary_sensor:
       inverted: true
   - platform: gpio
     name: 'IN_05'
+    # IN_05-IN_08 are on ESP32 pins, not on the PCF8574. Interrupts catch every
+    # contact bounce, so one press toggled the light twice; polling once per
+    # loop, as the expander inputs do, filters it out.
+    use_interrupt: false
     pin:
       number: 36
       mode:
@@ -141,6 +145,7 @@ binary_sensor:
       inverted: true
   - platform: gpio
     name: 'IN_06'
+    use_interrupt: false
     pin:
       number: 39
       mode:
@@ -148,6 +153,7 @@ binary_sensor:
       inverted: true
   - platform: gpio
     name: 'IN_07'
+    use_interrupt: false
     pin:
       number: 34
       mode:
@@ -155,6 +161,7 @@ binary_sensor:
       inverted: true
   - platform: gpio
     name: 'IN_08'
+    use_interrupt: false
     pin:
       number: 35
       mode:
