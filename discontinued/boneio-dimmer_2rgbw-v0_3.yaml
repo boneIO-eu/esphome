@@ -71,6 +71,14 @@ text_sensor:
     ip_address:
       entity_category: diagnostic
       name: boneio-dimmer IP
+  - platform: template
+    name: 'Hostname'
+    id: hostname
+    entity_category: diagnostic
+    lambda: |-
+      char buf[network::USE_ADDRESS_BUFFER_SIZE];
+      return std::string(network::get_use_address_to(buf));
+    update_interval: 5min
 
 binary_sensor:
   - platform: gpio
