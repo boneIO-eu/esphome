@@ -1,0 +1,12 @@
+# Old path kept for firmware that advertises it for adoption; the config lives in discontinued/boneio-dimmer_2rgbw-v0_3.yaml.
+substitutions:
+  name: boneio-dr-rgbw-03
+  friendly_name: 'BoneIO Dimmer LED'
+
+esphome:
+  name: '${name}'
+  friendly_name: '${friendly_name}'
+  name_add_mac_suffix: true
+
+packages:
+  device: github://boneIO-eu/esphome/discontinued/boneio-dimmer_2rgbw-v0_3.yaml@latest

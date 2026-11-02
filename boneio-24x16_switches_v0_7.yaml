@@ -1,0 +1,12 @@
+# Old path kept for firmware that advertises it for adoption; the config lives in discontinued/boneio-24x16_switches_v0_7.yaml.
+substitutions:
+  name: boneio-24-sw-07
+  friendly_name: 'BoneIO ESP 24x16 Switches'
+
+esphome:
+  name: '${name}'
+  friendly_name: '${friendly_name}'
+  name_add_mac_suffix: true
+
+packages:
+  device: github://boneIO-eu/esphome/discontinued/boneio-24x16_switches_v0_7.yaml@latest

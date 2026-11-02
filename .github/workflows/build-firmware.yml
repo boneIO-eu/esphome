@@ -56,6 +56,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          # Dimmer LED v0.3 and 24x16 are built from discontinued/. The old root
+          # paths stay as thin wrappers for firmware that advertises them.
           # Dimmer LED v0.3
           - yaml_file: discontinued/boneio-dimmer_8ch-v0_3.yaml
             board_name: "Dimmer LED"
