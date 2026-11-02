@@ -55,8 +55,8 @@ logger:
 api:
   reboot_timeout: 0s
 ota:
+  # No web_server OTA: its page has no per-device password, so anyone on the LAN could flash.
   - platform: esphome
-  - platform: web_server
 
 web_server:
   port: 80
@@ -71,13 +71,6 @@ text_sensor:
     ip_address:
       entity_category: diagnostic
       name: boneio-dimmer IP
-  - platform: template
-    name: 'Hostname'
-    id: hostname
-    entity_category: diagnostic
-    lambda: |-
-      return std::string(id(eth).get_use_address());
-    update_interval: 5min
 
 binary_sensor:
   - platform: gpio
@@ -134,6 +127,10 @@ binary_sensor:
       inverted: true
   - platform: gpio
     name: 'IN_05'
+    # IN_05-IN_08 are on ESP32 pins, not on the PCF8574. Interrupts catch every
+    # contact bounce, so one press toggled the light twice; polling once per
+    # loop, as the expander inputs do, filters it out.
+    use_interrupt: false
     pin:
       number: 36
       mode:
@@ -141,6 +138,7 @@ binary_sensor:
       inverted: true
   - platform: gpio
     name: 'IN_06'
+    use_interrupt: false
     pin:
       number: 39
       mode:
@@ -148,6 +146,7 @@ binary_sensor:
       inverted: true
   - platform: gpio
     name: 'IN_07'
+    use_interrupt: false
     pin:
       number: 34
       mode:
@@ -155,6 +154,7 @@ binary_sensor:
       inverted: true
   - platform: gpio
     name: 'IN_08'
+    use_interrupt: false
     pin:
       number: 35
       mode:
